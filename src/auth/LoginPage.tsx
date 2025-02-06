@@ -1,102 +1,151 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useUserStore } from "@/hooks/zustand/store/useUserStore";
 import { LoginInputType, userLoginSchema } from "@/schema/userSchema";
-import { Loader2, LockKeyhole, Mail } from "lucide-react";
+import { Loader2, LockKeyhole, Mail, Notebook, User, User2 } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [input, setInput] = useState<LoginInputType>({
+    firstname:"",
+    lastname:"",
+    username:"",
     email: "",
     password: "",
   });
+  const {login} = useUserStore();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<LoginInputType>>({});
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler =async (e: FormEvent) => {
     e.preventDefault();
     console.log(input); //to check whether input is coming or not
     const result = userLoginSchema.safeParse(input);
-    if(!result.success) {
-        const fieldErrors = result.error.formErrors.fieldErrors;
-        setErrors(fieldErrors as Partial<LoginInputType>);
-        return
+    if (!result.success) {
+      const fieldErrors = result.error.formErrors.fieldErrors;
+      setErrors(fieldErrors as Partial<LoginInputType>);
+      return;
     }
-
-    // reseting the form inputs
-    setInput({
-      email: "",
-      password: "",
-    });
+    try {
+      await login(input);
+      navigate("/dashboard/job-tracker");
+    } catch (error:any) {
+      console.log(error);
+    }
   };
   const loading = false;
   return (
     <div className="flex items-center  justify-center min-h-screen ">
-      <form
-        onSubmit={submitHandler}
-        className="md:p-8 w-full max-w-md md:border border-gray-200 rounde  mx-4"
-      >
-        <div className="mb-4">
-          <h1 className="font-bold  text-center text-2xl">Welcom ,Back</h1>
-        </div>
+    <form onSubmit={submitHandler} className="md:p-8 w-full max-w-md md:border border-gray-200 rounde  mx-4">
+      <div className="mb-4">
+        <h1 className="font-bold text-center text-2xl">
+          Welcome Back
+        </h1>
+      </div>
+      <div className="flex items-center gap-2">
         <div className="mb-4">
           <div className="relative">
             <Input
-              value={input.email}
               onChange={changeEventHandler}
-              type="email"
-              name="email"
-              placeholder="example@gmail.com"
+              value={input.firstname}
+              type="text"
+              name="firstname"
+              placeholder="John"
               className="pl-10 focus-visible:ring-1"
             />
-            <Mail className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && <span className="text-xs  text-red-500">{errors.email}</span>}
+            <User2 className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+            {errors && <span className="text-red-500 text-xs">{errors.firstname}</span>}
           </div>
         </div>
         <div className="mb-4">
           <div className="relative">
             <Input
-              value={input.password}
               onChange={changeEventHandler}
-              type="password"
-              name="password"
-              placeholder="******"
+              value={input.lastname}
+              type="text"
+              name="lastname"
+              placeholder="Doe"
               className="pl-10 focus-visible:ring-1"
             />
-            <LockKeyhole className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && <span className="text-xs  text-red-500">{errors.email}</span>}
+            <Notebook className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+            {errors && <span className="text-red-500 text-xs">{errors.lastname}</span>}
           </div>
         </div>
-        {loading ? (
-          <Button
-            disabled
-            className="bg-green hover:bg-hoverGreen w-full border-none"
-          >
-            <Loader2 className="animate-spin h-4 w-4 mr-2" />
-            Please Wait
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            className="bg-green hover:bg-hoverGreen w-full border-none"
-          >
-            Login
-          </Button>
-        )}
+      </div>
+      <div className="mb-4">
+        <div className="relative">
+          <Input
+            onChange={changeEventHandler}
+            value={input.username}
+            type="text"
+            name="username"
+            placeholder="John123"
+            className="pl-10 focus-visible:ring-1"
+          />
+          <User className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+          {errors && <span className="text-red-500 text-xs">{errors.username}</span>}
+        </div>
+      </div>
+      <div className="mb-4">
+        <div className="relative">
+          <Input
+            onChange={changeEventHandler}
+            value={input.email}
+            type="email"
+            name="email"
+            placeholder="john@example.com"
+            className="pl-10 focus-visible:ring-1"
+          />
+          <Mail className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+          {errors && <span className="text-red-500 text-xs">{errors.email}</span>}
+        </div>
+      </div>
+      <div className="mb-4">
+        <div className="relative">
+          <Input
+            onChange={changeEventHandler}
+            value={input.password}
+            type="password"
+            name="password"
+            placeholder="******"
+            className="pl-10 focus-visible:ring-1"
+          />
+          <LockKeyhole className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+          {errors && <span className="text-red-500 text-xs">{errors.password}</span>}
+        </div>
+      </div>
+      {loading ? (
+        <Button
+          disabled
+          className="bg-green hover:bg-hoverGreen w-full border-none"
+        >
+          <Loader2 className="animate-spin h-4 w-4 mr-2" />
+          Please Wait
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          className="bg-green hover:bg-hoverGreen w-full border-none"
+        >
+          Signup
+        </Button>
+      )}
 
-        <Separator className="mt-7" />
+      <Separator className="mt-7" />
 
-        <p className="mt-4 text-center">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-500 hover:underline">
-            Create an account.
-          </Link>
-        </p>
-      </form>
-    </div>
+      <p className="mt-4">
+        Don't have an account?{" "}
+        <Link to="/signup" className="text-blue-500 hover:underline">
+          Create new Account
+        </Link>
+      </p>
+    </form>
+  </div>
   );
 };
 
