@@ -11,8 +11,9 @@ import {
   User2,
 } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userSignupSchema } from "@/schema/userSchema";
+import { useUserStore } from "@/hooks/zustand/store/useUserStore";
 
 const SignupPage = () => {
   const [input, setInput] = useState<SignupInputType>({
@@ -22,6 +23,8 @@ const SignupPage = () => {
     email: "",
     password: "",
   });
+  const {signup}  = useUserStore();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<SignupInputType>>({});
 
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +32,7 @@ const SignupPage = () => {
     setInput({ ...input, [name]: value });
   };
 
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler = async(e: FormEvent) => {
     e.preventDefault();
     console.log(input);
     const result = userSignupSchema.safeParse(input);
@@ -39,13 +42,12 @@ const SignupPage = () => {
       return;
     }
     // reseting the fields
-    setInput({
-      username: "",
-      firstname: "",
-      lastname: "",
-      password: "",
-      email: "",
-    });
+   try {
+    await signup(input);
+    navigate("/dashboard/job-tracker");
+   } catch (error) {
+    console.log(error);
+   }
   };
 
   const loading = false;
