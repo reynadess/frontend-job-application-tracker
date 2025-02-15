@@ -9,8 +9,8 @@ export type LoginInputType = z.infer<typeof userLoginSchema>;
 
 export const userSignupSchema = z.object({
   username: z.string().min(4, "Username Must be 4 length long"),
-  firstname: z.string().min(2, "Enter a valid name"),
-  lastname: z.string().min(4, "Enter a valid lastname"),
+  firstName: z.string().min(2, "Enter a valid name"),
+  lastName: z.string().min(4, "Enter a valid lastname"),
   email: z.string().email("Enter a valid email address"),
   password: z.string().min(6, "Password must be 6 length long"),
 });

@@ -28,6 +28,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Link } from "react-router-dom"
 
 export function NavUser({
   user,
@@ -85,7 +86,7 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <User2 />
-                View Profile
+                <Link to="/dashboard/user/profile" className="text-inherit">View Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />

@@ -7,8 +7,8 @@ import { toast } from "sonner";
 const API_END_POINT = "http://localhost:3000/api/auth";
 
 type User = {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   username:string;
   email: string;
   password: string;

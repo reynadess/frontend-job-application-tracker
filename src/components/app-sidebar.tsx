@@ -1,4 +1,4 @@
-import { Activity, Building2Icon, Search, SearchIcon } from "lucide-react";
+import { Activity, Building2Icon, Search, SearchIcon, User } from "lucide-react";
 
 import {
   Sidebar,
@@ -35,13 +35,13 @@ const items = [
   },
   {
     title: "Job Search",
-    url: "#",
+    url: "/dashboard/jobsearch",
     icon: SearchIcon,
   },
   {
     title: "Profile",
-    url: "#",
-    icon: Search,
+    url: "/dashboard/user/profile",
+    icon: User,
   },
 ];
 

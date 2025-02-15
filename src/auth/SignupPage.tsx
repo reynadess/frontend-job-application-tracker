@@ -18,8 +18,8 @@ import { useUserStore } from "@/hooks/zustand/store/useUserStore";
 const SignupPage = () => {
   const [input, setInput] = useState<SignupInputType>({
     username: "",
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -64,28 +64,28 @@ const SignupPage = () => {
             <div className="relative">
               <Input
                 onChange={changeEventHandler}
-                value={input.firstname}
+                value={input.firstName}
                 type="text"
-                name="firstname"
+                name="firstName"
                 placeholder="John"
                 className="pl-10 focus-visible:ring-1"
               />
               <User2 className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-              {errors && <span className="text-red-500 text-xs">{errors.firstname}</span>}
+              {errors && <span className="text-red-500 text-xs">{errors.firstName}</span>}
             </div>
           </div>
           <div className="mb-4">
             <div className="relative">
               <Input
                 onChange={changeEventHandler}
-                value={input.lastname}
+                value={input.lastName}
                 type="text"
-                name="lastname"
+                name="lastName"
                 placeholder="Doe"
                 className="pl-10 focus-visible:ring-1"
               />
               <Notebook className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-              {errors && <span className="text-red-500 text-xs">{errors.lastname}</span>}
+              {errors && <span className="text-red-500 text-xs">{errors.lastName}</span>}
             </div>
           </div>
         </div>
