@@ -4,7 +4,7 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
-import { JobProps } from "@/DummyData/Jobs";
+import {  JobProps } from "@/DummyData/Jobs";
 
 const Job: React.FC<JobProps> = ({ job }) => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Job: React.FC<JobProps> = ({ job }) => {
   };
 
   return (
-    <div className="p-5 rounded-md shadow-xl   border border-gray-200 hover:shadow-2xl dark:hover:shadow-slate-50 dark:hover:shadow-md">
+    <div className="p-5 rounded-md shadow-xl overflow-hidden border border-gray-200 hover:shadow-2xl dark:hover:shadow-slate-50 dark:hover:shadow-md">
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">
           {daysAgoFunction(job?.createdAt) === 0
@@ -65,7 +65,7 @@ const Job: React.FC<JobProps> = ({ job }) => {
       </div>
       <div className="flex items-center gap-4 mt-4">
         <Button
-          onClick={() => navigate(`/details/${job?._id}`)}
+          onClick={() => navigate(`/dashboard/job/details/${job?._id}`)}
           variant="outline"
         >
           Details

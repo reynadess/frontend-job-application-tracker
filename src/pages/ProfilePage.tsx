@@ -1,8 +1,17 @@
 import ResumeUploader from "@/components/ResumeUploader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Briefcase, Mail, MapPin, Pen, Phone, Verified } from "lucide-react";
+import {
+  Briefcase,
+  Loader2,
+  Mail,
+  MapPin,
+  Pen,
+  Phone,
+  Verified,
+} from "lucide-react";
 import React, { useRef, useState } from "react";
 
 const ProfilePage = () => {
@@ -47,11 +56,11 @@ const ProfilePage = () => {
       resume: uploadedFile,
     }));
   };
-
+  const loading = false;
   return (
     <div className="">
-      <form className="">
-        <div className=" flex gap-5 border p-3 mt-7 rounded-md">
+      <form className="relative">
+        <div className=" flex gap-5 shadow-md p-3 mt-7 rounded-md">
           <div>
             <Avatar className="relative md:w-28 md:h-28 w-20 h-20">
               <AvatarImage src={selectedProfilePicture} />
@@ -154,6 +163,15 @@ const ProfilePage = () => {
             <p className="">{profileData.resume.name}</p>
           </div>
         )}
+        <div className="p-3 absolute top-0 right-1">
+          {loading ? (
+            <Button disabled>
+              <Loader2 className="animate-spin" /> Please Wait ...
+            </Button>
+          ) : (
+            <Button type="submit">Update Profile</Button>
+          )}
+        </div>
       </form>
     </div>
   );

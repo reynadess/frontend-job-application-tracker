@@ -6,6 +6,7 @@ import JobTracker from "./pages/JobTracker";
 import { ThemeProvider } from "./components/theme-provider";
 import ProfilePage from "./pages/ProfilePage";
 import GlobalJobs from "./pages/GlobalJobs";
+import JobDetail from "./pages/JobDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="job-tracker" element={<JobTracker />}></Route>
             <Route path="user/profile" element={<ProfilePage />}></Route>
             <Route path="jobsearch" element={<GlobalJobs />}></Route>
+            <Route path="job/details/:id" element={<JobDetail />}></Route>
           </Route>
         </Routes>
       </ThemeProvider>

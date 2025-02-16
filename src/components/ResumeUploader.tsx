@@ -14,7 +14,7 @@ const ResumeUploader: React.FC<ResumeUploaderProps> = ({ onFileUpload }) => {
   };
 
   return (
-    <div className="mx-auto p-6 shadow-md rounded-md border">
+    <div className="mx-auto p-6 shadow-md rounded-md mt-3">
       <h2 className="text-xl font-bold mb-4">Upload Your Resume</h2>
 
       {/* Dropzone Component */}

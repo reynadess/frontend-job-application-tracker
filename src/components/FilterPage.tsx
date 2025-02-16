@@ -1,4 +1,3 @@
-import React from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { ScrollArea } from "./ui/scroll-area";
 import { Label } from "./ui/label";
@@ -26,23 +25,6 @@ const filterData: IFilterData[] = [
       "Cloud Computing",
       "Artificial Intelligence",
       "Game Development",
-      "Carpenter",
-      "Electrician",
-      "Plumber",
-      "Mason",
-      "Factory Worker",
-      "Machine Operator",
-      "Assembly Line Worker",
-      "Delivery Driver",
-      "Truck Driver",
-      "Warehouse Worker",
-      "HVAC Technician",
-      "Auto Mechanic",
-      "Maintenance Worker",
-      "Security Guard",
-      "Driver",
-      "Construction Worker",
-      "Fire Safety Officer",
     ],
   },
   {
