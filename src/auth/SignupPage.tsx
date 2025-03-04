@@ -11,17 +11,20 @@ import {
   User2,
 } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userSignupSchema } from "@/schema/userSchema";
+import { useUserStore } from "@/hooks/zustand/store/useUserStore";
 
 const SignupPage = () => {
   const [input, setInput] = useState<SignupInputType>({
     username: "",
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
+  const {signup}  = useUserStore();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<SignupInputType>>({});
 
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +32,7 @@ const SignupPage = () => {
     setInput({ ...input, [name]: value });
   };
 
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler = async(e: FormEvent) => {
     e.preventDefault();
     console.log(input);
     const result = userSignupSchema.safeParse(input);
@@ -39,13 +42,12 @@ const SignupPage = () => {
       return;
     }
     // reseting the fields
-    setInput({
-      username: "",
-      firstname: "",
-      lastname: "",
-      password: "",
-      email: "",
-    });
+   try {
+    await signup(input);
+    navigate("/dashboard/job-tracker");
+   } catch (error) {
+    console.log(error);
+   }
   };
 
   const loading = false;
@@ -62,28 +64,28 @@ const SignupPage = () => {
             <div className="relative">
               <Input
                 onChange={changeEventHandler}
-                value={input.firstname}
+                value={input.firstName}
                 type="text"
-                name="firstname"
+                name="firstName"
                 placeholder="John"
                 className="pl-10 focus-visible:ring-1"
               />
               <User2 className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-              {errors && <span className="text-red-500 text-xs">{errors.firstname}</span>}
+              {errors && <span className="text-red-500 text-xs">{errors.firstName}</span>}
             </div>
           </div>
           <div className="mb-4">
             <div className="relative">
               <Input
                 onChange={changeEventHandler}
-                value={input.lastname}
+                value={input.lastName}
                 type="text"
-                name="lastname"
+                name="lastName"
                 placeholder="Doe"
                 className="pl-10 focus-visible:ring-1"
               />
               <Notebook className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-              {errors && <span className="text-red-500 text-xs">{errors.lastname}</span>}
+              {errors && <span className="text-red-500 text-xs">{errors.lastName}</span>}
             </div>
           </div>
         </div>
