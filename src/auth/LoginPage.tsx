@@ -6,13 +6,14 @@ import { LoginInputType, userLoginSchema } from "@/schema/userSchema";
 import { Loader2, LockKeyhole, User } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const LoginPage = () => {
   const [input, setInput] = useState<LoginInputType>({
     username: "",
     password: "",
   });
-  const { login } = useUserStore();
+  const { login , loading } = useUserStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<LoginInputType>>({});
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +22,6 @@ const LoginPage = () => {
   };
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(input); //to check whether input is coming or not
     const result = userLoginSchema.safeParse(input);
     if (!result.success) {
       const fieldErrors = result.error.formErrors.fieldErrors;
@@ -32,10 +32,11 @@ const LoginPage = () => {
       await login(input);
       navigate("/dashboard/job-tracker");
     } catch (error: any) {
+      toast.error(error.message);
       console.log(error);
     }
   };
-  const loading = false;
+
   return (
     <div className="flex items-center  justify-center min-h-screen ">
       <form

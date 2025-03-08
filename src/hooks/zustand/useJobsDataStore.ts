@@ -27,7 +27,7 @@ export const useJobsDataStore = create<useTasksDataStoreInterface>((set) => ({
   },
   fetchJobs: async () => {
     try {
-      console.log("fetched data");
+      // console.log("fetched data");
 
       await new Promise<void>((resolve) => {
         setTimeout(() => {

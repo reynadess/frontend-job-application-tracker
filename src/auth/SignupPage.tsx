@@ -23,7 +23,7 @@ const SignupPage = () => {
     email: "",
     password: "",
   });
-  const {signup}  = useUserStore();
+  const {signup , loading}  = useUserStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<SignupInputType>>({});
 
@@ -34,7 +34,6 @@ const SignupPage = () => {
 
   const submitHandler = async(e: FormEvent) => {
     e.preventDefault();
-    console.log(input);
     const result = userSignupSchema.safeParse(input);
     if (!result.success) {
       const fieldErrors = result.error.formErrors.fieldErrors;
@@ -50,7 +49,6 @@ const SignupPage = () => {
    }
   };
 
-  const loading = false;
   return (
     <div className="flex items-center  justify-center min-h-screen ">
       <form onSubmit={submitHandler} className="md:p-8 w-full max-w-md md:border border-gray-200 rounde  mx-4">
