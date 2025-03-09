@@ -10,6 +10,7 @@ import JobDetail from "./pages/JobDetail";
 import { Navigate } from "react-router-dom";
 import ProtectedRoute from "./auth/ProtectedRoutes";
 import PublicRoute from "./auth/PublicRoute";
+import NotFoundPage from "./components/404/PageNotFound";
 
 // const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 //   const {isAuthenticated, user} = useUserStore();
@@ -88,6 +89,7 @@ function App() {
             <Route path="jobsearch" element={<GlobalJobs />} />
             <Route path="job/details/:id" element={<JobDetail />} />
           </Route>
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ThemeProvider>
     </>
