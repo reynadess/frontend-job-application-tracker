@@ -13,8 +13,14 @@ import PublicRoute from "./auth/PublicRoute";
 import NotFoundPage from "./components/404/PageNotFound";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
+import { useEffect } from "react";
+import { useUserStore } from "./hooks/zustand/store/useUserStore";
 
 function App() {
+  const checkAuth = useUserStore((state) => state.checkAuth);
+  useEffect(() => {
+    checkAuth();
+  } , [])
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
