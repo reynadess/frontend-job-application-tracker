@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 import {
   Briefcase,
   Loader2,
@@ -17,9 +18,10 @@ import React, { useRef, useState } from "react";
 const ProfilePage = () => {
   const [selectedProfilePicture, setSelectedProfilePicture] =
     useState<string>("");
+    const {user} = useAuthStore();
   const [profileData, setProfileData] = useState({
     firstName: "om",
-    lastName: "",
+    lastName: "bhor",
     occupation: "Software Engineer",
     address: "Pune , India",
     profilePicture: "",

@@ -25,8 +25,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
-import { useUserStore } from "@/hooks/zustand/store/useUserStore";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 
 export function NavUser({
   user,
@@ -38,7 +37,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const logout = useUserStore((state) => state.logout);
+  const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = async () => {
     await logout(); // Ensure logout completes before proceeding

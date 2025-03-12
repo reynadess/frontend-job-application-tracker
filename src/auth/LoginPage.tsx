@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useUserStore } from "@/hooks/zustand/store/useUserStore";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 import { LoginInputType, userLoginSchema } from "@/schema/userSchema";
 import { Loader2, LockKeyhole, User } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -13,7 +13,7 @@ const LoginPage = () => {
     username: "",
     password: "",
   });
-  const { login, loading } = useUserStore();
+  const { login, loading } = useAuthStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<LoginInputType>>({});
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {

@@ -14,10 +14,10 @@ import NotFoundPage from "./components/404/PageNotFound";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import { useEffect } from "react";
-import { useUserStore } from "./hooks/zustand/store/useUserStore";
+import { useAuthStore } from "./hooks/zustand/store/useAuthStore";
 
 function App() {
-  const checkAuth = useUserStore((state) => state.checkAuth);
+  const checkAuth = useAuthStore((state) => state.checkAuth);
   useEffect(() => {
     checkAuth();
   } , [])
