@@ -13,7 +13,7 @@ const LoginPage = () => {
     username: "",
     password: "",
   });
-  const { login , loading } = useUserStore();
+  const { login, loading } = useUserStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<LoginInputType>>({});
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +78,14 @@ const LoginPage = () => {
               <span className="text-red-500 text-xs">{errors.password}</span>
             )}
           </div>
+          <p className="mt-2 text-sm">
+            <Link
+              to="/forgot-password"
+              className="text-blue-500 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </p>
         </div>
         {loading ? (
           <Button

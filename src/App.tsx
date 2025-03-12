@@ -11,46 +11,8 @@ import { Navigate } from "react-router-dom";
 import ProtectedRoute from "./auth/ProtectedRoutes";
 import PublicRoute from "./auth/PublicRoute";
 import NotFoundPage from "./components/404/PageNotFound";
-
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const {isAuthenticated, user} = useUserStore();
-//   if (!isAuthenticated || !user) {
-//     return <Navigate to="/login" replace />;
-//   }
-//   return children;
-// }
-
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const { isAuthenticated, user } = useUserStore();
-//   const [isHydrated, setIsHydrated] = useState(false);
-
-// Wait for the store to hydrate from localStorage
-//   useEffect(() => {
-//     const unsubscribe = useUserStore.persist.onHydrate(() => {
-//       setIsHydrated(true);
-//     });
-
-//     // If store was already hydrated, set state
-//     if (useUserStore.persist.hasHydrated()) {
-//       setIsHydrated(true);
-//     }
-
-//     return () => {
-//       unsubscribe();
-//     };
-//   }, []);
-
-//   // Show loading or nothing while hydrating
-//   if (!isHydrated) {
-//     return null; // or a loading indicator
-//   }
-
-//   if (!isAuthenticated || !user) {
-//     return <Navigate to="/login" replace />;
-//   }
-
-//   return children;
-// }
+import ForgotPassword from "./auth/ForgotPassword";
+import ResetPassword from "./auth/ResetPassword";
 
 function App() {
   return (
@@ -75,6 +37,22 @@ function App() {
             }
           />
           <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <PublicRoute>
+                <ResetPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -89,7 +67,7 @@ function App() {
             <Route path="jobsearch" element={<GlobalJobs />} />
             <Route path="job/details/:id" element={<JobDetail />} />
           </Route>
-            <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ThemeProvider>
     </>
