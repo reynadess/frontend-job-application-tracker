@@ -13,7 +13,7 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { userSignupSchema } from "@/schema/userSchema";
-import { useUserStore } from "@/hooks/zustand/store/useUserStore";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 
 const SignupPage = () => {
   const [input, setInput] = useState<SignupInputType>({
@@ -23,7 +23,7 @@ const SignupPage = () => {
     email: "",
     password: "",
   });
-  const {signup , loading}  = useUserStore();
+  const {signup , loading}  = useAuthStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<SignupInputType>>({});
 

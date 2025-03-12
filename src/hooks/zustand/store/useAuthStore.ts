@@ -12,23 +12,10 @@ import API_ROUTES from "@/config/config";
 import { toast } from "sonner";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { UserState } from "@/types/authTypes";
 
-type User = {
-  id: string;
-  username: string;
-};
 
-type UserState = {
-  user: User | null;
-  signup: (input: SignupInputType) => Promise<void>;
-  login: (input: LoginInputType) => Promise<void>;
-  logout: () => Promise<void>;
-  checkAuth: () => void;
-  loading: boolean;
-  isAuthenticated: boolean;
-};
-
-export const useUserStore = create<UserState>()(
+export const useAuthStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
@@ -88,6 +75,8 @@ export const useUserStore = create<UserState>()(
           set({ loading: false });
         }
       },
+
+      //TODO: if backend have logout api
       // logout: async () => {
       //   try {
       //     set({ loading: true });
@@ -104,6 +93,7 @@ export const useUserStore = create<UserState>()(
       //     set({ loading: false });
       //   }
       // },
+      
       logout: async () => {
         try {
           set({ loading: true });

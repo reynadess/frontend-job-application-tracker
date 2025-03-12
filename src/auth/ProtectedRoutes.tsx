@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useUserStore } from "@/hooks/zustand/store/useUserStore";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 import { getToken, isTokenExpired, removeToken } from "@/utils/tokenUtils";
 import { toast } from "sonner";
 
@@ -9,16 +9,16 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, user, logout } = useUserStore();
+  const { isAuthenticated, user, logout } = useAuthStore();
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = useUserStore.persist.onHydrate(() => {
+    const unsubscribe = useAuthStore.persist.onHydrate(() => {
       setIsHydrated(true);
     });
 
     // If store was already hydrated, set state
-    if (useUserStore.persist.hasHydrated()) {
+    if (useAuthStore.persist.hasHydrated()) {
       setIsHydrated(true);
     }
 
