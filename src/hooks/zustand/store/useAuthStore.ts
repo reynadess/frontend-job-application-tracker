@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { UserState } from "@/types/authTypes";
-
+import { StatusCodes } from "http-status-codes";
 
 export const useAuthStore = create<UserState>()(
   persist(
@@ -27,7 +27,7 @@ export const useAuthStore = create<UserState>()(
           set({ loading: true });
           const response = await api.post(API_ROUTES.AUTH.SIGNUP, input);
 
-          if (response.status === 201) {
+          if (response.status === StatusCodes.CREATED) {
             toast.success("Signup successful! Redirecting to login...");
             setTimeout(() => {
               window.location.href = "/login";
@@ -62,6 +62,10 @@ export const useAuthStore = create<UserState>()(
             });
 
             toast.success("Login successful");
+          } else {
+            // Handle the case where the access token is missing
+            toast.error("Login failed: Access token is missing");
+            set({ loading: false });
           }
         } catch (error: any) {
           if (axios.isAxiosError(error)) {
@@ -93,7 +97,7 @@ export const useAuthStore = create<UserState>()(
       //     set({ loading: false });
       //   }
       // },
-      
+
       logout: async () => {
         try {
           set({ loading: true });
@@ -128,7 +132,6 @@ export const useAuthStore = create<UserState>()(
 
           // ✅ Auto logout when token expires
           setTimeout(() => {
-            console.log("Token expired. Auto-logging out...");
             removeToken();
             set({ user: null, isAuthenticated: false });
           }, decodedToken.exp * 1000 - Date.now());

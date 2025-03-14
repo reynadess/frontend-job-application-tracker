@@ -18,9 +18,10 @@ import { useAuthStore } from "./hooks/zustand/store/useAuthStore";
 
 function App() {
   const checkAuth = useAuthStore((state) => state.checkAuth);
+  const { user } = useAuthStore();
   useEffect(() => {
     checkAuth();
-  } , [])
+  }, []);
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -59,7 +60,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard"
+            path="/"
             element={
               <ProtectedRoute>
                 <MainLayout />
@@ -68,7 +69,7 @@ function App() {
           >
             <Route index element={<Navigate to="job-tracker" replace />} />
             <Route path="job-tracker" element={<JobTracker />} />
-            <Route path="user/profile" element={<ProfilePage />} />
+            <Route path={`user/${user?.username}`} element={<ProfilePage />} />
             zus
             <Route path="jobsearch" element={<GlobalJobs />} />
             <Route path="job/details/:id" element={<JobDetail />} />

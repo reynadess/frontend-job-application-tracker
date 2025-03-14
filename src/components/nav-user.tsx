@@ -1,10 +1,7 @@
 import {
-  BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
   User2,
 } from "lucide-react";
 
@@ -28,9 +25,9 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 
 export function NavUser({
-  user,
+  User,
 }: {
-  user: {
+  User: {
     name: string;
     email: string;
     avatar: string;
@@ -38,7 +35,7 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const logout = useAuthStore((state) => state.logout);
-
+  const {user} = useAuthStore();
   const handleLogout = async () => {
     await logout(); // Ensure logout completes before proceeding
   };
@@ -53,12 +50,12 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={User.avatar} alt={User.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">{User.name}</span>
+                <span className="truncate text-xs">{User.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -72,12 +69,12 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={User.avatar} alt={User.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">{User.name}</span>
+                  <span className="truncate text-xs">{User.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -87,7 +84,7 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <User2 />
-                <Link to="/dashboard/user/profile" className="text-inherit">
+                <Link to={`/user/${user?.username}`} className="text-inherit">
                   View Profile
                 </Link>
               </DropdownMenuItem>

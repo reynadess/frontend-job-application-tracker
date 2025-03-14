@@ -35,7 +35,7 @@ const JobDialog = () => {
   const { isOpen, setIsOpen } = useOpenDialogStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async (data: JobsFormSchemaData) => {
-    console.log(data);
+    
     const newJob: JobApplication = {
       id: `Task-${generateRandomThreeDigitNumber()}`,
       jobPosition: data.title,
@@ -64,7 +64,7 @@ const JobDialog = () => {
       reset();
       setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      
       toast({
         variant: "destructive",
         title:"Failed to add the job",

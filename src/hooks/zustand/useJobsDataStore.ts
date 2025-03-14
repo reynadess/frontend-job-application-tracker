@@ -27,8 +27,6 @@ export const useJobsDataStore = create<useTasksDataStoreInterface>((set) => ({
   },
   fetchJobs: async () => {
     try {
-      // console.log("fetched data");
-
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           set({ jobs });
@@ -77,7 +75,7 @@ export const useJobsDataStore = create<useTasksDataStoreInterface>((set) => ({
       );
       return result;
     } catch (error: unknown) {
-      console.log(error);
+    
 
       // if an error occurs return failure status and generic error message
       return { success: false, message: "Something went wrong!" };
@@ -102,7 +100,7 @@ export const useJobsDataStore = create<useTasksDataStoreInterface>((set) => ({
       );
       return result;
     } catch (error) {
-      console.log(error);
+
 
       return { success: false, message: "Something went wrong!" };
     }

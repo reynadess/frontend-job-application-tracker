@@ -52,9 +52,9 @@ const TrackArea = () => {
     loadJobs();
   }, [fetchJobs]);
 
-  useEffect(() => {
-    console.log("Jobs data:", jobs); // Add this line to verify the data
-  }, [jobs]);
+  // useEffect(() => {
+  //   console.log("Jobs data:", jobs); // Add this line to verify the data
+  // }, [jobs]);
 
   const table = useReactTable({
     data: jobs || [],

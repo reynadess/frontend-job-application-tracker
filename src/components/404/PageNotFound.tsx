@@ -28,7 +28,7 @@ const NotFoundPage = () => {
         transition={{ delay: 0.6, duration: 0.5 }}
         className="mt-6"
       >
-        <Button variant="outline" onClick={() => window.location.href = "/dashboard/job-tracker"}>
+        <Button variant="outline" onClick={() => window.location.href = "/job-tracker"}>
           Back to DashBoard
         </Button>
       </motion.div>

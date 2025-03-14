@@ -31,7 +31,7 @@ const ResumeUploader: React.FC<ResumeUploaderProps> = ({ onFileUpload }) => {
       {/* Upload Button (Optional) */}
       {file && (
         <button
-          onClick={() => console.log("Uploading:", file)}
+          //onClick={() => console.log("Uploading:", file)}
           className="mt-4 bg-blue-500  px-4 py-2 rounded"
         >
           Upload

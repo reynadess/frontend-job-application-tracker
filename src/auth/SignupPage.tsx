@@ -43,9 +43,9 @@ const SignupPage = () => {
     // reseting the fields
    try {
     await signup(input);
-    navigate("/dashboard/job-tracker");
+    navigate("/job-tracker");
    } catch (error) {
-    console.log(error);
+    console.error(error);
    }
   };
 

@@ -30,10 +30,10 @@ const LoginPage = () => {
     }
     try {
       await login(input);
-      navigate("/dashboard/job-tracker");
+      navigate("/job-tracker");
     } catch (error: any) {
       toast.error(error.message);
-      console.log(error);
+      
     }
   };
 

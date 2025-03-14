@@ -9,7 +9,6 @@ import {
   Loader2,
   Mail,
   MapPin,
-  Pen,
   Phone,
   Verified,
 } from "lucide-react";
@@ -20,13 +19,13 @@ const ProfilePage = () => {
     useState<string>("");
     const {user} = useAuthStore();
   const [profileData, setProfileData] = useState({
-    firstName: "om",
-    lastName: "bhor",
-    occupation: "Software Engineer",
-    address: "Pune , India",
+    firstName: "",
+    lastName: "",
+    occupation: "",
+    address: "",
     profilePicture: "",
-    phoneNumber: "777657547648",
-    email: "om@om.com",
+    phoneNumber: "",
+    email: "",
     resume: null as File | null, //to upload the resume
   });
   const imageRef = useRef<HTMLInputElement | null>(null);
@@ -66,7 +65,7 @@ const ProfilePage = () => {
           <div>
             <Avatar className="relative md:w-28 md:h-28 w-20 h-20">
               <AvatarImage src={selectedProfilePicture} />
-              <AvatarFallback>John</AvatarFallback>
+              <AvatarFallback>{user?.username}</AvatarFallback>
               <Input
                 ref={imageRef}
                 accept="image/*"
