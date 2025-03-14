@@ -27,7 +27,7 @@ const MainLayout = () => {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="/dashboard/job-tracker">
+                    <BreadcrumbLink href="/job-tracker">
                       Job Tracker
                     </BreadcrumbLink>
                   </BreadcrumbItem>

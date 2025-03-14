@@ -62,7 +62,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <div
-            onClick={() => navigate("/dashboard/job-tracker")}
+            onClick={() => navigate("/job-tracker")}
             className="flex items-center gap-2 p-3 rounded-sm shadow-md dark:shadow-slate-800 mt-1 cursor-pointer text-2xl font-bold "
           >
             <Avatar className="border">

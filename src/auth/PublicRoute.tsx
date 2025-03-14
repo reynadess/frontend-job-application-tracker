@@ -30,7 +30,7 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
     return null; // or a loading indicator
   }
   if (isAuthenticated && user) {
-    return <Navigate to="/dashboard/job-tracker" replace />;
+    return <Navigate to="/job-tracker" replace />;
   }
 
   return <>{children}</>;
