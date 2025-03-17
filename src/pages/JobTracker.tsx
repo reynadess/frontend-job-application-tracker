@@ -1,10 +1,9 @@
 import StatusCard from "@/components/StatusCard";
-import JobDialog from "@/components/track_table/jobAddDialog/JobDialog";
+import { JobApplicationSheet } from "@/components/track_table/jobAddDialog/JobDialog";
 import TrackArea from "@/components/track_table/TrackArea";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+
 import { useJobsDataStore } from "@/hooks/zustand/useJobsDataStore";
-import { Plus } from "lucide-react";
+
 import { useEffect } from "react";
 
 const JobTracker = () => {
@@ -16,12 +15,10 @@ const JobTracker = () => {
   return (
     <>
       <header>
-        <StatusCard /> {/*TODO: navigate ti jobDialog */}
-        <Dialog>
-          <DialogTrigger asChild>
-          <Button className="ml-7"><Plus/> Add A New Job</Button>
-          </DialogTrigger>
-        </Dialog>
+        <StatusCard />
+        <div className="ml-7">
+          <JobApplicationSheet />
+        </div>
         <TrackArea />
       </header>
     </>

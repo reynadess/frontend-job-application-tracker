@@ -34,7 +34,7 @@ const JobStatus = () => {
   const { control } = useFormContext<JobsFormSchemaData>();
   return (
     <div className="flex flex-col gap-2">
-      <Label className="opacity-75 text-sm font-medium">Task Status</Label>
+      <Label className="opacity-75 text-sm font-medium">Job Status</Label>
       <Controller
         name="status"
         defaultValue="Applied"

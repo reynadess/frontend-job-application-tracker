@@ -6,7 +6,7 @@ const TableSkeleton = () => {
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              {["Task", "Title", "Status", "Priority", "Created At"].map(
+              {["Tasks","Title", "Status", "Priority", "Created At"].map(
                 (header, idx) => (
                   <th className="p-3 text-left" key={idx}>
                     <Skeleton className="h-7 w-3/4" />

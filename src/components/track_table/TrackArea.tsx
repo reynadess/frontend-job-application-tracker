@@ -26,6 +26,7 @@ import { useCheckedPrioritiesStore } from "@/hooks/zustand/useCheckedPrioritiesS
 import { useJobsDataStore } from "@/hooks/zustand/useJobsDataStore";
 import { useQueryStore } from "@/hooks/zustand/useQueryStore";
 import { useCheckedStatusStore } from "@/hooks/zustand/useCheckedStatusStore";
+import JobApplicationSheet from "./jobAddDialog/JobDialog";
 
 declare module "@tanstack/react-table" {
   interface FilterFns {
@@ -105,6 +106,7 @@ const TrackArea = () => {
               </Button>
             </div>
             {/* dropdown */}
+           
             <ViewColumnDropDown table={table} />
           </div>
         </CardHeader>
