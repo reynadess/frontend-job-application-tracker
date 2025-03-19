@@ -72,7 +72,7 @@ export function AppSidebar() {
               Career<span className="text-green">-Pilot</span>
             </h3>
           </div>
-          <SidebarGroupLabel className="font-medium text-gray-600 text-md mt-14">
+          <SidebarGroupLabel className="font-medium  text-md mt-14">
             Platform
           </SidebarGroupLabel>
           <SidebarGroupContent>
