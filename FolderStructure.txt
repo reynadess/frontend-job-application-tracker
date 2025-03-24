@@ -5,7 +5,8 @@
 │   ├── /auth                # authenticaion pages
 │   ├── /components          # Reusable UI components
 |       ├──404               #IF page is not in website
-|       ├──Track Table       #Job tracker table
+|       ├──profile           #profile
+|       ├──job Table         #Job tracker table
 |       ├──ui                #shadcn ui components
 │   ├── /config              #Configuration file (ex -> env config) 
 │   ├── /pages               # Page components

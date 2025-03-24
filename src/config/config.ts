@@ -11,14 +11,10 @@ const API_ROUTES = Object.freeze({
     SIGNUP: "/auth/register",
     LOGOUT:"/auth/logout"
   },
-//   USERS: {
-//     PROFILE: "/users/profile",
-//     UPDATE: "/users/update",
-//   },
-//   JOBS: {
-//     LIST: "/jobs",
-//     DETAILS: (id: string) => `/jobs/${id}`,
-//   },
+  APPLICANT: {
+    PROFILE: "/applicants",
+    UPDATE: "/users/update",
+  },
 });
 
 export default API_ROUTES;

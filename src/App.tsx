@@ -16,6 +16,7 @@ import ResetPassword from "./auth/ResetPassword";
 import { useEffect } from "react";
 import { useAuthStore } from "./hooks/zustand/store/useAuthStore";
 
+
 function App() {
   const checkAuth = useAuthStore((state) => state.checkAuth);
   const { user } = useAuthStore();
@@ -69,7 +70,7 @@ function App() {
           >
             <Route index element={<Navigate to="job-tracker" replace />} />
             <Route path="job-tracker" element={<JobTracker />} />
-            <Route path={`user/${user?.username}`} element={<ProfilePage />} />
+            <Route path={`user/:username`} element={<ProfilePage />} />
             zus
             <Route path="jobsearch" element={<GlobalJobs />} />
             <Route path="job/details/:id" element={<JobDetail />} />

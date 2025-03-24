@@ -1,181 +1,93 @@
-import ResumeUploader from "@/components/ResumeUploader";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
-import {
-  Briefcase,
-  Loader2,
-  Mail,
-  MapPin,
-  Phone,
-  Verified,
-} from "lucide-react";
-import React, { useRef, useState } from "react";
+import ProfileAboutMe from "@/components/profile/AboutMe";
+import ProfileEducation from "@/components/profile/ProfileEducation";
+import ProfileExperience from "@/components/profile/ProfileExperience";
+import ProfileHeroSection from "@/components/profile/ProfileHeroSection";
+import ProfileHireme from "@/components/profile/ProfileHireme";
+import ProfileProjects from "@/components/profile/ProfileProjects";
+import ProfileResume from "@/components/profile/ProfileResume";
+import ProfileSkills from "@/components/profile/ProfileSkills";
+import { useApplicantStore } from "@/hooks/zustand/store/useApplicantStore";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const ProfilePage = () => {
-  const [selectedProfilePicture, setSelectedProfilePicture] =
-    useState<string>("");
-    const {user} = useAuthStore();
-  const [profileData, setProfileData] = useState({
-    firstName: "",
-    lastName: "",
-    occupation: "",
-    address: "",
-    profilePicture: "",
-    phoneNumber: "",
-    email: "",
-    resume: null as File | null, //to upload the resume
-  });
-  const imageRef = useRef<HTMLInputElement | null>(null);
-  const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setSelectedProfilePicture(result);
-        setProfileData((prevData) => ({
-          ...prevData,
-          profilePicture: result,
-        }));
-      };
+const NewProfile = () => {
+    const userDetails = {
+        name: "John Doe",
+        aboutMe:
+            "I am a software developer with a passion for building web applications.",
+        resume: "https://example.com/resume.pdf",
+        resumeUpdateDate: new Date(),
+        skills: ["JavaScript", "React", "TypeScript", "Node.js"],
+        project: [
+            {
+                id: "1",
+                projectName: "Project 1",
+                projectGithub: "https://github.com/example/project1",
+                projectThumbnail: "https://example.com/project1-thumbnail.jpg",
+                description: "Description of project 1",
+                technologies: ["React", "TypeScript"],
+                liveDemo: "https://example.com/project1",
+            },
+            {
+                id: "2",
+                projectName: "Project 2",
+                projectGithub: "https://github.com/example/project2",
+                projectThumbnail: "https://example.com/project2-thumbnail.jpg",
+                description: "Description of project 2",
+                technologies: ["Node.js", "Express"],
+                liveDemo: "https://example.com/project2",
+            },
+        ],
+        experience: [
+            { company: "Company A", role: "Developer", duration: "2 years" },
+            { company: "Company B", role: "Senior Developer", duration: "3 years" },
+        ],
+        education: [
+            {
+                institution: "University A",
+                degree: "B.Sc. in Computer Science",
+                year: "2015",
+            },
+            {
+                institution: "University B",
+                degree: "M.Sc. in Software Engineering",
+                year: "2018",
+            },
+        ],
+        email: "johndoe@example.com",
+        contactEmail: "contact@example.com",
+    };
+    const {username} = useParams();
+    const {getApplicantInfo , Applicant} = useApplicantStore();
+    useEffect(() => {
+        if(username){
+            getApplicantInfo(username);
+        }
+    } , [username]);
 
-      reader.readAsDataURL(file);
-    }
-  };
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
-  };
+    const isOwner = true;
 
-  // Function to update profileData when resume is uploaded
-  const handleResumeUpload = (uploadedFile: File) => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      resume: uploadedFile,
-    }));
-  };
-  const loading = false;
-  return (
-    <div className="">
-      <form className="relative">
-        <div className=" flex gap-5 shadow-md p-3 mt-7 rounded-md">
-          <div>
-            <Avatar className="relative md:w-28 md:h-28 w-20 h-20">
-              <AvatarImage src={selectedProfilePicture} />
-              <AvatarFallback>{user?.username}</AvatarFallback>
-              <Input
-                ref={imageRef}
-                accept="image/*"
-                onChange={fileChangeHandler}
-                className="hidden"
-                type="file"
-              />
-              <div
-                onClick={() => imageRef.current?.click()}
-                className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50 rounded-full cursor-pointer"
-              ></div>
-            </Avatar>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col">
-              <div>
-                <Input
-                  type="text"
-                  name="firstName"
-                  className="font-bold text-2xl w-fit shadow-none outline-none border-none focus-visible:ring-transparent"
-                  value={profileData.firstName}
-                  onChange={changeHandler}
-                />
-                <Input
-                  type="text"
-                  name="occupation"
-                  className="font-medium text-sm w-fit shadow-none outline-none border-none focus-visible:ring-transparent opacity-[0.7]"
-                  value={profileData.occupation}
-                  onChange={changeHandler}
-                />
-              </div>
-              <Separator className="w-[700px] mt-3" />
-              <div className="flex mt-5">
-                <div className="flex flex-col  gap-2">
-                  <div className="flex items-center">
-                    <MapPin />
-                    <Input
-                      className="font-medium text-2xl shadow-none w-fit outline-none border-none focus-visible:ring-transparent"
-                      name="address"
-                      value={profileData.address}
-                      onChange={changeHandler}
-                      type="text"
-                    />
-                  </div>
-                  <div className="flex  items-center">
-                    <Briefcase />
-                    <Input
-                      className="font-medium shadow-none text-2xl w-fit outline-none border-none focus-visible:ring-transparent"
-                      name="occupation"
-                      value={profileData.occupation}
-                      onChange={changeHandler}
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <Separator
-                  orientation="vertical"
-                  className="h-[100px] border-1 border-gray-900"
-                />
-                <div className="flex flex-col gap-2 ml-7">
-                  <div className="flex items-center">
-                    <Phone />
-                    <Input
-                      className="font-medium shadow-none text-2xl w-fit outline-none border-none focus-visible:ring-transparent"
-                      name="phoneNumber"
-                      value={profileData.phoneNumber}
-                      onChange={changeHandler}
-                      type="number"
-                    />
-                  </div>
-                  <div className="flex items-center">
-                    <Mail />
-                    <Input
-                      className="font-medium shadow-none text-2xl w-fit outline-none border-none focus-visible:ring-transparent"
-                      name="email"
-                      value={profileData.email}
-                      onChange={changeHandler}
-                      type="email"
-                    />{" "}
-                    <Verified className="text-green" />
-                  </div>
-                </div>
-              </div>
+    return (
+        <div className="mx-auto max-w-6xl py-5">
+            <ProfileHeroSection applicant={Applicant} />
+            <ProfileAboutMe aboutMe={userDetails.aboutMe} isOwner={isOwner}  />
+            <ProfileResume
+                resume={userDetails.resume}
+                // name={userDetails.name}
+                // resumeUpdateDate={userDetails.resumeUpdateDate}
+            />
+            <ProfileSkills  />
+            <ProfileProjects  />
+            <div className="mt-5">
+            <ProfileExperience />
+
             </div>
-          </div>
+            <ProfileEducation />
+            <ProfileHireme applicant={Applicant}
+               
+            />
         </div>
-        {/* ✅ Resume Uploader */}
-        <div className="mt-5">
-          <ResumeUploader onFileUpload={handleResumeUpload} />
-        </div>
-
-        {/* ✅ Show Uploaded Resume */}
-        {profileData.resume && (
-          <div className="mt-4 p-3 border rounded">
-            <p className="font-semibold">Resume Uploaded:</p>
-            <p className="">{profileData.resume.name}</p>
-          </div>
-        )}
-        <div className="p-3 absolute top-0 right-1">
-          {loading ? (
-            <Button disabled>
-              <Loader2 className="animate-spin" /> Please Wait ...
-            </Button>
-          ) : (
-            <Button type="submit">Update Profile</Button>
-          )}
-        </div>
-      </form>
-    </div>
-  );
+    );
 };
 
-export default ProfilePage;
+export default NewProfile;

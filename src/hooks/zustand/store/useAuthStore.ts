@@ -12,7 +12,7 @@ import API_ROUTES from "@/config/config";
 import { toast } from "sonner";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { UserState } from "@/types/authTypes";
+import { UserState } from "@/types/auth.types";
 import { StatusCodes } from "http-status-codes";
 
 export const useAuthStore = create<UserState>()(

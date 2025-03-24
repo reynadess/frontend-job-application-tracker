@@ -1,6 +1,4 @@
 import { LoginInputType, SignupInputType } from "@/schema/userSchema";
-
-
 //Auth types
 export type User = {
     id: string;
