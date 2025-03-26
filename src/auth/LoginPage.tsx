@@ -1,18 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useUserStore } from "@/hooks/zustand/store/useUserStore";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 import { LoginInputType, userLoginSchema } from "@/schema/userSchema";
 import { Loader2, LockKeyhole, User } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const LoginPage = () => {
   const [input, setInput] = useState<LoginInputType>({
     username: "",
     password: "",
   });
-  const { login } = useUserStore();
+  const { login, loading } = useAuthStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<LoginInputType>>({});
   const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +22,6 @@ const LoginPage = () => {
   };
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(input); //to check whether input is coming or not
     const result = userLoginSchema.safeParse(input);
     if (!result.success) {
       const fieldErrors = result.error.formErrors.fieldErrors;
@@ -30,12 +30,13 @@ const LoginPage = () => {
     }
     try {
       await login(input);
-      navigate("/dashboard/job-tracker");
+      navigate("/job-tracker");
     } catch (error: any) {
-      console.log(error);
+      toast.error(error.message);
+      
     }
   };
-  const loading = false;
+
   return (
     <div className="flex items-center  justify-center min-h-screen ">
       <form
@@ -77,6 +78,14 @@ const LoginPage = () => {
               <span className="text-red-500 text-xs">{errors.password}</span>
             )}
           </div>
+          <p className="mt-2 text-sm">
+            <Link
+              to="/forgot-password"
+              className="text-blue-500 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </p>
         </div>
         {loading ? (
           <Button

@@ -1,7 +1,6 @@
 import {
   Activity,
   Building2Icon,
-  Search,
   SearchIcon,
   User,
 } from "lucide-react";
@@ -20,7 +19,7 @@ import {
 import { NavUser } from "./nav-user";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarImage } from "./ui/avatar";
-import { ScrollArea } from "./ui/scroll-area";
+import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 
 const data = {
   user: {
@@ -29,38 +28,41 @@ const data = {
     avatar: "https://github.com/shadcn.png",
   },
 };
-// Menu items.
-const items = [
-  {
-    title: "Job Tracker",
-    url: "/dashboard/job-tracker",
-    icon: Activity,
-  },
-  {
-    title: "Companies",
-    url: "/dashboard/companies",
-    icon: Building2Icon,
-  },
-  {
-    title: "Job Search",
-    url: "/dashboard/jobsearch",
-    icon: SearchIcon,
-  },
-  {
-    title: "Profile",
-    url: "/dashboard/user/profile",
-    icon: User,
-  },
-];
 
 export function AppSidebar() {
+  const { user } = useAuthStore();
+
+  // Menu items.
+  const items = [
+    {
+      title: "Job Tracker",
+      url: "/job-tracker",
+      icon: Activity,
+    },
+    {
+      title: "Companies",
+      url: "/companies",
+      icon: Building2Icon,
+    },
+    {
+      title: "Job Search",
+      url: "/jobsearch",
+      icon: SearchIcon,
+    },
+    {
+      title: "Profile",
+      url: `/user/${user?.username}`,
+      icon: User,
+    },
+  ];
+
   const navigate = useNavigate();
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <div
-            onClick={() => navigate("/dashboard/job-tracker")}
+            onClick={() => navigate("/job-tracker")}
             className="flex items-center gap-2 p-3 rounded-sm shadow-md dark:shadow-slate-800 mt-1 cursor-pointer text-2xl font-bold "
           >
             <Avatar className="border">
@@ -70,7 +72,7 @@ export function AppSidebar() {
               Career<span className="text-green">-Pilot</span>
             </h3>
           </div>
-          <SidebarGroupLabel className="font-medium text-gray-600 text-md mt-14">
+          <SidebarGroupLabel className="font-medium  text-md mt-14">
             Platform
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -93,7 +95,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="py-5">
-        <NavUser user={data.user} />
+        <NavUser User={data.user} />
       </SidebarFooter>
     </Sidebar>
   );

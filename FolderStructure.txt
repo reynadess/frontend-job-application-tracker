@@ -1,0 +1,31 @@
+/Front-end Job-application-tracker
+│── /public                  # Static assets (favicons, images, etc.)
+│── /src                     # Source code
+│   ├── /Dashboard           # Dashboard -> mainLayout
+│   ├── /auth                # authenticaion pages
+│   ├── /components          # Reusable UI components
+|       ├──404               #IF page is not in website
+|       ├──profile           #profile
+|       ├──job Table         #Job tracker table
+|       ├──ui                #shadcn ui components
+│   ├── /config              #Configuration file (ex -> env config) 
+│   ├── /pages               # Page components
+│   ├── /hooks               # Custom hooks
+│       ├── /zustand         # store for state management and api 
+│   ├── /api                 # API calls -> axiosInstance
+│   ├── /lib                 # tailwind ,clsx
+│   ├── /utils               # Utility functions/helpers
+│   ├── /assets              # Images, fonts, icons, etc.
+│   ├── /schema              # ZOD scehma
+│   ├── /types               # types for api calls
+│   ├── inedx.css       
+│   ├── app.css   
+│   ├── app.tsx    
+│   ├── main.tsx    
+│── /tests                   # Unit and integration tests
+│── /config                  # Configurations (env, constants)
+│── /dist                    # Production build output
+│── .gitignore
+│── package.json
+│── index.html.md
+│── README.md

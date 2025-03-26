@@ -70,7 +70,7 @@ const JobDetailsCard = () => {
             Amazon <Verified className="h-4 text-green" />
           </h1>
           <Avatar className="ml-3">
-            <AvatarImage src="https://media.wired.com/photos/5a99ba72927dc94e67685b9b/1:1/w_700,h_700,c_limit/amazon-a-logo.jpg"/>
+            <AvatarImage src="https://media.wired.com/photos/5a99ba72927dc94e67685b9b/1:1/w_700,h_700,c_limit/amazon-a-logo.jpg" />
           </Avatar>
         </div>
         <div>

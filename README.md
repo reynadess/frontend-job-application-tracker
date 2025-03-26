@@ -20,3 +20,9 @@ cd front-job-application-tracker
 npm install
 npm run dev
 ```
+
+## env setup
+- create .env file in root folder
+```
+VITE_BASE_URL=http://localhost:3000/api
+```
