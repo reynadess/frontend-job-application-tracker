@@ -62,7 +62,18 @@ export default {
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
   			}
-  		}
+  		},
+		  transitionDuration: {
+			'900': '900ms',
+			'1000': '1000ms',
+        	'2000': '2000ms',
+		  },
+		  transitionProperty: {
+			'all': 'all',
+		  },
+		  transitionTimingFunction: {
+			'ease': 'ease',
+		  },
   	}
   },
   plugins: [require("tailwindcss-animate")],

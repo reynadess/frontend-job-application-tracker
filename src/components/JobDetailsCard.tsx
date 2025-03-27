@@ -1,90 +1,216 @@
-import { Verified } from "lucide-react";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import React from "react";
-import { JobProps } from "@/DummyData/Jobs";
+import React from 'react';
+import { Job } from '@/DummyData/Jobs';
+import { 
+  Briefcase, 
+  MapPin, 
+  DollarSign, 
+  Clock, 
+  Star, 
+  CheckCircle2,
+  BookmarkIcon,
+  ShareIcon
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-const JobDetailsCard = () => {
+interface JobDetailsProps {
+  job: Job;
+}
+
+const JobDetailsPage: React.FC<JobDetailsProps> = ({ job }) => {
+  // Function to format salary
+  const formatSalary = (salary: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      notation: 'compact'
+    }).format(salary);
+  };
+
+  // Function to get experience badge color and background
+  const getExperienceStyles = (experience: Job['experience']) => {
+    const variants = {
+      'entry': {
+        badge: 'dark:bg-gray-700 dark:text-gray-300 bg-gray-200 text-gray-800',
+        text: 'text-gray-800 dark:text-gray-300'
+      },
+      'mid': {
+        badge: 'dark:bg-blue-900/50 dark:text-blue-300 bg-blue-100 text-blue-800',
+        text: 'text-blue-800 dark:text-blue-300'
+      },
+      'senior': {
+        badge: 'dark:bg-green-900/50 dark:text-green-300 bg-green-100 text-green-800',
+        text: 'text-green-800 dark:text-green-300'
+      },
+      'executive': {
+        badge: 'dark:bg-purple-900/50 dark:text-purple-300 bg-purple-100 text-purple-800',
+        text: 'text-purple-800 dark:text-purple-300'
+      }
+    };
+    return variants[experience];
+  };
+
+  const experienceStyles = getExperienceStyles(job?.experience);
+
   return (
-    <div className="pl-2 flex items-center justify-between">
-      <div className="p-3 space-y-5 w-full">
-        <div className="flex gap-5 items-center justify-between border-b p-2">
-          <h1 className="text-2xl font-medium">{"Backend Enginner"}</h1>
-          <div className="flex items-center gap-2 mt-4 ">
-            <Badge
-              variant="secondary"
-              className="bg-[#E9D6FC] text-[#6A1B9A] font-bold"
-            >
-              {"3"} Positions
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-[#DFFCE9] text-[#1B5E20] font-bold"
-            >
-              {"Full Time"}
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-[#FDECD2] text-[#D77A2A] font-bold"
-            >
-              {"10"} LPA
-            </Badge>
-          </div>
-        </div>
-        <div className="pl-2 space-y-5">
-          <div className="space-y-2">
-            <p className="text-xl font-medium">About the role</p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis consequuntur iusto dolor, voluptatem rerum illum
-              ratione ipsam cupiditate explicabo adipisci, eius libero atque
-              architecto vel veritatis. Temporibus repellendus asperiores sint.
-            </p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-xl font-medium">Responsibilities</p>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero
-              iure, commodi quia qui corrupti ad expedita exercitationem
-              suscipit quidem rerum aliquid pariatur iusto possimus porro
-              recusandae veritatis esse dolore velit.
-            </p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-xl font-medium">Reuired skills</p>
-            <div className="flex items-center gap-2">
-              <Badge variant={"outline"}>React</Badge>
-              <Badge variant={"outline"}>React</Badge>
-              <Badge variant={"outline"}>React</Badge>
-              <Badge variant={"outline"}>React</Badge>
-              <Badge variant={"outline"}>React</Badge>
+    <div className=" mx-auto px-4 py-6">
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <div className="space-y-3">
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
+                {job.title}
+              </h1>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                  <Briefcase className="w-5 h-5" />
+                  <span className="text-base">{job.company}</span>
+                </div>
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                  <MapPin className="w-5 h-5" />
+                  <span className="text-base">{job.location}</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700"
+              >
+                <BookmarkIcon className="w-5 h-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700"
+              >
+                <ShareIcon className="w-5 h-5" />
+              </Button>
             </div>
           </div>
-        </div>
-      </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Job Overview */}
+          <div className="grid grid-cols-3 gap-4 bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Clock className="w-6 h-6 text-blue-600" />
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Job Type</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-200">
+                  {job.jobType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <DollarSign className="w-6 h-6 text-green-600" />
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Salary</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-200">
+                  {formatSalary(job.salary)} / year
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Star className="w-6 h-6 text-yellow-600" />
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Experience</p>
+                <Badge 
+                  className={`
+                    ${experienceStyles.badge} 
+                    text-xs px-2 py-1 rounded-full
+                  `}
+                >
+                  {job?.experience.charAt(0).toUpperCase() + job?.experience.slice(1)} Level
+                </Badge>
+              </div>
+            </div>
+          </div>
 
-      <div className="space-y-3 p-3 px-9 border rounded-md shadow-md">
-        <div className="flex items-center">
-          <h1 className="text-xl font-bold flex items-center gap-2">
-            Amazon <Verified className="h-4 text-green" />
-          </h1>
-          <Avatar className="ml-3">
-            <AvatarImage src="https://media.wired.com/photos/5a99ba72927dc94e67685b9b/1:1/w_700,h_700,c_limit/amazon-a-logo.jpg" />
-          </Avatar>
-        </div>
-        <div>
-          <h3 className="font-medium">Founded</h3>
-          <p>January 6 , 2017</p>
-        </div>
-        <div>
-          <h3 className="font-medium">Location</h3>
-          <h3>Usa</h3>
-        </div>
-        <Button className="w-full rounded-full">Apply now</Button>
-      </div>
+          {/* Job Description */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              Job Description
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              {job.description}
+            </p>
+          </div>
+
+          {/* Requirements */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              Requirements
+            </h2>
+            <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+              {job.requirements.map((req, index) => (
+                <li key={index} className="flex items-center space-x-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <span>{req}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Skills */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              Required Skills
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {job.skills.map((skill, index) => (
+                <Badge 
+                  key={index} 
+                  variant="outline" 
+                  className="
+                    text-sm 
+                    dark:bg-gray-800 
+                    dark:text-gray-300 
+                    dark:border-gray-700 
+                    bg-gray-100 
+                    text-gray-700
+                  "
+                >
+                  {skill}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-between items-center pt-6 border-t dark:border-gray-800">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Posted on {job.postedDate}
+            </p>
+            <div className="flex space-x-4">
+              <Button 
+                variant="outline"
+                className="
+                  dark:bg-gray-800 
+                  dark:text-gray-300 
+                  dark:border-gray-700 
+                  dark:hover:bg-gray-700
+                "
+              >
+                Save Job
+              </Button>
+              <Button 
+                className="
+                  bg-blue-600 
+                  hover:bg-blue-700 
+                  dark:bg-blue-800 
+                  dark:hover:bg-blue-700
+                "
+              >
+                Apply Now
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
 
-export default JobDetailsCard;
+export default JobDetailsPage;
