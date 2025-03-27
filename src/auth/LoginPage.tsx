@@ -90,7 +90,7 @@ const LoginPage = () => {
         {loading ? (
           <Button
             disabled
-            className="bg-green hover:bg-hoverGreen w-full border-none"
+            className=" w-full border-none"
           >
             <Loader2 className="animate-spin h-4 w-4 mr-2" />
             Please Wait
@@ -98,7 +98,7 @@ const LoginPage = () => {
         ) : (
           <Button
             type="submit"
-            className="bg-green hover:bg-hoverGreen w-full border-none"
+            className=" w-full border-none"
           >
             Login
           </Button>
