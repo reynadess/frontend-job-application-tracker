@@ -74,6 +74,7 @@ function App() {
             zus
             <Route path="jobsearch" element={<GlobalJobs />} />
             <Route path="job/details/:id" element={<JobDetail />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

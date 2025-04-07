@@ -1,100 +1,161 @@
+import * as React from "react";
 import {
-  Activity,
-  Building2Icon,
-  SearchIcon,
-  User,
+  BookOpen,
+  Bot,
+  LifeBuoy,
+  Send,
+  Settings2,
+  SquareTerminal,
 } from "lucide-react";
 
+import { NavMain } from "@/components/nav-main";
+import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { NavUser } from "./nav-user";
-import { Link, useNavigate } from "react-router-dom";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Link } from "react-router-dom";
+import { ModeToggle } from "./mode-toggle";
 import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
+import { useApplicantStore } from "@/hooks/zustand/store/useApplicantStore";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "https://github.com/shadcn.png",
-  },
-};
 
-export function AppSidebar() {
-  const { user } = useAuthStore();
-
-  // Menu items.
-  const items = [
-    {
-      title: "Job Tracker",
-      url: "/job-tracker",
-      icon: Activity,
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const {user}  = useAuthStore();
+  const {getApplicantInfo , Applicant} = useApplicantStore()
+  const username = user?.username;
+  React.useEffect(() => {
+    getApplicantInfo(username as string)
+  } , [username])
+  const data = {
+    user: {
+      name: Applicant?.firstName,
+      email:Applicant?.email ,
+      username:Applicant?.username,
+      avatar: "https://github.com/shadcn.png",
     },
-    {
-      title: "Companies",
-      url: "/companies",
-      icon: Building2Icon,
-    },
-    {
-      title: "Job Search",
-      url: "/jobsearch",
-      icon: SearchIcon,
-    },
-    {
-      title: "Profile",
-      url: `/user/${user?.username}`,
-      icon: User,
-    },
-  ];
-
-  const navigate = useNavigate();
+    navMain: [
+      {
+        title: "Job Tracker",
+        url: "/job-tracker",
+        icon: SquareTerminal,
+        isActive: true,
+        // items: [
+        //   {
+        //     title: "History",
+        //     url: "#",
+        //   },
+        //   {
+        //     title: "Starred",
+        //     url: "#",
+        //   },
+        //   {
+        //     title: "Settings",
+        //     url: "#",
+        //   },
+        // ],
+      },
+      {
+        title: "Companies",
+        url: "#",
+        icon: Bot,
+        // items: [
+        //   {
+        //     title: "Genesis",
+        //     url: "#",
+        //   },
+        //   {
+        //     title: "Explorer",
+        //     url: "#",
+        //   },
+        //   {
+        //     title: "Quantum",
+        //     url: "#",
+        //   },
+        // ],
+      },
+      {
+        title: "Job Search",
+        url: "/jobsearch",
+        icon: BookOpen,
+        items: [
+          {
+            title: "Recent Jobs",
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: "Settings",
+        url: "#",
+        icon: Settings2,
+        items: [
+          {
+            title: "View Profile",
+            url: `/user/${user?.username}`,
+          },
+          {
+            title: "Delete Account",
+            url: "#",
+          },
+          {
+            title: "Billing",
+            url: "#",
+          },
+        ],
+      },
+    ],
+    navSecondary: [
+      {
+        title: "Support",
+        url: "#",
+        icon: LifeBuoy,
+      },
+      {
+        title: "Feedback",
+        url: "#",
+        icon: Send,
+      },
+    ],
+  };
   return (
-    <Sidebar>
+    <Sidebar variant="inset" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <Link to="/job-tracker">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  {/* <Command className="size-4" /> */}
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>AQ</AvatarFallback>
+                  </Avatar>
+                </div>
+                <div className="flex items-center gap-6 flex-1 text-left  leading-tight">
+                  <span className="ml-1 truncate font-semibold text-xl ">Apply-<span className="text-green">IQ</span></span>
+                  <ModeToggle/>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <div
-            onClick={() => navigate("/job-tracker")}
-            className="flex items-center gap-2 p-3 rounded-sm shadow-md dark:shadow-slate-800 mt-1 cursor-pointer text-2xl font-bold "
-          >
-            <Avatar className="border">
-              <AvatarImage src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg" />
-            </Avatar>
-            <h3>
-              Career<span className="text-green">-Pilot</span>
-            </h3>
-          </div>
-          <SidebarGroupLabel className="font-medium  text-md mt-14">
-            Platform
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu className="">
-              {items.map((item) => (
-                <SidebarMenuItem className="mt-5 p-1" key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link
-                      className="text-inherit hover:bg-[#9ce8b8] hover:dark:bg-slate-500"
-                      to={item.url}
-                    >
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <NavMain items={data.navMain} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter className="py-5">
+      <SidebarFooter>
         <NavUser User={data.user} />
       </SidebarFooter>
     </Sidebar>

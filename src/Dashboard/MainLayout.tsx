@@ -27,16 +27,11 @@ const MainLayout = () => {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="/job-tracker">
+                    <BreadcrumbLink  href="/job-tracker">
                       Job Tracker
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <div>
-                      <ModeToggle />
-                    </div>
-                  </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>

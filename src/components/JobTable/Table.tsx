@@ -35,7 +35,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import {
   MoreVertical,
-  Plus,
   Search,
   ChevronDown,
   CalendarIcon,
@@ -188,13 +187,13 @@ const statusColorMap: Record<string, string> = {
   accepted: "success",
 };
 
-const statusIconMap: Record<string, React.ReactNode> = {
-  applied: <Clock className="mr-2 h-3 w-3" />,
-  interview: <Calendar className="mr-2 h-3 w-3" />,
-  offer: <BadgeDollarSign className="mr-2 h-3 w-3" />,
-  rejected: <X className="mr-2 h-3 w-3" />,
-  accepted: <Check className="mr-2 h-3 w-3" />,
-};
+// const statusIconMap: Record<string, React.ReactNode> = {
+//   applied: <Clock className="mr-2 h-3 w-3" />,
+//   interview: <Calendar className="mr-2 h-3 w-3" />,
+//   offer: <BadgeDollarSign className="mr-2 h-3 w-3" />,
+//   rejected: <X className="mr-2 h-3 w-3" />,
+//   accepted: <Check className="mr-2 h-3 w-3" />,
+// };
 
 type Job = (typeof jobs)[0];
 
@@ -216,7 +215,6 @@ export default function JobTrackingTable() {
   const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">(
     "desc"
   );
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
 
   // Filter jobs based on search and status
   const filteredJobs = React.useMemo(() => {
@@ -326,7 +324,7 @@ export default function JobTrackingTable() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 m-auto w-[96%]">
       {/* Table controls */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="relative w-full sm:w-72">

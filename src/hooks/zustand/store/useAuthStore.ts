@@ -12,8 +12,11 @@ import API_ROUTES from "@/config/config";
 import { toast } from "sonner";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { UserState } from "@/types/auth.types";
+
 import { StatusCodes } from "http-status-codes";
+import { UserState } from "@/types/auth.types";
+import { useApplicantStore } from "./useApplicantStore";
+import { removeApplicantInfo } from "@/utils/storageUtil";
 
 export const useAuthStore = create<UserState>()(
   persist(
@@ -79,33 +82,17 @@ export const useAuthStore = create<UserState>()(
           set({ loading: false });
         }
       },
-
-      //TODO: if backend have logout api
-      // logout: async () => {
-      //   try {
-      //     set({ loading: true });
-      //     await api.post(API_ROUTES.AUTH.LOGOUT);
-
-      //     removeToken();
-      //     set({ loading: false, user: null, isAuthenticated: false });
-      //     toast.success("Logged out successfully");
-      //   } catch (error: any) {
-      //     toast.error(
-      //       error.response?.data?.message || "Logout failed. Try again."
-      //     );
-      //   } finally {
-      //     set({ loading: false });
-      //   }
-      // },
-
       logout: async () => {
         try {
           set({ loading: true });
-
           // Clear token and user data
           removeToken();
-
-          set({ loading: false, user: null, isAuthenticated: false });
+          removeApplicantInfo();
+          set({
+            loading: false,
+            user: null,
+            isAuthenticated: false,
+          });
 
           // Redirect to login page
           window.location.href = "/login";
@@ -123,16 +110,14 @@ export const useAuthStore = create<UserState>()(
         if (token && !isTokenExpired(token)) {
           const decodedToken: any = jwtDecode(token);
           set({
-            user: {
-              username: decodedToken.username || "",
-              id: decodedToken.id || "",
-            },
+            user: decodedToken,
             isAuthenticated: true,
           });
 
           // ✅ Auto logout when token expires
           setTimeout(() => {
             removeToken();
+            removeApplicantInfo();
             set({ user: null, isAuthenticated: false });
           }, decodedToken.exp * 1000 - Date.now());
         } else {
@@ -141,7 +126,7 @@ export const useAuthStore = create<UserState>()(
       },
     }),
     {
-      name: "user-store",
+      name: "auth-store",
       storage: createJSONStorage(() => localStorage),
     }
   )
