@@ -13,7 +13,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "../components/ui/sidebar";
-import { ModeToggle } from "@/components/mode-toggle";
 const MainLayout = () => {
   return (
     <div>
@@ -28,7 +27,7 @@ const MainLayout = () => {
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink  href="/job-tracker">
-                      Job Tracker
+                      Go to home
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
