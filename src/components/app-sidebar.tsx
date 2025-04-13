@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
+  BriefcaseBusiness,
   LifeBuoy,
   Send,
   Settings2,
@@ -25,6 +26,7 @@ import { Link } from "react-router-dom";
 import { ModeToggle } from "./mode-toggle";
 import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 import { useApplicantStore } from "@/hooks/zustand/store/useApplicantStore";
+
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -82,15 +84,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         // ],
       },
       {
-        title: "Job Search",
+        title: "Jobs",
         url: "/jobsearch",
-        icon: BookOpen,
-        items: [
-          {
-            title: "Recent Jobs",
-            url: "#",
-          },
-        ],
+        icon: BriefcaseBusiness,
       },
       {
         title: "Settings",

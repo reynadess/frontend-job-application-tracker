@@ -7,7 +7,7 @@ import { Map, Search, StarsIcon, Filter, X } from "lucide-react";
 import JobCard from "@/components/JobCard";
 import FilterPage from "@/components/FilterPage";
 import { Link } from "react-router-dom";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 
 // Define filter state type
 type FilterState = {
