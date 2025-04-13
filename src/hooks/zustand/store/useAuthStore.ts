@@ -15,7 +15,6 @@ import { jwtDecode } from "jwt-decode";
 
 import { StatusCodes } from "http-status-codes";
 import { UserState } from "@/types/auth.types";
-import { useApplicantStore } from "./useApplicantStore";
 import { removeApplicantInfo } from "@/utils/storageUtil";
 
 export const useAuthStore = create<UserState>()(
@@ -95,7 +94,7 @@ export const useAuthStore = create<UserState>()(
           });
 
           // Redirect to login page
-          window.location.href = "/login";
+          window.location.href = "/home";
 
           toast.success("Logged out successfully");
         } catch (error: any) {
