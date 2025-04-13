@@ -10,7 +10,7 @@ import {
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Separator } from "./ui/separator";
 
@@ -68,14 +68,14 @@ export function NavbarHome() {
             onClose={() => setIsMobileMenuOpen(false)}
           >
             {navItems.map((item, idx) => (
-              <a
+              <Link
                 key={`mobile-link-${idx}`}
-                href={item.link}
+                to={item.link}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="relative text-neutral-600 dark:text-neutral-300"
               >
                 <span className="block">{item.name}</span>
-              </a>
+              </Link>
             ))}
             <div className="flex w-full flex-col gap-4">
               <NavbarButton
@@ -169,21 +169,21 @@ const Footer = () => {
 
         {/* Center: Navigation Links */}
         <div className="flex space-x-6 text-sm">
-          <a href="/about" className="hover:underline">
+          <Link to="/about" className="hover:underline">
             About
-          </a>
-          <a href="/login" className="hover:underline">
+          </Link>
+          <Link to="/login" className="hover:underline">
             Jobs
-          </a>
-          <a href="/login" className="hover:underline">
-            Post a Job
-          </a>
-          <a href="/login" className="hover:underline">
+          </Link>
+          <Link to="/login" className="hover:underline">
+            Post Link Job
+          </Link>
+          <Link to="/login" className="hover:underline">
             Tracker
-          </a>
-          <a href="/contact" className="hover:underline">
+          </Link>
+          <Link to="/contact" className="hover:underline">
             Contact
-          </a>
+          </Link>
         </div>
 
         {/* Right: Copyright */}
