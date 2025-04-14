@@ -75,9 +75,9 @@ export const statusOptions = [
 export const jobs = [
   {
     id: 1,
-    company: "Tech Solutions Inc.",
+    company: "Google",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://img.icons8.com/color/512/google-logo.png",
     position: "Frontend Developer",
     salary: "$85,000",
     appliedDate: "2025-02-15",
@@ -88,7 +88,7 @@ export const jobs = [
   },
   {
     id: 2,
-    company: "GlobalSoft",
+    company: "MicroSoft",
     companyLogo:
       "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
     position: "Full Stack Engineer",
@@ -101,9 +101,9 @@ export const jobs = [
   },
   {
     id: 3,
-    company: "Innovate Solutions",
+    company: "Atlassian",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://w7.pngwing.com/pngs/660/290/png-transparent-atlassian-logo-thumbnail-tech-companies-thumbnail.png",
     position: "UI/UX Designer",
     salary: "$95,000",
     appliedDate: "2025-02-20",
@@ -114,9 +114,9 @@ export const jobs = [
   },
   {
     id: 4,
-    company: "DataViz Corp",
+    company: "Amazon",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://w7.pngwing.com/pngs/489/527/png-transparent-amazon-logo-amazon-com-retail-customer-service-walmart-amazon-logo-thumbnail.png",
     position: "Data Analyst",
     salary: "$78,000",
     appliedDate: "2025-03-10",
@@ -127,9 +127,9 @@ export const jobs = [
   },
   {
     id: 5,
-    company: "CloudTech Systems",
+    company: "Netflix",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://image.similarpng.com/file/similarpng/very-thumbnail/2021/01/Netflix-logo-on-transparent-background-PNG.png",
     position: "DevOps Engineer",
     salary: "$115,000",
     appliedDate: "2025-02-25",
@@ -140,9 +140,9 @@ export const jobs = [
   },
   {
     id: 6,
-    company: "Digital Innovations",
+    company: "Apple",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://cdn-icons-png.flaticon.com/512/0/747.png",
     position: "Product Manager",
     salary: "$130,000",
     appliedDate: "2025-03-05",
@@ -153,9 +153,9 @@ export const jobs = [
   },
   {
     id: 7,
-    company: "SecureNet",
+    company: "Facebook",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://img.freepik.com/premium-psd/facebook-social-media-icon-3d_466778-4384.jpg?semt=ais_hybrid&w=740",
     position: "Security Analyst",
     salary: "$95,000",
     appliedDate: "2025-03-08",
@@ -166,9 +166,9 @@ export const jobs = [
   },
   {
     id: 8,
-    company: "EduTech Solutions",
+    company: "Meta",
     companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
+      "https://w7.pngwing.com/pngs/36/959/png-transparent-meta-logo-facebook-social-media-chat-message-communication-icon-thumbnail.png",
     position: "React Developer",
     salary: "$90,000",
     appliedDate: "2025-02-18",
