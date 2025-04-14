@@ -24,7 +24,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       removeToken();
-      window.location.href = "/login"; // Auto-redirect on token expiry
+      window.location.href = "/home"; // Auto-redirect on token expiry
     }
     return Promise.reject(error);
   }

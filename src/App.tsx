@@ -15,11 +15,10 @@ import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import { useEffect } from "react";
 import { useAuthStore } from "./hooks/zustand/store/useAuthStore";
-
+import HomePage from "./pages/HomePage";
 
 function App() {
   const checkAuth = useAuthStore((state) => state.checkAuth);
-  const { user } = useAuthStore();
   useEffect(() => {
     checkAuth();
   }, []);
@@ -27,7 +26,15 @@ function App() {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route
+            path="/home"
+            element={
+              <PublicRoute>
+                <HomePage />
+              </PublicRoute>
+            }
+          />
           <Route
             path="/login"
             element={

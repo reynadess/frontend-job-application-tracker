@@ -28,7 +28,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       removeToken();
       logout(); // Clear user state in Zustand
       toast.error("Session expired. Please log in again.");
-      window.location.href = "/login";
+      window.location.href = "/home";
     }
 
     return () => {
@@ -42,7 +42,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   if (!isAuthenticated || !user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return <>{children}</>;
