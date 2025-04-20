@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Separator } from "./ui/separator";
+import { HeroParallax } from "./ui/hero-parallax";
 
 
 export function NavbarHome() {
@@ -106,6 +107,7 @@ export function NavbarHome() {
       <Separator />
       <JobTrackerHero />
       <Separator />
+      <FeaturesImageCompo/>
       <Footer />
       {/* Navbar */}
     </div>
@@ -146,7 +148,7 @@ const JobTrackerHero = () => {
         }
       >
         <img
-          src={`/linear.webp`}
+          src={`job.png`}
           alt="hero"
           height={720}
           width={1400}
@@ -157,6 +159,108 @@ const JobTrackerHero = () => {
     </div>
   );
 };
+
+
+ const FeaturesImageCompo = () =>  {
+  return <HeroParallax products={products} />;
+}
+
+//TODO :Move this to another file cleanup
+const products = [
+  {
+    title: "Moonbeam",
+    link: "https://gomoonbeam.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Cursor",
+    link: "https://cursor.so",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Rogue",
+    link: "https://userogue.com",
+    thumbnail:
+      "job.png",
+  },
+ 
+  {
+    title: "Editorially",
+    link: "https://editorially.org",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Editrix AI",
+    link: "https://editrix.ai",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Pixel Perfect",
+    link: "https://app.pixelperfect.quest",
+    thumbnail:
+      "jobs.png",
+  },
+ 
+  {
+    title: "Algochurn",
+    link: "https://algochurn.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Aceternity UI",
+    link: "https://ui.aceternity.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Tailwind Master Kit",
+    link: "https://tailwindmasterkit.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "SmartBridge",
+    link: "https://smartbridgetech.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Renderwork Studio",
+    link: "https://renderwork.studio",
+    thumbnail:
+      "job.png",
+  },
+ 
+  {
+    title: "Creme Digital",
+    link: "https://cremedigital.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Golden Bells Academy",
+    link: "https://goldenbellsacademy.com",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "Invoker Labs",
+    link: "https://invoker.lol",
+    thumbnail:
+      "job.png",
+  },
+  {
+    title: "E Free Invoice",
+    link: "https://efreeinvoice.com",
+    thumbnail:
+      "job.png",
+  },
+];
 
 const Footer = () => {
   return (
