@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
 import { getToken, isTokenExpired, removeToken } from "@/utils/tokenUtils";
@@ -11,7 +11,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated, user, logout } = useAuthStore();
   const [isHydrated, setIsHydrated] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = useAuthStore.persist.onHydrate(() => {
       setIsHydrated(true);
@@ -28,7 +28,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       removeToken();
       logout(); // Clear user state in Zustand
       toast.error("Session expired. Please log in again.");
-      window.location.href = "/login";
+      navigate("/home");
     }
 
     return () => {
@@ -42,7 +42,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   if (!isAuthenticated || !user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return <>{children}</>;

@@ -1,8 +1,9 @@
 import {
-  Bell,
+  BadgeCheck,
   ChevronsUpDown,
+  CreditCard,
   LogOut,
-  User2,
+  Sparkles,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -21,25 +22,26 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
 import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
-export function NavUser({
-  User,
-}: {
+interface NavUserProps {
   User: {
-    name: string;
-    email: string;
+    username?: string;
+    name?: string;
+    email?: string;
     avatar: string;
   };
-}) {
+}
+
+export function NavUser({ User }: NavUserProps) {
   const { isMobile } = useSidebar();
   const logout = useAuthStore((state) => state.logout);
-  const {user} = useAuthStore();
+  const navigate = useNavigate();
   const handleLogout = async () => {
-    await logout(); // Ensure logout completes before proceeding
+    await logout();
+    navigate("/home");
   };
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -79,24 +81,27 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup></DropdownMenuGroup>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <User2 />
-                <Link to={`/user/${user?.username}`} className="text-inherit">
-                  View Profile
-                </Link>
+                <Sparkles />
+                Upgrade to Pro
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => navigate(`user/${User.username}`)}>
+                <BadgeCheck />
+                View Profile
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Bell />
-                Notifications
+                <CreditCard />
+                Billing
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} disabled={!logout}>
               <LogOut />
-              Logout
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

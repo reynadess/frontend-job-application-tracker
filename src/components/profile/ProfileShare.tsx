@@ -23,7 +23,7 @@ export const ProfileShareDialog = () => {
       icon: <Twitter className="h-5 w-5" />,
       shareFunction: () => {
         const text = encodeURIComponent(
-          `Check out my new profile at 100xdevs Job-Board: ${window.location.href}`
+          `Check out my new profile at  Job-Board: ${window.location.href}`
         );
         window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
       },

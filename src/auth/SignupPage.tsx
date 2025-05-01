@@ -43,7 +43,7 @@ const SignupPage = () => {
     // reseting the fields
    try {
     await signup(input);
-    navigate("/job-tracker");
+    navigate("/login");
    } catch (error) {
     console.error(error);
    }
@@ -132,7 +132,7 @@ const SignupPage = () => {
         {loading ? (
           <Button
             disabled
-            className="bg-green hover:bg-hoverGreen w-full border-none"
+            className=" w-full border-none"
           >
             <Loader2 className="animate-spin h-4 w-4 mr-2" />
             Please Wait
@@ -140,7 +140,7 @@ const SignupPage = () => {
         ) : (
           <Button
             type="submit"
-            className="bg-green hover:bg-hoverGreen w-full border-none"
+            className=" w-full border-none"
           >
             Signup
           </Button>

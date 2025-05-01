@@ -14,7 +14,7 @@ interface JobCardProps {
   job: Job;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
   // Function to format salary
   const formatSalary = (salary: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -96,27 +96,6 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
           <span>{job.jobType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
         </div>
       </div>
-
-      {/* Skills */}
-      <div className="flex flex-wrap gap-2">
-        {job.skills.slice(0, 3).map((skill, index) => (
-          <Badge 
-            key={index} 
-            variant="outline" 
-            className="
-              text-xs 
-              dark:bg-gray-800 
-              dark:text-gray-300 
-              dark:border-gray-700 
-              bg-gray-100 
-              text-gray-700
-            "
-          >
-            {skill}
-          </Badge>
-        ))}
-      </div>
-
       {/* Job Actions */}
       <div className="flex justify-between items-center pt-3 border-t dark:border-gray-800">
         <div className="flex items-center text-yellow-500">
@@ -125,31 +104,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
             Posted {job.postedDate}
           </span>
         </div>
-        <div className="flex space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="
-              dark:bg-gray-800 
-              dark:text-gray-300 
-              dark:border-gray-700 
-              dark:hover:bg-gray-700
-            "
-          >
-            Save
-          </Button>
-          <Button 
-            size="sm"
-            className="
-              bg-blue-600 
-              hover:bg-blue-700 
-              dark:bg-blue-800 
-              dark:hover:bg-blue-700
-            "
-          >
-            Apply Now
-          </Button>
-        </div>
+      
       </div>
 
       {/* Subtle Gradient Overlay */}
@@ -173,4 +128,4 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   );
 };
 
-export default JobCard;
+export default CurrentJobCard;

@@ -1,6 +1,8 @@
 import axios from "axios";
 import API_ROUTES from "@/config/config";
 import { getToken, removeToken } from "@/utils/tokenUtils";
+import { useNavigate } from "react-router-dom";
+
 
 // Create Axios Instance with Base URL
 const api = axios.create({
@@ -23,8 +25,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      const naviagate = useNavigate();
       removeToken();
-      window.location.href = "/login"; // Auto-redirect on token expiry
+      naviagate("/home"); // Auto-redirect on token expiry
     }
     return Promise.reject(error);
   }
