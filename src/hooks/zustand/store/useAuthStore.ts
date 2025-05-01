@@ -30,9 +30,6 @@ export const useAuthStore = create<UserState>()(
           const response = await api.post(API_ROUTES.AUTH.SIGNUP, input);
           if (response.status === StatusCodes.CREATED) {
             toast.success("Signup successful! Redirecting to login...");
-            setTimeout(() => {
-              window.location.href = "/login";
-            }, 1500);
           } else {
             toast.error("Signup failed. Please try again.");
           }
