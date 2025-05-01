@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const NotFoundPage = () => {
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col items-center justify-center h-screen text-center px-4">
       <motion.h1
@@ -28,7 +30,7 @@ const NotFoundPage = () => {
         transition={{ delay: 0.6, duration: 0.5 }}
         className="mt-6"
       >
-        <Button variant="outline" onClick={() => window.location.href = "/job-tracker"}>
+        <Button variant="outline" onClick={() => navigate("/job-tracker")}>
           Back to DashBoard
         </Button>
       </motion.div>

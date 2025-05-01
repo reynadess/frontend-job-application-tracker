@@ -28,7 +28,6 @@ export const useAuthStore = create<UserState>()(
         try {
           set({ loading: true });
           const response = await api.post(API_ROUTES.AUTH.SIGNUP, input);
-
           if (response.status === StatusCodes.CREATED) {
             toast.success("Signup successful! Redirecting to login...");
             setTimeout(() => {
@@ -92,10 +91,6 @@ export const useAuthStore = create<UserState>()(
             user: null,
             isAuthenticated: false,
           });
-
-          // Redirect to login page
-          window.location.href = "/home";
-
           toast.success("Logged out successfully");
         } catch (error: any) {
           toast.error("Logout failed. Please try again.");

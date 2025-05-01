@@ -40,6 +40,7 @@ export function NavUser({ User }: NavUserProps) {
   const navigate = useNavigate();
   const handleLogout = async () => {
     await logout();
+    navigate("/home");
   };
   return (
     <SidebarMenu>
