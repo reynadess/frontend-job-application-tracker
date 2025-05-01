@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleReset = async (e : FormEvent) => {
     e.preventDefault();
-    setTimeout(() => window.location.href = "/login", 2000);
+    setTimeout(() => navigate("/login"), 2000);
   };
 
   return (

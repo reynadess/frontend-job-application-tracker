@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     // Call your API for forgot password
@@ -29,7 +30,7 @@ export default function ForgotPassword() {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 "
           />
           <Button
-          onClick={ () => window.location.href = "/reset-password"}
+          onClick={ () => navigate("/reset-password") }
             type="submit"
             className="w-full mt-4   py-2 rounded-md  transition"
           >
