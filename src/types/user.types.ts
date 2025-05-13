@@ -4,8 +4,7 @@ import {
   FieldOfStudyType,
   WorkMode,
 } from "@/lib/enum/enums";
-import { User } from "./auth.types";
-import { LoginInputType, SignupInputType } from "@/schema/userSchema";
+import { userApplicationTypes } from "@/schema/userApplications";
 
 export interface ProjectType {
   id: number;
@@ -65,3 +64,10 @@ export type ApplicantState = {
   getApplicantInfo: (username: string) => Promise<void>;
   loading: boolean;
 };
+
+
+export type ApplicationsState = {
+  Applications : [],
+  createApplication : (application : userApplicationTypes) =>Promise<void>,
+  loading : boolean, 
+}

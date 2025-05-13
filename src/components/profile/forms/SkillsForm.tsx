@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   addSkillsSchema,
   addSkillsSchemaType,
-} from '@/lib/validators/userProfileValidators';
+} from '@/schema/userProfileValidators';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import ProfileSkillsCombobox from '../profile-skills-combobox';  

@@ -87,7 +87,7 @@ export function JobApplicationSheet({
 }: AddJobSheetProps) {
   const [isOpen, setIsOpen] = React.useState<boolean>(open || false);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
-
+  
   // Handle controlled/uncontrolled state
   const handleOpenChange = (newOpen: boolean) => {
     setIsOpen(newOpen);

@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { expFormSchema } from '@/lib/validators/userProfileValidators';
+import { expFormSchema } from '@/schema/userProfileValidators';
 import { toast } from 'sonner';
 
 // Assuming these enums are imported or defined elsewhere
