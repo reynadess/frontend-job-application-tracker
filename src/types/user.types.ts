@@ -4,7 +4,6 @@ import {
   FieldOfStudyType,
   WorkMode,
 } from "@/lib/enum/enums";
-import { userApplicationTypes } from "@/schema/userApplications";
 
 export interface ProjectType {
   id: number;
@@ -17,8 +16,8 @@ export interface ProjectType {
   projectSummary: string;
 }
 export interface EducationType {
-  id: number;
-  startDate: Date;
+  id?: number;
+  startDate: Date | undefined;
   instituteName: string;
   degree: DegreeType;
   fieldOfStudy: FieldOfStudyType;
@@ -66,8 +65,3 @@ export type ApplicantState = {
 };
 
 
-export type ApplicationsState = {
-  Applications : [],
-  createApplication : (application : userApplicationTypes) =>Promise<void>,
-  loading : boolean, 
-}

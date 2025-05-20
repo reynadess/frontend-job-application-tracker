@@ -51,4 +51,9 @@ interface SheetDetails {
       description:
         'Manage your account preferences, update your password, or delete your account. Keep your profile secure and up-to-date.',
     },
+
+    jobApplication : {
+      title : "Add job application",
+      description : "Track a new job application in your job search."
+    }
   };

@@ -5,24 +5,24 @@ import SheetWrapper from './sheets/SheetWrapper';
 import { SHEETS } from '@/lib/constants/Profile.constant';
 import EducationForm from './forms/EducationForm';
 import { EducationType } from '@/types/user.types';
-import { DegreeType } from '@/lib/enum/enums';
+import { DegreeType, FieldOfStudyType } from '@/lib/enum/enums';
 
-const mockEducation = [
+const mockEducation : EducationType[] = [
   {
     id :1,
     degree: DegreeType.BTECH,
     instituteName: 'ABC University',
-    fieldOfStudy: 'Computer Science',
-    startDate: 'September 2020',
-    endDate: 'June 2024',
+    fieldOfStudy: FieldOfStudyType.CS,
+    startDate: new Date("2020-09-01"),
+    endDate: new Date("2024-05-31")
   },
   {
     id:2,
     degree: DegreeType.BTECH,
     instituteName: 'XYZ Institute',
-    fieldOfStudy: 'Data Science',
-    startDate: 'August 2024',
-    endDate: 'Present',
+    fieldOfStudy: FieldOfStudyType.MACHINE_LEARNING,
+  startDate: new Date("2020-09-01"),
+    endDate: new Date("2024-05-31")
   },
 ];
 
@@ -38,10 +38,11 @@ const ProfileEducation = () => {
     setIsSheetOpen(false);
     setSelectedEducation(null);
   }
-  const handleEditClick = (mockEducation: EducationType) => {
-    setSelectedEducation(mockEducation);
-    handleOpen();
-  };
+  const handleEditClick = (event: React.MouseEvent<HTMLButtonElement>, education: EducationType) => {
+  event.preventDefault();
+  setSelectedEducation(education);
+  setIsSheetOpen(true);
+};
   const title = selectedEducation
   ? SHEETS.education.title.replace('Add', 'Edit')
   : SHEETS.education.title;
@@ -90,7 +91,7 @@ const ProfileEducation = () => {
               </div>
 
               {isOwner && (
-                <Button onClick={handleEditClick} variant="ghost" size="icon">
+                <Button onClick={(e) =>handleEditClick(e , edu)} variant="ghost" size="icon">
                   <Pencil className="text-slate-500" size={16} />
                 </Button>
               )}
@@ -105,7 +106,7 @@ const ProfileEducation = () => {
           title={title}
           description={SHEETS.education.description}
         >
-          <EducationForm
+          <EducationForm 
             handleClose={handleClose}
             selectedEducation={selectedEducation}
           />

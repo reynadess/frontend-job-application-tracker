@@ -16,7 +16,8 @@ const API_ROUTES = Object.freeze({
     UPDATE: "/users/update",
   },
   APPLICATIONS : {
-    CREATE : "/applications"
+    CREATE : "/applications",
+    GET : "/applications"
   }
 });
 

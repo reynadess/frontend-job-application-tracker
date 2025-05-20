@@ -1,15 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -27,235 +18,223 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, Plus } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useApplicationsStore } from "@/hooks/zustand/store/useApplicationsStore";
+import {
+  ApplicationStatus,
+  ApplicationsType,
+} from "@/types/applications.types";
+import { toast } from "sonner";
+import { userApplicationTypes } from "@/schema/userApplications";
 
-// Define the job status types
-export type JobStatus =
-  | "applied"
-  | "interview"
-  | "offer"
-  | "rejected"
-  | "accepted";
+interface Props {
+  selectedApplication?: ApplicationsType | null;
+  handleClose: () => void;
+}
 
+//FIXME : status dropdown options
 // Status options
-export const statusOptions = [
-  { name: "Applied", uid: "applied" as JobStatus },
-  { name: "Interview", uid: "interview" as JobStatus },
-  { name: "Offer", uid: "offer" as JobStatus },
-  { name: "Rejected", uid: "rejected" as JobStatus },
-  { name: "Accepted", uid: "accepted" as JobStatus },
-];
+// type StatusOptions = {
+//   name: string;
+//   uid: ApplicationStatus;
+// };
 
-// Define the job interface
-export interface Job {
-  id: number;
-  company: string;
-  companyLogo: string;
-  position: string;
-  salary: string;
-  appliedDate: string;
-  status: JobStatus;
-  location: string;
-  description: string;
-  notes: string;
-}
-
-// Define the form data interface
-export interface JobFormData {
-  company: string;
-  position: string;
-  salary: string;
-  location: string;
-  appliedDate: string;
-  status: JobStatus;
-  description: string;
-  notes: string;
-}
-
-// Define the component props
-interface AddJobSheetProps {
-  onAddJob?: (job: Job) => void;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}
+// const statusOptions: StatusOptions[] = [
+//   { name: "Applied", uid: ApplicationStatus.Applied },
+//   { name: "Interview", uid: ApplicationStatus.Interview },
+//   { name: "Offered", uid: ApplicationStatus.Offered },
+//   { name: "Rejected", uid: ApplicationStatus.Rejected },
+//   { name: "Accepted", uid: ApplicationStatus.Accepted },
+//   { name: "Apply", uid: ApplicationStatus.Apply },
+//   { name: "InProgress", uid: ApplicationStatus.InProgress },
+// ];
 
 export function JobApplicationSheet({
-  onAddJob,
-  open,
-  onOpenChange,
-}: AddJobSheetProps) {
-  const [isOpen, setIsOpen] = React.useState<boolean>(open || false);
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
-  
-  // Handle controlled/uncontrolled state
-  const handleOpenChange = (newOpen: boolean) => {
-    setIsOpen(newOpen);
-    onOpenChange?.(newOpen);
-  };
+  selectedApplication,
+  handleClose,
+}: Props) {
+  // const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { createApplication } = useApplicationsStore();
 
   // Set up form with TypeScript types
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue,
-  } = useForm<JobFormData>({
+  } = useForm<userApplicationTypes>({
     defaultValues: {
       company: "",
-      position: "",
-      salary: "",
-      location: "",
+      role: "",
+      // salary: "",
+      city: "",
+      state: "",
+      country: "",
       description: "",
-      notes: "",
-      status: "applied",
-      appliedDate: format(new Date(), "yyyy-MM-dd"),
+      //FIXME: Fixme after we  have status and applied date given by user
+      // status: ApplicationStatus.Apply,
+      // appliedDate: format(new Date(), "yyyy-MM-dd"),
     },
   });
 
-  const onSubmit = (data: JobFormData) => {
+  const onSubmit = async (data: userApplicationTypes) => {
     // Generate company logo (initials) from company name
-    const companyLogo = data.company
-      .split(" ")
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-
-    const newJob: Job = {
-      id: Date.now(), // Generate a unique ID
-      ...data,
-      companyLogo,
-    };
-
-    onAddJob?.(newJob);
-    handleOpenChange(false);
-    reset();
-  };
-
-  const handleDateChange = (selectedDate: Date | undefined) => {
-    setDate(selectedDate);
-    if (selectedDate) {
-      setValue("appliedDate", format(selectedDate, "yyyy-MM-dd"));
+    setIsSubmitting(true);
+    try {
+      await createApplication(data);
+    } catch (error) {
+      toast.error("Try again");
+    } finally {
+      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
+    // reset();
   };
 
-  // Use controlled component if provided open prop
-  const sheetOpen = open !== undefined ? open : isOpen;
-  const sheetOnOpenChange =
-    onOpenChange !== undefined ? onOpenChange : handleOpenChange;
+  // Populate form when selectedApplication changes
+  useEffect(() => {
+    if (selectedApplication) {
+      // Set form values from the selected application
+      setValue("company", selectedApplication.company || "");
+      setValue("role", selectedApplication.role || "");
+      setValue("city", selectedApplication.city || "");
+      setValue("state", selectedApplication.state || "");
+      setValue("country", selectedApplication.country || "");
+      setValue("description", selectedApplication.description || "");
+      setValue("jobLink", selectedApplication.jobLink || "");
+    }
+  }, [selectedApplication, setValue]);
+
+  // const handleDateChange = (selectedDate: Date | undefined) => {
+  //   setDate(selectedDate);
+  //   if (selectedDate) {
+  //     setValue("appliedDate", format(selectedDate, "yyyy-MM-dd"));
+  //   }
+  // };
 
   return (
-    <Sheet open={sheetOpen} onOpenChange={sheetOnOpenChange}>
-      <SheetTrigger asChild>
-        <Button size="sm" className="h-8">
-          <Plus className="mr-2 h-4 w-4" /> Add Job
-        </Button>
-      </SheetTrigger>
-      <SheetContent className="sm:max-w-md overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle>Add New Job Application</SheetTitle>
-          <SheetDescription>
-            Track a new job application in your job search.
-          </SheetDescription>
-        </SheetHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 py-6">
-          <div className="space-y-4">
-            {/* Company */}
-            <div className="space-y-2">
-              <Label htmlFor="company">Company</Label>
-              <Input
-                id="company"
-                placeholder="Enter company name"
-                {...register("company", { required: "Company is required" })}
-              />
-              {errors.company && (
-                <p className="text-sm text-red-500">{errors.company.message}</p>
-              )}
-            </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 py-6">
+      <div className="space-y-4">
+        {/* Company */}
+        <div className="space-y-2">
+          <Label htmlFor="company">Company</Label>
+          <Input
+            id="company"
+            placeholder="Enter company name"
+            {...register("company", { required: "Company is required" })}
+          />
+          {errors.company && (
+            <p className="text-sm text-red-500">{errors.company.message}</p>
+          )}
+        </div>
 
-            {/* Position */}
-            <div className="space-y-2">
-              <Label htmlFor="position">Position</Label>
-              <Input
-                id="position"
-                placeholder="Enter job position"
-                {...register("position", { required: "Position is required" })}
-              />
-              {errors.position && (
-                <p className="text-sm text-red-500">
-                  {errors.position.message}
-                </p>
-              )}
-            </div>
+        {/* Position */}
+        <div className="space-y-2">
+          <Label htmlFor="role">Position</Label>
+          <Input
+            id="role"
+            placeholder="Enter job position"
+            {...register("role", { required: "Position is required" })}
+          />
+          {errors.role && (
+            <p className="text-sm text-red-500">{errors.role.message}</p>
+          )}
+        </div>
 
-            {/* Salary */}
-            <div className="space-y-2">
-              <Label htmlFor="salary">Salary</Label>
-              <Input
-                id="salary"
-                placeholder="e.g. $75,000"
-                {...register("salary")}
-              />
-            </div>
+        {/* Salary */}
+        {/* <div className="space-y-2">
+          <Label htmlFor="salary">Salary</Label>
+          <Input
+            id="salary"
+            placeholder="e.g. $75,000"
+            {...register("salary")}
+          />
+        </div> */}
 
-            {/* Location */}
+        {/* Location */}
+        <div className="space-y-2">
+          <Label htmlFor="city">City</Label>
+          <Input
+            id="city"
+            placeholder="e.g. Remote, New York, NY"
+            {...register("city")}
+          />
+          <div className="space-y-2">
+            <Label htmlFor="state">State</Label>
+            <Input
+              id="state"
+              placeholder="e.g. Remote, New York, NY"
+              {...register("state")}
+            />
             <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+              <Label htmlFor="country">Country</Label>
               <Input
-                id="location"
+                id="country"
                 placeholder="e.g. Remote, New York, NY"
-                {...register("location")}
+                {...register("country")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="jobLink">Job Link</Label>
+              <Input
+                id="jobLink"
+                placeholder="https://www.company.com/about/careers/applications/jobs-software-engineer-phd-early-career-campus-systems-and-infrastructure-2025-start"
+                {...register("jobLink")}
               />
             </div>
 
             {/* Applied Date */}
-            <div className="space-y-2">
-              <Label htmlFor="appliedDate">Applied Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : "Select date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={handleDateChange}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
+            {/* <div className="space-y-2">
+          <Label htmlFor="appliedDate">Applied Date</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : "Select date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={handleDateChange}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div> */}
 
             {/* Status */}
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select
-                defaultValue="applied"
-                onValueChange={(value: JobStatus) => setValue("status", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {statusOptions.map((status) => (
-                    <SelectItem key={status.uid} value={status.uid}>
-                      {status.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {/* <div className="space-y-2">
+          <Label htmlFor="status">Status</Label>
+          <Select
+            defaultValue={ApplicationStatus.Apply}
+            onValueChange={(value: ApplicationStatus) =>
+              setValue("status", value)
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              {statusOptions.map((status) => (
+                <SelectItem key={status.uid} value={status.uid}>
+                  {status.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div> */}
 
             {/* Description */}
             <div className="space-y-2">
@@ -267,26 +246,32 @@ export function JobApplicationSheet({
                 {...register("description")}
               />
             </div>
-
-            {/* Notes */}
-            <div className="space-y-2">
-              <Label htmlFor="notes">Notes</Label>
-              <Textarea
-                id="notes"
-                placeholder="Any additional notes about the application"
-                className="min-h-20"
-                {...register("notes")}
-              />
-            </div>
           </div>
 
-          <SheetFooter>
-            <Button type="submit" className="w-full sm:w-auto">
-              Add Job
-            </Button>
-          </SheetFooter>
-        </form>
-      </SheetContent>
-    </Sheet>
+          <div className="py-4 flex gap-4 justify-end">
+            <button
+              onClick={handleClose}
+              type="button"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              disabled={isSubmitting}
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            >
+              {isSubmitting
+                ? "Please wait..."
+                : `${
+                    selectedApplication?.id
+                      ? "Update Application"
+                      : "Add Application"
+                  }`}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   );
 }

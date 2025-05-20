@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -45,10 +45,17 @@ import {
   Calendar,
   Check,
   X,
+  Plus,
 } from "lucide-react";
-import { format } from "date-fns";
 import { JobApplicationSheet } from "../JobApplicationSheet";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { SHEETS } from "@/lib/constants/Profile.constant";
+import SheetWrapper from "../profile/sheets/SheetWrapper";
+import {
+  ApplicationStatus,
+  ApplicationsType,
+} from "@/types/applications.types";
+import { useApplicationsStore } from "@/hooks/zustand/store/useApplicationsStore";
 
 // Helper function to capitalize first letter
 export function capitalize(s: string) {
@@ -57,7 +64,7 @@ export function capitalize(s: string) {
 
 export const columns = [
   { name: "COMPANY", uid: "company", sortable: true },
-  { name: "POSITION", uid: "position", sortable: true },
+  { name: "ROLE", uid: "role", sortable: true },
   { name: "SALARY", uid: "salary", sortable: true },
   { name: "APPLIED DATE", uid: "appliedDate", sortable: true },
   { name: "STATUS", uid: "status", sortable: true },
@@ -65,144 +72,31 @@ export const columns = [
 ];
 
 export const statusOptions = [
-  { name: "Applied", uid: "applied" },
-  { name: "Interview", uid: "interview" },
-  { name: "Offer", uid: "offer" },
-  { name: "Rejected", uid: "rejected" },
-  { name: "Accepted", uid: "accepted" },
-];
-
-export const jobs = [
-  {
-    id: 1,
-    company: "Google",
-    companyLogo:
-      "https://img.icons8.com/color/512/google-logo.png",
-    position: "Frontend Developer",
-    salary: "$85,000",
-    appliedDate: "2025-02-15",
-    status: "interview",
-    location: "Remote",
-    description: "Frontend developer role focusing on React and TypeScript.",
-    notes: "Technical interview scheduled for next week.",
-  },
-  {
-    id: 2,
-    company: "MicroSoft",
-    companyLogo:
-      "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
-    position: "Full Stack Engineer",
-    salary: "$120,000",
-    appliedDate: "2025-03-01",
-    status: "applied",
-    location: "New York, NY",
-    description: "Full stack role with Node.js and React.",
-    notes: "Waiting for initial screening.",
-  },
-  {
-    id: 3,
-    company: "Atlassian",
-    companyLogo:
-      "https://w7.pngwing.com/pngs/660/290/png-transparent-atlassian-logo-thumbnail-tech-companies-thumbnail.png",
-    position: "UI/UX Designer",
-    salary: "$95,000",
-    appliedDate: "2025-02-20",
-    status: "offer",
-    location: "San Francisco, CA",
-    description: "UI/UX designer position with focus on product design.",
-    notes: "Offer received, negotiating terms.",
-  },
-  {
-    id: 4,
-    company: "Amazon",
-    companyLogo:
-      "https://w7.pngwing.com/pngs/489/527/png-transparent-amazon-logo-amazon-com-retail-customer-service-walmart-amazon-logo-thumbnail.png",
-    position: "Data Analyst",
-    salary: "$78,000",
-    appliedDate: "2025-03-10",
-    status: "applied",
-    location: "Boston, MA",
-    description: "Data analyst role with SQL and Python requirements.",
-    notes: "Application submitted via company website.",
-  },
-  {
-    id: 5,
-    company: "Netflix",
-    companyLogo:
-      "https://image.similarpng.com/file/similarpng/very-thumbnail/2021/01/Netflix-logo-on-transparent-background-PNG.png",
-    position: "DevOps Engineer",
-    salary: "$115,000",
-    appliedDate: "2025-02-25",
-    status: "rejected",
-    location: "Seattle, WA",
-    description: "DevOps position with focus on AWS and Kubernetes.",
-    notes: "Application rejected after technical assessment.",
-  },
-  {
-    id: 6,
-    company: "Apple",
-    companyLogo:
-      "https://cdn-icons-png.flaticon.com/512/0/747.png",
-    position: "Product Manager",
-    salary: "$130,000",
-    appliedDate: "2025-03-05",
-    status: "interview",
-    location: "Austin, TX",
-    description: "Product manager role for SaaS products.",
-    notes: "Second interview scheduled for next Monday.",
-  },
-  {
-    id: 7,
-    company: "Facebook",
-    companyLogo:
-      "https://img.freepik.com/premium-psd/facebook-social-media-icon-3d_466778-4384.jpg?semt=ais_hybrid&w=740",
-    position: "Security Analyst",
-    salary: "$95,000",
-    appliedDate: "2025-03-08",
-    status: "applied",
-    location: "Denver, CO",
-    description: "Information security role with focus on threat detection.",
-    notes: "Waiting for response after application submission.",
-  },
-  {
-    id: 8,
-    company: "Meta",
-    companyLogo:
-      "https://w7.pngwing.com/pngs/36/959/png-transparent-meta-logo-facebook-social-media-chat-message-communication-icon-thumbnail.png",
-    position: "React Developer",
-    salary: "$90,000",
-    appliedDate: "2025-02-18",
-    status: "accepted",
-    location: "Chicago, IL",
-    description: "React developer role for educational platform.",
-    notes: "Offer accepted, starting next month.",
-  },
+  { name: "Applied", uid: "Applied" },
+  { name: "Interview", uid: "Interview" },
+  { name: "Offered", uid: "Offered" },
+  { name: "Rejected", uid: "Rejected" },
+  { name: "Accepted", uid: "Accepted" },
+  { name: "Apply", uid: "Apply" },
+  { name: "InProgress", uid: "InProgress" },
 ];
 
 const statusColorMap: Record<string, string> = {
-  applied: "blue",
-  interview: "yellow",
-  offer: "purple",
-  rejected: "destructive",
-  accepted: "success",
+  Applied: "blue",
+  Interview: "yellow",
+  Offered: "purple",
+  Rejected: "destructive",
+  Accepted: "success",
+  Apply: "orange",
+  InProgress: "gray",
 };
-
-// const statusIconMap: Record<string, React.ReactNode> = {
-//   applied: <Clock className="mr-2 h-3 w-3" />,
-//   interview: <Calendar className="mr-2 h-3 w-3" />,
-//   offer: <BadgeDollarSign className="mr-2 h-3 w-3" />,
-//   rejected: <X className="mr-2 h-3 w-3" />,
-//   accepted: <Check className="mr-2 h-3 w-3" />,
-// };
-
-type Job = (typeof jobs)[0];
 
 export default function JobTrackingTable() {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedJobs, setSelectedJobs] = React.useState<number[]>([]);
   const [visibleColumns, setVisibleColumns] = React.useState<string[]>([
     "company",
-    "position",
+    "role",
     "salary",
     "appliedDate",
     "status",
@@ -216,15 +110,53 @@ export default function JobTrackingTable() {
     "desc"
   );
 
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
+  const [selectedApplication, setSelectedApplication] =
+    useState<ApplicationsType | null>(null);
+
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const applications = useApplicationsStore((state) => state.Applications);
+  const getAllUserApplications = useApplicationsStore(
+    (state) => state.getAllUserApplications
+  );
+
+  // fetch once when component loads
+  useEffect(() => {
+    getAllUserApplications();
+  }, []);
+
+  const handleClose = () => {
+    setIsSheetOpen(false);
+    setSelectedApplication(null);
+  };
+
+  const handleOpen = () => {
+    setIsSheetOpen(true);
+  };
+
+  //FIXME :Application types
+  const handleEditClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    application: ApplicationsType
+  ) => {
+    event.preventDefault();
+    setSelectedApplication({ ...application });
+    setIsSheetOpen(true);
+  };
+
+  const title = selectedApplication
+    ? SHEETS.jobApplication.title.replace("Add", "Edit")
+    : SHEETS.jobApplication.title;
+
   // Filter jobs based on search and status
   const filteredJobs = React.useMemo(() => {
-    let filtered = [...jobs];
+    let filtered = [...applications];
 
     if (filterValue) {
       filtered = filtered.filter(
         (job) =>
-          job.company.toLowerCase().includes(filterValue.toLowerCase()) ||
-          job.position.toLowerCase().includes(filterValue.toLowerCase())
+          job?.company?.toLowerCase().includes(filterValue.toLowerCase()) ||
+          job?.role?.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
@@ -234,13 +166,13 @@ export default function JobTrackingTable() {
 
     // Sort jobs
     filtered.sort((a, b) => {
-      const aValue = a[sortColumn as keyof Job];
-      const bValue = b[sortColumn as keyof Job];
+      const aValue = a[sortColumn as keyof ApplicationsType];
+      const bValue = b[sortColumn as keyof ApplicationsType];
 
       // Special handling for dates
       if (sortColumn === "appliedDate") {
-        const dateA = new Date(a.appliedDate);
-        const dateB = new Date(b.appliedDate);
+        const dateA = new Date(a.appliedDate as Date | string);
+        const dateB = new Date(b.appliedDate as Date | string);
         return sortDirection === "asc"
           ? dateA.getTime() - dateB.getTime()
           : dateB.getTime() - dateA.getTime();
@@ -248,8 +180,8 @@ export default function JobTrackingTable() {
 
       // Special handling for salary
       if (sortColumn === "salary") {
-        const numA = parseInt(a.salary.replace(/[$,]/g, ""));
-        const numB = parseInt(b.salary.replace(/[$,]/g, ""));
+        const numA = a.salary ? parseInt(a.salary.replace(/[$,]/g, "")) : 0;
+        const numB = b.salary ? parseInt(b.salary.replace(/[$,]/g, "")) : 0;
         return sortDirection === "asc" ? numA - numB : numB - numA;
       }
 
@@ -318,9 +250,11 @@ export default function JobTrackingTable() {
   };
 
   // Format date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return format(date, "MMM d, yyyy");
+  const formatDate = (date: string | Date | undefined): string => {
+    if (!date) return "";
+
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+    return dateObj.toISOString().split("T")[0]; // Retur
   };
 
   return (
@@ -401,8 +335,10 @@ export default function JobTrackingTable() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <JobApplicationSheet />
+          <Button onClick={handleOpen}>
+            <Plus height={16} width={16} /> Add Job
+          </Button>
+          {/* <JobApplicationSheet  /> */}
         </div>
       </div>
 
@@ -414,31 +350,41 @@ export default function JobTrackingTable() {
               <TableRow>
                 <TableHead className="w-[40px] px-2 whitespace-nowrap sticky left-0 bg-background z-20">
                   <Checkbox
-                    checked={selectedJobs.length === paginatedJobs.length && paginatedJobs.length > 0}
+                    checked={
+                      selectedJobs.length === paginatedJobs.length &&
+                      paginatedJobs.length > 0
+                    }
                     onCheckedChange={toggleAllJobs}
                     aria-label="Select all"
                   />
                 </TableHead>
                 {visibleColumns.includes("company") && (
                   <TableHead className="w-[140px] px-2 whitespace-nowrap sticky left-[40px] bg-background z-20">
-                    <button className="flex items-center gap-1" onClick={() => handleSort("company")}>
+                    <button
+                      className="flex items-center gap-1"
+                      onClick={() => handleSort("company")}
+                    >
                       <Building2 className="h-4 w-4 mr-1 hidden lg:block" />
                       Company
                       {sortColumn === "company" && (
-                        <ChevronDown className={`h-4 w-4 ${sortDirection === "desc" ? "rotate-180" : ""}`} />
+                        <ChevronDown
+                          className={`h-4 w-4 ${
+                            sortDirection === "desc" ? "rotate-180" : ""
+                          }`}
+                        />
                       )}
                     </button>
                   </TableHead>
                 )}
-                {visibleColumns.includes("position") && (
+                {visibleColumns.includes("role") && (
                   <TableHead className="w-[180px] px-2 whitespace-nowrap">
                     <button
                       className="flex items-center gap-1"
-                      onClick={() => handleSort("position")}
+                      onClick={() => handleSort("role")}
                     >
                       <Briefcase className="h-4 w-4 mr-1 hidden sm:block" />
                       Position
-                      {sortColumn === "position" && (
+                      {sortColumn === "role" && (
                         <ChevronDown
                           className={`h-4 w-4 ${
                             sortDirection === "desc" ? "rotate-180" : ""
@@ -515,7 +461,7 @@ export default function JobTrackingTable() {
                     colSpan={visibleColumns.length + 1}
                     className="h-24 text-center"
                   >
-                    No jobs found
+                    job applications not found
                   </TableCell>
                 </TableRow>
               ) : (
@@ -534,33 +480,35 @@ export default function JobTrackingTable() {
                           <div className="hidden lg:flex h-8 w-8 items-center justify-center rounded-full bg-muted">
                             <Avatar>
                               <AvatarImage
-                                src={job.companyLogo}
+                                src={
+                                  "https://imgs.search.brave.com/KXIQDgZs6Cs98mfa4pLMtF1oVpNgpmgIpSjvVUIyImM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9yZWdp/c3RyeS5ucG1taXJy/b3IuY29tL0Bsb2Jl/aHViL2ljb25zLXN0/YXRpYy1wbmcvbGF0/ZXN0L2ZpbGVzL2Rh/cmsvZ29vZ2xlLWNv/bG9yLnBuZw"
+                                }
                                 alt="@shadcn"
                               />
                               <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                           </div>
                           <div className="font-medium truncate max-w-[100px]">
-                            {job.company}
+                            {job.company || "N/A"}
                           </div>
                         </div>
                       </TableCell>
                     )}
-                    {visibleColumns.includes("position") && (
+                    {visibleColumns.includes("role") && (
                       <TableCell className="px-2 sm:px-4">
                         <div className="flex flex-col">
                           <span className="font-medium truncate">
-                            {job.position}
+                            {job.role || 'N/A'}
                           </span>
                           <span className="text-xs text-muted-foreground hidden sm:block">
-                            {job.location}
+                            {job.city}
                           </span>
                         </div>
                       </TableCell>
                     )}
                     {visibleColumns.includes("salary") && (
                       <TableCell className="hidden md:table-cell">
-                        <span className="font-medium">{job.salary}</span>
+                        <span className="font-medium">{job.salary || "N/A"}</span>
                       </TableCell>
                     )}
                     {visibleColumns.includes("appliedDate") && (
@@ -590,19 +538,22 @@ export default function JobTrackingTable() {
                               : ""
                           } capitalize w-fit inline-flex items-center`}
                         >
-                          {job.status === "applied" && (
+                          {job.status === ApplicationStatus.Applied && (
                             <Clock className="mr-1 h-3 w-3" />
                           )}
-                          {job.status === "interview" && (
+                          {job.status === ApplicationStatus.InProgress && (
                             <Calendar className="mr-1 h-3 w-3" />
                           )}
-                          {job.status === "offer" && (
+                          {job.status === ApplicationStatus.Offered && (
                             <BadgeDollarSign className="mr-1 h-3 w-3" />
                           )}
-                          {job.status === "rejected" && (
+                          {job.status === ApplicationStatus.Rejected && (
                             <X className="mr-1 h-3 w-3" />
                           )}
-                          {job.status === "accepted" && (
+                          {job.status === ApplicationStatus.Accepted && (
+                            <Check className="mr-1 h-3 w-3" />
+                          )}
+                          {job.status === ApplicationStatus.Interview && (
                             <Check className="mr-1 h-3 w-3" />
                           )}
                           {capitalize(job.status)}
@@ -611,7 +562,7 @@ export default function JobTrackingTable() {
                     )}
                     {visibleColumns.includes("actions") && (
                       <TableCell className="hidden md:table-cell text-right">
-                        <DropdownMenu>
+                        <DropdownMenu modal={false}>
                           <DropdownMenuTrigger asChild>
                             <Button
                               variant="ghost"
@@ -623,7 +574,14 @@ export default function JobTrackingTable() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem>View Details</DropdownMenuItem>
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
+
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                handleEditClick(e, job);
+                              }}
+                            >
+                              Edit
+                            </DropdownMenuItem>
                             <DropdownMenuItem>Update Status</DropdownMenuItem>
                             <DropdownMenuItem className="text-destructive">
                               Delete
@@ -717,6 +675,20 @@ export default function JobTrackingTable() {
           </PaginationContent>
         </Pagination>
       </div>
+      {isSheetOpen && (
+        <SheetWrapper
+          isOpen={isSheetOpen}
+          handleClose={handleClose}
+          title={title}
+          description={"Add or edit your job application"}
+        >
+          <JobApplicationSheet
+            handleClose={handleClose}
+            selectedApplication={selectedApplication}
+            key={selectedApplication?.id}
+          />
+        </SheetWrapper>
+      )}
     </div>
   );
 }
