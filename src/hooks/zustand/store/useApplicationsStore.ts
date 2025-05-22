@@ -22,10 +22,17 @@ export const useApplicationsStore = create<ApplicationsState>()(
             application
           );
           if (response.status === StatusCodes.CREATED) {
+            const newApplication = response.data.application || response.data;
+            set((state) => ({
+              Applications: [...state.Applications, newApplication],
+              loading: false,
+            }));
             toast.success(
               response.data.message || "Applications created successfully"
             );
+            return newApplication;
           } else {
+            set({ loading: false });
             toast.error("Something went wrong try again");
           }
         } catch (error: any) {
@@ -33,6 +40,7 @@ export const useApplicationsStore = create<ApplicationsState>()(
           toast.error(
             error.response?.data?.message || "Failed to create the application"
           );
+          set({ loading: false });
         } finally {
           set({ loading: false });
         }
@@ -40,9 +48,10 @@ export const useApplicationsStore = create<ApplicationsState>()(
 
       getAllUserApplications: async () => {
         try {
+          set({ loading: true });
           const response = await api.get(`${API_ROUTES.APPLICATIONS.GET}`);
           if (response.status === StatusCodes.OK) {
-            set({ Applications: response.data });
+            set({ Applications: response.data, loading: false });
           } else {
             toast.error(
               "You dont have any applications to fetch please create one."
@@ -51,6 +60,22 @@ export const useApplicationsStore = create<ApplicationsState>()(
         } catch (error) {
           console.error(error);
           toast.error("Fetching applications failed");
+        }
+      },
+      getApplicationById: async (id: number) => {
+        try {
+          const response = await api.get(
+            `${API_ROUTES.APPLICATIONS.GETBYID}/${id}`
+          );
+          if (response) {
+            return response.data;
+          } else {
+            console.error(
+              "Something went wrong while fetching the application"
+            );
+          }
+        } catch (error) {
+          console.error(error);
         }
       },
     }),

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -56,6 +56,7 @@ import {
   ApplicationsType,
 } from "@/types/applications.types";
 import { useApplicationsStore } from "@/hooks/zustand/store/useApplicationsStore";
+import JobApplicationDetailsPopup from "./JobApplicationDetailsPopup";
 
 // Helper function to capitalize first letter
 export function capitalize(s: string) {
@@ -92,9 +93,9 @@ const statusColorMap: Record<string, string> = {
 };
 
 export default function JobTrackingTable() {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [selectedJobs, setSelectedJobs] = React.useState<number[]>([]);
-  const [visibleColumns, setVisibleColumns] = React.useState<string[]>([
+  const [filterValue, setFilterValue] = useState("");
+  const [selectedJobs, setSelectedJobs] = useState<number[]>([]);
+  const [visibleColumns, setVisibleColumns] = useState<string[]>([
     "company",
     "role",
     "salary",
@@ -102,11 +103,11 @@ export default function JobTrackingTable() {
     "status",
     "actions",
   ]);
-  const [statusFilter, setStatusFilter] = React.useState<string[]>([]);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortColumn, setSortColumn] = React.useState("appliedDate");
-  const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">(
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortColumn, setSortColumn] = useState("appliedDate");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">(
     "desc"
   );
 
@@ -114,16 +115,16 @@ export default function JobTrackingTable() {
   const [selectedApplication, setSelectedApplication] =
     useState<ApplicationsType | null>(null);
 
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const applications = useApplicationsStore((state) => state.Applications);
+  const Applications = useApplicationsStore((state) => state.Applications);
   const getAllUserApplications = useApplicationsStore(
     (state) => state.getAllUserApplications
   );
 
+
   // fetch once when component loads
   useEffect(() => {
     getAllUserApplications();
-  }, []);
+  }, [getAllUserApplications]);
 
   const handleClose = () => {
     setIsSheetOpen(false);
@@ -149,8 +150,8 @@ export default function JobTrackingTable() {
     : SHEETS.jobApplication.title;
 
   // Filter jobs based on search and status
-  const filteredJobs = React.useMemo(() => {
-    let filtered = [...applications];
+  const filteredJobs = useMemo(() => {
+    let filtered = [...Applications];
 
     if (filterValue) {
       filtered = filtered.filter(
@@ -196,10 +197,10 @@ export default function JobTrackingTable() {
     });
 
     return filtered;
-  }, [filterValue, statusFilter, sortColumn, sortDirection]);
+  }, [filterValue, statusFilter, sortColumn, sortDirection, Applications]);
 
   // Paginate jobs
-  const paginatedJobs = React.useMemo(() => {
+  const paginatedJobs = useMemo(() => {
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     return filteredJobs.slice(start, end);
@@ -498,7 +499,7 @@ export default function JobTrackingTable() {
                       <TableCell className="px-2 sm:px-4">
                         <div className="flex flex-col">
                           <span className="font-medium truncate">
-                            {job.role || 'N/A'}
+                            {job.role || "N/A"}
                           </span>
                           <span className="text-xs text-muted-foreground hidden sm:block">
                             {job.city}
@@ -508,7 +509,9 @@ export default function JobTrackingTable() {
                     )}
                     {visibleColumns.includes("salary") && (
                       <TableCell className="hidden md:table-cell">
-                        <span className="font-medium">{job.salary || "N/A"}</span>
+                        <span className="font-medium">
+                          {job.salary || "N/A"}
+                        </span>
                       </TableCell>
                     )}
                     {visibleColumns.includes("appliedDate") && (
@@ -573,8 +576,6 @@ export default function JobTrackingTable() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View Details</DropdownMenuItem>
-
                             <DropdownMenuItem
                               onClick={(e) => {
                                 handleEditClick(e, job);
@@ -582,10 +583,14 @@ export default function JobTrackingTable() {
                             >
                               Edit
                             </DropdownMenuItem>
-                            <DropdownMenuItem>Update Status</DropdownMenuItem>
                             <DropdownMenuItem className="text-destructive">
                               Delete
                             </DropdownMenuItem>
+                            <div className="border-t">
+                              <JobApplicationDetailsPopup
+                                selectedApplication={job}
+                              />
+                            </div>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

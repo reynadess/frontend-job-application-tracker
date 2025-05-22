@@ -56,7 +56,9 @@ export function JobApplicationSheet({
 }: Props) {
   // const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const { createApplication } = useApplicationsStore();
+  const createApplication = useApplicationsStore((state) => state.createApplication)
+  const getAllUserApplications = useApplicationsStore((state) => state.getAllUserApplications)
+
 
   // Set up form with TypeScript types
   
@@ -86,13 +88,15 @@ export function JobApplicationSheet({
     setIsSubmitting(true);
     try {
       await createApplication(data);
+      await getAllUserApplications();
+      handleClose();
+      reset();
     } catch (error) {
       toast.error("Try again");
     } finally {
       setIsSubmitting(false);
     }
     setIsSubmitting(false);
-    // reset();
   };
 
   // Populate form when selectedApplication changes

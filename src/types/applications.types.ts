@@ -27,5 +27,6 @@ export type ApplicationsState = {
   Applications: ApplicationsType[] | [];
   createApplication: (application: userApplicationTypes) => Promise<void>;
   getAllUserApplications: () => Promise<void>;
+  getApplicationById : (id : number) => Promise<void>;
   loading: boolean;
 };
