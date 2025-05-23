@@ -685,7 +685,7 @@ export default function JobTrackingTable() {
           isOpen={isSheetOpen}
           handleClose={handleClose}
           title={title}
-          description={"Add or edit your job application"}
+          description={SHEETS.jobApplication.description}
         >
           <JobApplicationSheet
             handleClose={handleClose}
