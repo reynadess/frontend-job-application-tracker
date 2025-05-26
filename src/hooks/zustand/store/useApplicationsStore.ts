@@ -78,6 +78,64 @@ export const useApplicationsStore = create<ApplicationsState>()(
           console.error(error);
         }
       },
+      updateApplicationById: async (id: number, updatedData: any) => {
+        try {
+          set({ loading: true });
+          const res = await api.patch(
+            `${API_ROUTES.APPLICATIONS.UPDATEBYID}/${id}`,
+            updatedData
+          );
+          if (res.status === StatusCodes.OK) {
+            const updatedApplication = res.data;
+
+            //update the application in state
+            set((state) => ({
+              Applications: state.Applications.map((application) =>
+                application.id === id ? updatedApplication : application
+              ),
+            }));
+            toast.success(
+              updatedApplication.data.message ||
+                "Application updated successfully"
+            );
+          } else {
+            toast.error("Failed to update the application");
+          }
+        } catch (error) {
+          console.error(`Update application failed for id: ${id}`);
+          toast.error("Something went wrong, Please try again");
+        } finally {
+          set({ loading: false });
+        }
+      },
+      deleteApplicationById: async (id: number) => {
+        try {
+          set({ loading: true });
+          const res = await api.delete(
+            `${API_ROUTES.APPLICATIONS.DELETEBYID}/${id}`
+          );
+          if (res.status === StatusCodes.OK) {
+            toast.success(
+              `Application with id : ${id} deleted successfully` ||
+                res.data.message
+            );
+
+            // After deleting update the state
+            set((state) => ({
+              Applications: state.Applications.filter(
+                (application) => application.id !== id
+              ),
+            }));
+          } else {
+            toast.error(res.data.message || "Failed to delete application");
+          }
+        } catch (error) {
+          console.error(`Application deletion failed for id : ${id}`);
+          toast.error("Something went wrong");
+        } finally {
+          set({ loading: false });
+        }
+      },
     }),
     {
       name: "user-applications",

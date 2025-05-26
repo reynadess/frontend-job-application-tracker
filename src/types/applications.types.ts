@@ -28,5 +28,8 @@ export type ApplicationsState = {
   createApplication: (application: userApplicationTypes) => Promise<void>;
   getAllUserApplications: () => Promise<void>;
   getApplicationById : (id : number) => Promise<void>;
+  deleteApplicationById : (id : number) => Promise<void>;
+  //FIXME :Fix the type
+  updateApplicationById : (id : number , updatedData : any) => Promise<void>;
   loading: boolean;
 };

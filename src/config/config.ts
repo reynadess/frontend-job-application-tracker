@@ -18,7 +18,9 @@ const API_ROUTES = Object.freeze({
   APPLICATIONS : {
     CREATE : "/applications",
     GET : "/applications",
-    GETBYID:"/applications"
+    GETBYID:"/applications",
+    UPDATEBYID:"/applications",
+    DELETEBYID:"/applications"
   }
 });
 

@@ -107,9 +107,7 @@ export default function JobTrackingTable() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState("appliedDate");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">(
-    "desc"
-  );
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
   const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
   const [selectedApplication, setSelectedApplication] =
@@ -119,12 +117,14 @@ export default function JobTrackingTable() {
   const getAllUserApplications = useApplicationsStore(
     (state) => state.getAllUserApplications
   );
-
+  const deleteApplicationById = useApplicationsStore(
+    (state) => state.deleteApplicationById
+  );
 
   // fetch once when component loads
   useEffect(() => {
     getAllUserApplications();
-  }, [getAllUserApplications]);
+  }, [getAllUserApplications, deleteApplicationById]);
 
   const handleClose = () => {
     setIsSheetOpen(false);
@@ -248,6 +248,15 @@ export default function JobTrackingTable() {
         return [...prev, status];
       }
     });
+  };
+
+  //handle application delete
+  const handleApplicationDelete = async (id: number) => {
+    try {
+      await deleteApplicationById(id);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Format date
@@ -583,7 +592,10 @@ export default function JobTrackingTable() {
                             >
                               Edit
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive">
+                            <DropdownMenuItem
+                              onClick={() => handleApplicationDelete(job.id)}
+                              className="text-destructive"
+                            >
                               Delete
                             </DropdownMenuItem>
                             <div className="border-t">
