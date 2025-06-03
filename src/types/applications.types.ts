@@ -7,7 +7,6 @@ export enum ApplicationStatus {
   Offered = "Offered",
   Rejected = "Rejected",
   Accepted = "Accepted",
-  Interview = "Interview",
 }
 export interface ApplicationsType {
     id: number;
@@ -20,8 +19,23 @@ export interface ApplicationsType {
     status: ApplicationStatus;
     description?: string;
     appliedDate?: string | Date;
-    salary?:string
+    ctcOffered?:number
 }
+
+
+export type StatusOptions = {
+  name: string;
+  uid: ApplicationStatus;
+};
+
+export const Status_Options: StatusOptions[] = [
+  { name: "Applied", uid: ApplicationStatus.Applied },
+  { name: "Offered", uid: ApplicationStatus.Offered },
+  { name: "Rejected", uid: ApplicationStatus.Rejected },
+  { name: "Accepted", uid: ApplicationStatus.Accepted },
+  { name: "Apply", uid: ApplicationStatus.Apply },
+  { name: "InProgress", uid: ApplicationStatus.InProgress },
+];
 
 export type ApplicationsState = {
   Applications: ApplicationsType[] | [];

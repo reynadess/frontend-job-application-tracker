@@ -20,16 +20,12 @@ import {
 } from "lucide-react";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { ApplicationsType } from "@/types/applications.types";
-import { useEffect, useState } from "react";
-import api from "@/api/axiosInstance";
-
 
 interface PopupProps {
-    selectedApplication : ApplicationsType | null;
+  selectedApplication: ApplicationsType | null;
 }
 
-
-const JobApplicationDetailsPopup = ({selectedApplication} : PopupProps) => {
+const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -53,7 +49,7 @@ const JobApplicationDetailsPopup = ({selectedApplication} : PopupProps) => {
 
         <DialogHeader>
           <DialogTitle className="text-2xl">
-           {selectedApplication?.role}
+            {selectedApplication?.role}
           </DialogTitle>
         </DialogHeader>
         <DialogDescription>
@@ -62,11 +58,14 @@ const JobApplicationDetailsPopup = ({selectedApplication} : PopupProps) => {
             <div className="flex flex-wrap gap-3 text-sm">
               <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950  px-3 py-1 rounded-full">
                 <DollarSignIcon className="h-4 w-4" />
-                <span>{selectedApplication?.salary}</span>
+                <span>{selectedApplication?.ctcOffered}</span>
               </div>
               <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950 px-3 py-1 rounded-full">
                 <MapPinIcon className="h-4 w-4" />
-                <span>{selectedApplication?.city}, { selectedApplication?.country}, {selectedApplication?.state}</span>
+                <span>
+                  {selectedApplication?.city}, {selectedApplication?.country},{" "}
+                  {selectedApplication?.state}
+                </span>
               </div>
               <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950 px-3 py-1 rounded-full">
                 <BriefcaseIcon className="h-4 w-4" />
@@ -82,12 +81,10 @@ const JobApplicationDetailsPopup = ({selectedApplication} : PopupProps) => {
             <div className="flex items-center justify-between border-t border-b py-3">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="h-4 w-4 " />
-                <span className="text-sm ">
-                  Applied on May 15 , 2025
-                </span>
+                <span className="text-sm ">Applied on May 15 , 2025</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
-               {selectedApplication?.status}
+                {selectedApplication?.status}
               </span>
             </div>
 
@@ -109,9 +106,7 @@ const JobApplicationDetailsPopup = ({selectedApplication} : PopupProps) => {
             <div>
               <h3 className="font-semibold mb-2">Job Description</h3>
               <div className="text-sm  space-y-2">
-                <p>
-                  {selectedApplication?.description}
-                </p>
+                <p>{selectedApplication?.description}</p>
                 <p>
                   Responsibilities include developing new features, maintaining
                   existing code, and collaborating with cross-functional teams.

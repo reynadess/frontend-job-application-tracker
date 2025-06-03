@@ -28,5 +28,5 @@
       ]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/hooks/zustand/store/useApplicationsStore.ts"]
 }

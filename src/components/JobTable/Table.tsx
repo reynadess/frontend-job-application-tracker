@@ -54,6 +54,7 @@ import SheetWrapper from "../profile/sheets/SheetWrapper";
 import {
   ApplicationStatus,
   ApplicationsType,
+  Status_Options,
 } from "@/types/applications.types";
 import { useApplicationsStore } from "@/hooks/zustand/store/useApplicationsStore";
 import JobApplicationDetailsPopup from "./JobApplicationDetailsPopup";
@@ -72,19 +73,9 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export const statusOptions = [
-  { name: "Applied", uid: "Applied" },
-  { name: "Interview", uid: "Interview" },
-  { name: "Offered", uid: "Offered" },
-  { name: "Rejected", uid: "Rejected" },
-  { name: "Accepted", uid: "Accepted" },
-  { name: "Apply", uid: "Apply" },
-  { name: "InProgress", uid: "InProgress" },
-];
 
 const statusColorMap: Record<string, string> = {
   Applied: "blue",
-  Interview: "yellow",
   Offered: "purple",
   Rejected: "destructive",
   Accepted: "success",
@@ -181,8 +172,8 @@ export default function JobTrackingTable() {
 
       // Special handling for salary
       if (sortColumn === "salary") {
-        const numA = a.salary ? parseInt(a.salary.replace(/[$,]/g, "")) : 0;
-        const numB = b.salary ? parseInt(b.salary.replace(/[$,]/g, "")) : 0;
+        const numA = a.ctcOffered ?? 0;
+        const numB = b.ctcOffered ?? 0;
         return sortDirection === "asc" ? numA - numB : numB - numA;
       }
 
@@ -295,7 +286,7 @@ export default function JobTrackingTable() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[200px]">
-              {statusOptions.map((status) => (
+              {Status_Options.map((status) => (
                 <DropdownMenuItem
                   key={status.uid}
                   className="flex items-center gap-2"
@@ -519,7 +510,7 @@ export default function JobTrackingTable() {
                     {visibleColumns.includes("salary") && (
                       <TableCell className="hidden md:table-cell">
                         <span className="font-medium">
-                          {job.salary || "N/A"}
+                          {job.ctcOffered || "N/A"}
                         </span>
                       </TableCell>
                     )}
@@ -563,9 +554,6 @@ export default function JobTrackingTable() {
                             <X className="mr-1 h-3 w-3" />
                           )}
                           {job.status === ApplicationStatus.Accepted && (
-                            <Check className="mr-1 h-3 w-3" />
-                          )}
-                          {job.status === ApplicationStatus.Interview && (
                             <Check className="mr-1 h-3 w-3" />
                           )}
                           {capitalize(job.status)}

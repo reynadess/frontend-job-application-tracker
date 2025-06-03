@@ -27,9 +27,6 @@ export const useApplicationsStore = create<ApplicationsState>()(
               Applications: [...state.Applications, newApplication],
               loading: false,
             }));
-            toast.success(
-              response.data.message || "Applications created successfully"
-            );
             return newApplication;
           } else {
             set({ loading: false });
@@ -92,12 +89,8 @@ export const useApplicationsStore = create<ApplicationsState>()(
             set((state) => ({
               Applications: state.Applications.map((application) =>
                 application.id === id ? updatedApplication : application
-              ),
+              ),loading : false
             }));
-            toast.success(
-              updatedApplication.data.message ||
-                "Application updated successfully"
-            );
           } else {
             toast.error("Failed to update the application");
           }
