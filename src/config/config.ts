@@ -15,6 +15,13 @@ const API_ROUTES = Object.freeze({
     PROFILE: "/applicants",
     UPDATE: "/users/update",
   },
+  APPLICATIONS : {
+    CREATE : "/applications",
+    GET : "/applications",
+    GETBYID:"/applications",
+    UPDATEBYID:"/applications",
+    DELETEBYID:"/applications"
+  }
 });
 
 export default API_ROUTES;

@@ -4,8 +4,6 @@ import {
   FieldOfStudyType,
   WorkMode,
 } from "@/lib/enum/enums";
-import { User } from "./auth.types";
-import { LoginInputType, SignupInputType } from "@/schema/userSchema";
 
 export interface ProjectType {
   id: number;
@@ -18,8 +16,8 @@ export interface ProjectType {
   projectSummary: string;
 }
 export interface EducationType {
-  id: number;
-  startDate: Date;
+  id?: number;
+  startDate: Date | undefined;
   instituteName: string;
   degree: DegreeType;
   fieldOfStudy: FieldOfStudyType;
@@ -65,3 +63,5 @@ export type ApplicantState = {
   getApplicantInfo: (username: string) => Promise<void>;
   loading: boolean;
 };
+
+

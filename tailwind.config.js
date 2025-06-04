@@ -10,8 +10,6 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			green: 'hsl(142.1, 76.2%, 36.3%)',
-  			hoverGreen: 'hsl(142.1, 76.2%, 46.3%)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

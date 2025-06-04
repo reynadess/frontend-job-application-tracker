@@ -139,7 +139,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </Avatar>
                 </div>
                 <div className="flex items-center gap-6 flex-1 text-left  leading-tight">
-                  <span className="ml-1 truncate font-semibold text-xl ">Apply-<span className="text-green">IQ</span></span>
+                  <span className="ml-1 truncate font-semibold text-xl ">Apply-<span className="text-green-400">IQ</span></span>
                   <ModeToggle/>
                 </div>
               </Link>

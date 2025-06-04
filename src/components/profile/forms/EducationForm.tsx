@@ -1,39 +1,17 @@
+import { DegreeType, FieldOfStudyType } from '@/lib/enum/enums';
+import { EducationType } from '@/types/user.types';
 import React, { useState } from 'react';
 
-// Define enums to match the original component
-enum DegreeType {
-  BTECH = "BTECH",
-  MTECH = "MTECH",
-  BCA = "BCA",
-  MCA = "MCA",
-  BSC = "BSC",
-  MSC = "MSC",
-  PHD = "PHD",
-  DIPLOMA = "DIPLOMA",
-  OTHER = "OTHER"
-}
-
-enum FieldOfStudyType {
-  CS = "CS",
-  IT = "IT",
-  ECE = "ECE",
-  EEE = "EEE",
-  MECH = "MECH",
-  CIVIL = "CIVIL",
-  CHEM = "CHEM",
-  BIO = "BIO",
-  OTHER = "OTHER"
-}
 
 // Define the Education type
-interface EducationType {
-  id?: number;
-  instituteName: string;
-  degree: DegreeType;
-  fieldOfStudy: FieldOfStudyType;
-  startDate?: Date;
-  endDate?: Date | null;
-}
+// interface EducationType {
+//   id?: number;
+//   instituteName: string;
+//   degree: DegreeType;
+//   fieldOfStudy: FieldOfStudyType;
+//   startDate?: Date;
+//   endDate?: Date | null;
+// }
 
 interface EducationFormProps {
   handleClose: () => void;

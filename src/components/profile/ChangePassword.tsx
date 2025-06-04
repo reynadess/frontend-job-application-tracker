@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   UserPasswordSchema,
   UserPasswordSchemaType,
-} from '@/lib/validators/userProfileValidators';
+} from '@/schema/userProfileValidators';
 
 import { Input } from '../ui/input';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';

@@ -9,7 +9,7 @@ import {
 import {
   UserPasswordSchema,
   UserPasswordSchemaType,
-} from "@/lib/validators/userProfileValidators"
+} from "@/schema/userProfileValidators"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';

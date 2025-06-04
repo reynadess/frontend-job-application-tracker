@@ -2,7 +2,7 @@ import * as React from "react"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Button  } from "@/components/ui/button"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -35,28 +35,22 @@ const PaginationItem = React.forwardRef<
 PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
-  isActive?: boolean
-} & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"a">
+  isActive?: boolean;
+  onClick?:() => void;
+  children?: React.ReactNode
+} 
 
-const PaginationLink = ({
-  className,
-  isActive,
-  size = "icon",
-  ...props
-}: PaginationLinkProps) => (
-  <a
-    aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className
-    )}
+const PaginationLink = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button> & PaginationLinkProps
+>(({ className, isActive, ...props }, ref) => (
+  <Button
+    ref={ref}
+    variant={isActive ? "outline" : "ghost"}
+    className={cn(className)}
     {...props}
   />
-)
+))
 PaginationLink.displayName = "PaginationLink"
 
 const PaginationPrevious = ({

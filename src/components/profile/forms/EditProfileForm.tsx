@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import {
   profileSchema,
   ProfileSchemaType,
-} from '@/lib/validators/userProfileValidators'
+} from '@/schema/userProfileValidators'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileUpIcon, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';

@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   aboutMeSchema,
   AboutMeSchemaType,
-} from "@/lib/validators/userProfileValidators";
+} from "@/schema/userProfileValidators";
 
 const AboutMeForm = ({
   handleClose,
