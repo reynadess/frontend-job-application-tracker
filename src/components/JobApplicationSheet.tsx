@@ -170,7 +170,7 @@ export function JobApplicationSheet({
             id="company"
             placeholder="Enter company name"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("company", {
               required: !isEditMode ? "Company is required" : false,
             })}
@@ -187,7 +187,7 @@ export function JobApplicationSheet({
             id="role"
             placeholder="Enter job position"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("role", {
               required: !isEditMode ? "Position is required" : false,
             })}
@@ -205,7 +205,7 @@ export function JobApplicationSheet({
             type="number"
             placeholder="e.g. 75000"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("ctcOffered", {
               valueAsNumber: true,
               validate: (value) =>
@@ -227,7 +227,7 @@ export function JobApplicationSheet({
             id="city"
             placeholder="e.g. Remote, New York, NY"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("city")}
           />
         </div>
@@ -238,7 +238,7 @@ export function JobApplicationSheet({
             id="state"
             placeholder="e.g. New York"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("state")}
           />
         </div>
@@ -249,7 +249,7 @@ export function JobApplicationSheet({
             id="country"
             placeholder="e.g. United States"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("country")}
           />
         </div>
@@ -260,7 +260,7 @@ export function JobApplicationSheet({
             id="jobLink"
             placeholder="https://www.company.com/careers/job-id"
             readOnly={isEditMode}
-            className={isEditMode ? "bg-gray-50 cursor-not-allowed" : ""}
+            className={isEditMode ? "cursor-not-allowed" : ""}
             {...register("jobLink")}
           />
         </div>
@@ -272,7 +272,7 @@ export function JobApplicationSheet({
             id="description"
             placeholder="Brief description of the role"
             className={`min-h-20 ${
-              isEditMode ? "bg-gray-50 cursor-not-allowed" : ""
+              isEditMode ? "cursor-not-allowed" : ""
             }`}
             readOnly={isEditMode}
             {...register("description")}

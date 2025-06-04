@@ -2,7 +2,7 @@ import { UserType } from '@/types/user.types';
 import { ArrowRight, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const ProfileHireme = ({applicant } : {applicant : UserType}) => {
+const ProfileHireme = ({applicant } : {applicant : any}) => {
   return (
     <div className="border  rounded-2xl bg-gradient-to-b mt-7 from-slate-200 to-slate-300 dark:from-gray-800 dark:to-gray-900 min-h-40 overflow-hidden flex flex-col gap-y-4 px-6 py-4 items-center justify-center">
       <div className="text-center">

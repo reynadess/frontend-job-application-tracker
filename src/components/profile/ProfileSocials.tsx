@@ -3,7 +3,7 @@ import { Globe } from 'lucide-react';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 
-const ProfileSocials = ({ userdetails , applicant }: { userdetails: UserType ,applicant : UserType }) => {
+const ProfileSocials = ({ userdetails , applicant }: { userdetails: any ,applicant : UserType }) => {
   return (
     <div className="flex flex-wrap gap-x-3 gap-y-3">
       {userdetails.githubLink && (
