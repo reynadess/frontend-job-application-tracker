@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Pencil, Settings, User } from 'lucide-react';
+import { Pencil, Settings, User  } from 'lucide-react';
 import SheetWrapper from './sheets/SheetWrapper';
 import EditProfileForm from './forms/EditProfileForm';
 import { SHEETS } from '@/lib/constants/Profile.constant';
@@ -11,9 +11,11 @@ import ProfileSocials from './ProfileSocials';
 import { ProfileShareDialog } from './ProfileShare';
 import { UserType } from '@/types/user.types';
 
-const mockUserDetails = {
+const mockUserDetails   = {
   id: "1",
-  name: "John Doe",
+  username: "johndoe",
+  firstName: "John",
+  lastName: "Doe",
   avatar: "https://github.com/shadcn.png",
   githubLink: "https://github.com/johndoe",
   linkedinLink: "https://linkedin.com/in/johndoe",
@@ -21,10 +23,11 @@ const mockUserDetails = {
   portfolioLink: "https://johndoe.dev",
   discordLink: "https://discord.com/users/johndoe",
   email: "john@example.com",
-  contactEmail: "contact@example.com"
+  contactEmail: "contact@example.com",
+  skills: [],
 };
 
-const ProfileHeroSection = ({applicant} : {applicant : UserType}) => {
+const ProfileHeroSection = ({applicant} : {applicant : any}) => {
   const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [userdetails] = useState(mockUserDetails);
@@ -85,8 +88,8 @@ const ProfileHeroSection = ({applicant} : {applicant : UserType}) => {
         description={SHEETS.editProfile.description}
       >
         <EditProfileForm
-          userdetails={userdetails}
-          handleClose={handleClose}
+          userDetails={userdetails} 
+          onClose={handleClose}
         />
       </SheetWrapper>
       <SheetWrapper

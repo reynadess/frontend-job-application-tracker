@@ -6,7 +6,7 @@ import { ArrowUpRight, Github, Pencil } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ProjectType } from '@/types/user.types';
 
-const ProfileProject = ({project , handleEditClick } : {
+const ProfileProject = ({project , handleClick } : {
   project : ProjectType;
   handleClick : (project : ProjectType) => void;
 }) => {
@@ -16,7 +16,8 @@ const ProfileProject = ({project , handleEditClick } : {
     <div className="flex flex-col gap-y-6 p-3 sm:p-6 dark:bg-slate-900 bg-slate-200 rounded-2xl">
       <div className="relative w-full aspect-w-16 h-48 rounded-[8px] overflow-hidden">
         <img
-          src={project.projectThumbnail} // Static placeholder image
+        //FIXME : placeholder and proper image
+          src={project.projectThumbnail || "https://https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png.png"} // Static placeholder image
           alt="project-image"
           className="object-cover"
           sizes="16:9"
@@ -28,7 +29,7 @@ const ProfileProject = ({project , handleEditClick } : {
           {isOwner && (
             <div className="flex gap-3 items-center w-fit">
               <ProjectDeleteDialog  />
-              <Button onClick={() => handleEditClick(project)} className="bg-transparent p-0 b-0 hover:bg-transparent">
+              <Button onClick={() => handleClick(project)} className="bg-transparent p-0 b-0 hover:bg-transparent">
                 <Pencil
                   width={16}
                   height={16}

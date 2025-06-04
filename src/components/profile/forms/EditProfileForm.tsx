@@ -17,45 +17,45 @@ import { FileUpIcon, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { User } from '@/lib/enum/enums';
 interface EditProfileFormProps {
-  user?: User;
+  userDetails?: any;
   onClose?: () => void;
   onSubmit?: (data: ProfileSchemaType) => Promise<void>;
 }
 
 const EditProfileForm: React.FC<EditProfileFormProps> = ({ 
-  user, 
+  userDetails, 
   onClose, 
   onSubmit 
 }) => {
-  const [previewImg, setPreviewImg] = useState<string | null>(user?.avatar || null);
+  const [previewImg, setPreviewImg] = useState<string | null>(userDetails?.avatar || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const form = useForm<ProfileSchemaType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: user?.name || '',
-      email: user?.email || '',
-      contactEmail: user?.contactEmail || '',
-      portfolioLink: user?.portfolioLink || '',
-      githubLink: user?.githubLink || '',
-      twitterLink: user?.twitterLink || '',
-      linkedinLink: user?.linkedinLink || '',
-      discordLink: user?.discordLink || '',
-      aboutMe: user?.aboutMe || '',
+      name: userDetails?.name || '',
+      email: userDetails?.email || '',
+      contactEmail: userDetails?.contactEmail || '',
+      portfolioLink: userDetails?.portfolioLink || '',
+      githubLink: userDetails?.githubLink || '',
+      twitterLink: userDetails?.twitterLink || '',
+      linkedinLink: userDetails?.linkedinLink || '',
+      discordLink: userDetails?.discordLink || '',
+      aboutMe: userDetails?.aboutMe || '',
     },
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file  = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setPreviewImg(reader.result as string);
       };
       reader.readAsDataURL(file);
-      form.setValue('avatar', file);
+      //TODO: when needed use file with proper types
+      form.setValue('avatar', URL.createObjectURL(file));
     }
   };
 

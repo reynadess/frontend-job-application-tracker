@@ -75,7 +75,7 @@ const ProfileProjects = ({ isOwner = true }) => {
               <ProfileProject
                 key={project.id}
                 project={project}
-                handleEditClick={handleEditClick}
+                handleClick={handleEditClick}
               />
             ))}
           </div>

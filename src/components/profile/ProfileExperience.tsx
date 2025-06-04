@@ -8,14 +8,15 @@ import { ExperienceType } from '@/types/user.types';
 import { format } from 'date-fns';
 import { ExperienceDeleteDialog } from './ExperienceDeleteDialog';
 import ProfileEmptyContainers from './emptycontainers/ProfileEmptyContainers';
+import { EmploymentType, WorkMode } from '@/lib/enum/enums';
 
-const mockExperiences = [
+const mockExperiences  :ExperienceType[] = [
   {
     id: 1,
     designation: "Senior Frontend Developer",
     companyName: "Tech Corp",
-    EmploymentType: "FULL_TIME",
-    workMode: "REMOTE",
+    EmploymentType: EmploymentType.FULL_TIME,
+    workMode: WorkMode.REMOTE,
     startDate: new Date("2021-01-01"),
     endDate: null,
     description: "Leading frontend development team and architecture",
