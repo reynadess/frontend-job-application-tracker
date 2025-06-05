@@ -1,5 +1,5 @@
 import CurrentJobCard from "@/components/CurrentJobCard";
-import TableJob from "@/components/JobTable/Table";
+import JobTrackingTable from "@/components/job-tracking/JobTrackingTable";
 import { dummyJobs } from "@/DummyData/Jobs";
 import { Link } from "react-router-dom";
 const JobTracker = () => {
@@ -17,7 +17,7 @@ const JobTracker = () => {
       </div>
       <div className="mt-12">
         <h1 className=" ml-7 text-2xl font-bold mb-3">Tracker</h1>
-        <TableJob />
+        <JobTrackingTable />
       </div>
     </>
   );
