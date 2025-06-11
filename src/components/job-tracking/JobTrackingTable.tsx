@@ -1,12 +1,12 @@
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
-import { TableControls } from "./ui/TableControls"
-import { JobTableHeader } from "./ui/TableHeader"
-import { JobTableRow } from "./ui/TableRow"
-import { TablePagination } from "./ui/TablePagination"
-import { useJobTable } from "./hooks/useJobTable"
-import { JobApplicationSheet } from "../JobApplicationSheet"
-import SheetWrapper from "../profile/sheets/SheetWrapper"
-import { SHEETS } from "@/lib/constants/Profile.constant"
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { TableControls } from './ui/TableControls';
+import { JobTableHeader } from './ui/TableHeader';
+import { JobTableRow } from './ui/TableRow';
+import { TablePagination } from './ui/TablePagination';
+import { useJobTable } from './hooks/useJobTable';
+import { JobApplicationSheet } from '../JobApplicationSheet';
+import SheetWrapper from '../profile/sheets/SheetWrapper';
+import { SHEETS } from '@/lib/constants/Profile.constant';
 
 export default function JobTrackingTable() {
   const {
@@ -28,12 +28,14 @@ export default function JobTrackingTable() {
     handleCloseSheet,
     handleOpenSheet,
     handleReset,
-  } = useJobTable()
+  } = useJobTable();
 
-  const title = selectedApplication ? SHEETS.jobApplication.title.replace("Add", "Edit") : SHEETS.jobApplication.title
+  const title = selectedApplication
+    ? SHEETS.jobApplication.title.replace('Add', 'Edit')
+    : SHEETS.jobApplication.title;
 
   return (
-    <div className="space-y-4 m-auto w-[96%]">
+    <div className="m-auto w-[96%] space-y-4">
       <TableControls
         filters={filters}
         onFilterChange={handleFilterChange}
@@ -41,8 +43,8 @@ export default function JobTrackingTable() {
         onReset={handleReset}
       />
 
-      <div className="relative border rounded-md overflow-hidden">
-        <div className="w-full overflow-x-auto scrollbar-thin">
+      <div className="relative overflow-hidden rounded-md border">
+        <div className="scrollbar-thin w-full overflow-x-auto">
           <Table>
             <JobTableHeader
               visibleColumns={filters.visibleColumns}
@@ -55,7 +57,10 @@ export default function JobTrackingTable() {
             <TableBody>
               {paginatedJobs.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={filters.visibleColumns.length + 1} className="h-24 text-center">
+                  <TableCell
+                    colSpan={filters.visibleColumns.length + 1}
+                    className="h-24 text-center"
+                  >
                     Job applications not found
                   </TableCell>
                 </TableRow>
@@ -99,5 +104,5 @@ export default function JobTrackingTable() {
         </SheetWrapper>
       )}
     </div>
-  )
+  );
 }

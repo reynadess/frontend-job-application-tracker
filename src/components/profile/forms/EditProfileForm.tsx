@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import {
   profileSchema,
   ProfileSchemaType,
-} from '@/schema/userProfileValidators'
+} from '@/schema/userProfileValidators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileUpIcon, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -23,14 +23,16 @@ interface EditProfileFormProps {
   onSubmit?: (data: ProfileSchemaType) => Promise<void>;
 }
 
-const EditProfileForm: React.FC<EditProfileFormProps> = ({ 
-  userDetails, 
-  onClose, 
-  onSubmit 
+const EditProfileForm: React.FC<EditProfileFormProps> = ({
+  userDetails,
+  onClose,
+  onSubmit,
 }) => {
-  const [previewImg, setPreviewImg] = useState<string | null>(userDetails?.avatar || null);
+  const [previewImg, setPreviewImg] = useState<string | null>(
+    userDetails?.avatar || null
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const form = useForm<ProfileSchemaType>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -47,7 +49,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file  = e.target.files?.[0];
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -87,33 +89,33 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleFormSubmit)}
-        className="space-y-8 h-full flex flex-col justify-between"
+        className="flex h-full flex-col justify-between space-y-8"
       >
         <div className="flex flex-col gap-y-4">
           <FormLabel> Profile Picture </FormLabel>
           <div className="flex justify-center">
             <div
               onClick={handleUploadClick}
-              className="w-40 h-40 relative dark:bg-gray-700 bg-gray-300 border border-dashed border-gray-500 rounded-md flex items-center justify-center cursor-pointer mb-2"
+              className="relative mb-2 flex h-40 w-40 cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-500 bg-gray-300 dark:bg-gray-700"
             >
               {previewImg ? (
                 <img
                   src={previewImg}
                   alt="Preview"
-                  className="w-full h-full object-cover rounded-md"
+                  className="h-full w-full rounded-md object-cover"
                 />
               ) : (
                 <FileUpIcon
                   height={80}
                   width={80}
-                  className="text-white h-10 w-10"
+                  className="h-10 w-10 text-white"
                 />
               )}
               {previewImg && (
                 <button
                   type="button"
                   onClick={clearLogoImage}
-                  className="absolute top-0 right-0 w-5 h-5 bg-red-500 rounded-full items-center flex justify-center cursor-pointer translate-x-1/2 -translate-y-1/2"
+                  className="absolute right-0 top-0 flex h-5 w-5 -translate-y-1/2 translate-x-1/2 cursor-pointer items-center justify-center rounded-full bg-red-500"
                 >
                   <X size="16" />
                 </button>
@@ -279,19 +281,19 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             )}
           />
         </div>
-        <div className="py-4 flex gap-4 justify-end">
+        <div className="flex justify-end gap-4 py-4">
           <Button
             type="reset"
             onClick={handleFormClose}
             variant={'outline'}
-            className="mt-0 text-slate-500 dark:text-slate-400 rounded-[8px]"
+            className="mt-0 rounded-[8px] text-slate-500 dark:text-slate-400"
           >
             Cancel
           </Button>
           <Button
             disabled={form.formState.isSubmitting}
             type="submit"
-            className="mt-0 text-white rounded-[8px]"
+            className="mt-0 rounded-[8px] text-white"
           >
             {form.formState.isSubmitting ? 'Please wait...' : 'Update Profile'}
           </Button>

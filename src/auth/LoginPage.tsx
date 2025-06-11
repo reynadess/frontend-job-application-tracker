@@ -1,17 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
-import { LoginInputType, userLoginSchema } from "@/schema/userSchema";
-import { Loader2, LockKeyhole, User } from "lucide-react";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { useAuthStore } from '@/hooks/zustand/store/useAuthStore';
+import { LoginInputType, userLoginSchema } from '@/schema/userSchema';
+import { Loader2, LockKeyhole, User } from 'lucide-react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const LoginPage = () => {
   const [input, setInput] = useState<LoginInputType>({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   const { login, loading } = useAuthStore();
   const navigate = useNavigate();
@@ -30,21 +30,20 @@ const LoginPage = () => {
     }
     try {
       await login(input);
-      navigate("/job-tracker");
+      navigate('/job-tracker');
     } catch (error: any) {
       toast.error(error.message);
-      
     }
   };
 
   return (
-    <div className="flex items-center  justify-center min-h-screen ">
+    <div className="flex min-h-screen items-center justify-center">
       <form
         onSubmit={submitHandler}
-        className="md:p-8 w-full max-w-md md:border border-gray-200 rounde  mx-4"
+        className="rounde mx-4 w-full max-w-md border-gray-200 md:border md:p-8"
       >
         <div className="mb-4">
-          <h1 className="font-bold text-center text-2xl">Welcome Back</h1>
+          <h1 className="text-center text-2xl font-bold">Welcome Back</h1>
         </div>
 
         <div className="mb-4">
@@ -57,9 +56,9 @@ const LoginPage = () => {
               placeholder="John123"
               className="pl-10 focus-visible:ring-1"
             />
-            <User className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+            <User className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
             {errors && (
-              <span className="text-red-500 text-xs">{errors.username}</span>
+              <span className="text-xs text-red-500">{errors.username}</span>
             )}
           </div>
         </div>
@@ -73,9 +72,9 @@ const LoginPage = () => {
               placeholder="******"
               className="pl-10 focus-visible:ring-1"
             />
-            <LockKeyhole className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+            <LockKeyhole className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
             {errors && (
-              <span className="text-red-500 text-xs">{errors.password}</span>
+              <span className="text-xs text-red-500">{errors.password}</span>
             )}
           </div>
           <p className="mt-2 text-sm">
@@ -88,18 +87,12 @@ const LoginPage = () => {
           </p>
         </div>
         {loading ? (
-          <Button
-            disabled
-            className=" w-full border-none"
-          >
-            <Loader2 className="animate-spin h-4 w-4 mr-2" />
+          <Button disabled className="w-full border-none">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Please Wait
           </Button>
         ) : (
-          <Button
-            type="submit"
-            className=" w-full border-none"
-          >
+          <Button type="submit" className="w-full border-none">
             Login
           </Button>
         )}
@@ -107,7 +100,7 @@ const LoginPage = () => {
         <Separator className="mt-7" />
 
         <p className="mt-4">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <Link to="/signup" className="text-blue-500 hover:underline">
             Create new Account
           </Link>

@@ -1,8 +1,8 @@
-import { Navigate, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
-import { getToken, isTokenExpired, removeToken } from "@/utils/tokenUtils";
-import { toast } from "sonner";
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/hooks/zustand/store/useAuthStore';
+import { getToken, isTokenExpired, removeToken } from '@/utils/tokenUtils';
+import { toast } from 'sonner';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -27,8 +27,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     if (token && isTokenExpired(token)) {
       removeToken();
       logout(); // Clear user state in Zustand
-      toast.error("Session expired. Please log in again.");
-      navigate("/home");
+      toast.error('Session expired. Please log in again.');
+      navigate('/home');
     }
 
     return () => {

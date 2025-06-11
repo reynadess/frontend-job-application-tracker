@@ -24,7 +24,7 @@ const SheetWrapper: React.FC<SheetWrapperProps> = ({
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={handleClose}>
-      <SheetContent className="flex flex-col pb-0 overflow-y-auto no-scrollbar">
+      <SheetContent className="no-scrollbar flex flex-col overflow-y-auto pb-0">
         <SheetHeader>
           <SheetTitle className="text-2xl">{title}</SheetTitle>
           <SheetDescription>{description}</SheetDescription>

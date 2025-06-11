@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { Button } from "../../ui/button";
+import { Link } from 'react-router-dom';
+import { Button } from '../../ui/button';
 import {
   Dialog,
   DialogClose,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../ui/dialog";
+} from '../../ui/dialog';
 
 import {
   CalendarIcon,
@@ -17,9 +17,9 @@ import {
   LinkIcon,
   DollarSignIcon,
   ClockIcon,
-} from "lucide-react";
-import { DialogDescription } from "@radix-ui/react-dialog";
-import { ApplicationsType } from "@/types/applications.types";
+} from 'lucide-react';
+import { DialogDescription } from '@radix-ui/react-dialog';
+import { ApplicationsType } from '@/types/applications.types';
 
 interface PopupProps {
   selectedApplication: ApplicationsType | null;
@@ -29,19 +29,19 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full" type="button" variant={"ghost"}>
+        <Button className="w-full" type="button" variant={'ghost'}>
           View Details
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[70vw] max-h-[90vh]  overflow-y-auto">
-        <div className="flex flex-col items-center mb-4">
-          <div className="w-24 h-24 rounded-full bg-gray-100  flex items-center justify-center md-2 overflow-hidden">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[70vw]">
+        <div className="mb-4 flex flex-col items-center">
+          <div className="md-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-gray-100">
             <img
               src={
-                "https://imgs.search.brave.com/IQL0yRWAyMo_AqV4saaoXE1ZwqC_lJR1S7aF6WaqWfI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvam9iLWFuZC1y/ZXN1bWUtNS82NC9D/b21wYW55LW9mZmlj/ZS1hZGRyZXNzLWxv/Y2F0aW9uLWdwcy0x/MjgucG5n"
+                'https://imgs.search.brave.com/IQL0yRWAyMo_AqV4saaoXE1ZwqC_lJR1S7aF6WaqWfI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvam9iLWFuZC1y/ZXN1bWUtNS82NC9D/b21wYW55LW9mZmlj/ZS1hZGRyZXNzLWxv/Y2F0aW9uLWdwcy0x/MjgucG5n'
               }
               alt="company-logo"
-              className="w-full h-full object-contain"
+              className="h-full w-full object-contain"
             />
           </div>
           <h2 className="text-xl font-bold">{selectedApplication?.company}</h2>
@@ -56,32 +56,32 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
           <div className="grid gap-6 py-4">
             {/* Job highlights */}
             <div className="flex flex-wrap gap-3 text-sm">
-              <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950  px-3 py-1 rounded-full">
+              <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
                 <DollarSignIcon className="h-4 w-4" />
                 <span>{selectedApplication?.ctcOffered}</span>
               </div>
-              <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
                 <MapPinIcon className="h-4 w-4" />
                 <span>
-                  {selectedApplication?.city}, {selectedApplication?.country},{" "}
+                  {selectedApplication?.city}, {selectedApplication?.country},{' '}
                   {selectedApplication?.state}
                 </span>
               </div>
-              <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
                 <BriefcaseIcon className="h-4 w-4" />
                 <span>Full time</span>
               </div>
-              <div className="flex items-center gap-1 bg-gray-100 dark:bg-blue-950 px-3 py-1 rounded-full">
+              <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
                 <ClockIcon className="h-4 w-4" />
                 <span>Remote</span>
               </div>
             </div>
 
             {/* Application status */}
-            <div className="flex items-center justify-between border-t border-b py-3">
+            <div className="flex items-center justify-between border-b border-t py-3">
               <div className="flex items-center gap-2">
-                <CalendarIcon className="h-4 w-4 " />
-                <span className="text-sm ">Applied on May 15 , 2025</span>
+                <CalendarIcon className="h-4 w-4" />
+                <span className="text-sm">Applied on May 15 , 2025</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
                 {selectedApplication?.status}
@@ -91,10 +91,10 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
             {/* job link  */}
 
             <div className="flex items-center gap-2">
-              <LinkIcon className="h-4 w-4 " />
+              <LinkIcon className="h-4 w-4" />
               <Link
-                to={"www.google.com"}
-                className="text-blue-600 hover:underline text-sm"
+                to={'www.google.com'}
+                className="text-sm text-blue-600 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -104,8 +104,8 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
 
             {/* Job Description */}
             <div>
-              <h3 className="font-semibold mb-2">Job Description</h3>
-              <div className="text-sm  space-y-2">
+              <h3 className="mb-2 font-semibold">Job Description</h3>
+              <div className="space-y-2 text-sm">
                 <p>{selectedApplication?.description}</p>
                 <p>
                   Responsibilities include developing new features, maintaining
@@ -116,8 +116,8 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
 
             {/* Qualification */}
             <div>
-              <h3 className="font-semibold mb-2">Qualification</h3>
-              <ul className="list-disc list-inside text-sm  space-y-1">
+              <h3 className="mb-2 font-semibold">Qualification</h3>
+              <ul className="list-inside list-disc space-y-1 text-sm">
                 <li>5+ years of experience in software development</li>
                 <li>Strong proficiency in JavaScript, React, and Node.js</li>
                 <li>Experience with cloud platforms (AWS, GCP, or Azure)</li>
@@ -129,8 +129,8 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
             {/* Benefits */}
 
             <div>
-              <h3 className="font-semibold mb-2">Benefits</h3>
-              <ul className="list-disc list-inside text-sm  space-y-1">
+              <h3 className="mb-2 font-semibold">Benefits</h3>
+              <ul className="list-inside list-disc space-y-1 text-sm">
                 <li>Competitive salary and equity package</li>
                 <li>Health, dental, and vision insurance</li>
                 <li>401(k) matching</li>
@@ -141,8 +141,8 @@ const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">About Acme Corporation</h3>
-              <p className="text-sm ">
+              <h3 className="mb-2 font-semibold">About Acme Corporation</h3>
+              <p className="text-sm">
                 Acme Corporation is a leading technology company specializing in
                 innovative software solutions. Founded in 2010, we've grown to
                 over 500 employees worldwide with offices in San Francisco, New

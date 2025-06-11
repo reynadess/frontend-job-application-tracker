@@ -12,12 +12,12 @@ import ProfileEmptyContainers from './emptycontainers/ProfileEmptyContainers';
 import { Link } from 'react-router-dom';
 
 const mockResumeData = {
-  resume: "https://example.com/resume.pdf",
-  name: "John Doe",
-  resumeUpdateDate: new Date()
+  resume: 'https://example.com/resume.pdf',
+  name: 'John Doe',
+  resumeUpdateDate: new Date(),
 };
 
-const ProfileResume = ({resume}) => {
+const ProfileResume = ({ resume }) => {
   const [resumeData] = useState(mockResumeData);
   const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
   const [isOwner] = useState<boolean>(true);
@@ -30,13 +30,13 @@ const ProfileResume = ({resume}) => {
   };
 
   return (
-    <div className='space-y-5'>
-      <div className="flex justify-between items-center space-y-2">
-        <h3 className="font-bold text-2xl">Resume</h3>
+    <div className="space-y-5">
+      <div className="flex items-center justify-between space-y-2">
+        <h3 className="text-2xl font-bold">Resume</h3>
         {isOwner && (
           <Button
             variant={'outline'}
-            className="px-3 py-2 rounded-sm text-slate-500 dark:text-slate-400 flex gap-2"
+            className="flex gap-2 rounded-sm px-3 py-2 text-slate-500 dark:text-slate-400"
             onClick={handleOpen}
           >
             <Pencil height={16} width={16} /> Edit
@@ -61,9 +61,9 @@ const ProfileResume = ({resume}) => {
         />
       )}
       {resumeData.resume && (
-        <div className="rounded-2xl gap-y-4 p-6 dark:bg-slate-900 bg-slate-200 flex justify-between items-center">
+        <div className="flex items-center justify-between gap-y-4 rounded-2xl bg-slate-200 p-6 dark:bg-slate-900">
           <Link to={resumeData.resume} target="_blank" className="flex gap-x-4">
-            <div className="border-slate-200 w-fit border dark:border-slate-800 p-2 rounded-[12px]">
+            <div className="w-fit rounded-[12px] border border-slate-200 p-2 dark:border-slate-800">
               <FileText width={32} height={32} className="text-slate-500" />
             </div>
             <div>

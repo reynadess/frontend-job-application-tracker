@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -7,14 +7,14 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   aboutMeSchema,
   AboutMeSchemaType,
-} from "@/schema/userProfileValidators";
+} from '@/schema/userProfileValidators';
 
 const AboutMeForm = ({
   handleClose,
@@ -26,7 +26,7 @@ const AboutMeForm = ({
   const form = useForm<AboutMeSchemaType>({
     resolver: zodResolver(aboutMeSchema),
     defaultValues: {
-      aboutMe: aboutMe || "",
+      aboutMe: aboutMe || '',
     },
   });
 
@@ -36,9 +36,9 @@ const AboutMeForm = ({
   };
 
   return (
-    <div className=" flex-1 relative">
+    <div className="relative flex-1">
       <Form {...form}>
-        <form className="space-y-8 h-full flex flex-col justify-between">
+        <form className="flex h-full flex-col justify-between space-y-8">
           <div>
             <FormField
               control={form.control}
@@ -56,11 +56,11 @@ const AboutMeForm = ({
               )}
             />
           </div>
-          <div className="py-4 flex gap-4 justify-end">
+          <div className="flex justify-end gap-4 py-4">
             <Button
               onClick={handleFormClose}
-              variant={"outline"}
-              className="mt-0 text-slate-500 dark:text-slate-400 rounded-[8px]"
+              variant={'outline'}
+              className="mt-0 rounded-[8px] text-slate-500 dark:text-slate-400"
               type="reset"
             >
               Cancel
@@ -68,13 +68,13 @@ const AboutMeForm = ({
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"
-              className="mt-0 text-white rounded-[8px]"
+              className="mt-0 rounded-[8px] text-white"
             >
               {form.formState.isSubmitting
-                ? "Please Wait..."
+                ? 'Please Wait...'
                 : aboutMe
-                ? "Update About Me"
-                : "Add About Me"}
+                  ? 'Update About Me'
+                  : 'Add About Me'}
             </Button>
           </div>
         </form>

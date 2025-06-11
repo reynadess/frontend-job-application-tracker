@@ -3,7 +3,7 @@ import {
   EmploymentType,
   FieldOfStudyType,
   WorkMode,
-} from "@/lib/enum/enums";
+} from '@/lib/enum/enums';
 
 export interface ProjectType {
   id: number;
@@ -63,5 +63,3 @@ export type ApplicantState = {
   getApplicantInfo: (username: string) => Promise<void>;
   loading: boolean;
 };
-
-

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Pencil, Settings, User  } from 'lucide-react';
+import { Pencil, Settings, User } from 'lucide-react';
 import SheetWrapper from './sheets/SheetWrapper';
 import EditProfileForm from './forms/EditProfileForm';
 import { SHEETS } from '@/lib/constants/Profile.constant';
@@ -11,23 +11,23 @@ import ProfileSocials from './ProfileSocials';
 import { ProfileShareDialog } from './ProfileShare';
 import { UserType } from '@/types/user.types';
 
-const mockUserDetails   = {
-  id: "1",
-  username: "johndoe",
-  firstName: "John",
-  lastName: "Doe",
-  avatar: "https://github.com/shadcn.png",
-  githubLink: "https://github.com/johndoe",
-  linkedinLink: "https://linkedin.com/in/johndoe",
-  twitterLink: "https://twitter.com/johndoe",
-  portfolioLink: "https://johndoe.dev",
-  discordLink: "https://discord.com/users/johndoe",
-  email: "john@example.com",
-  contactEmail: "contact@example.com",
+const mockUserDetails = {
+  id: '1',
+  username: 'johndoe',
+  firstName: 'John',
+  lastName: 'Doe',
+  avatar: 'https://github.com/shadcn.png',
+  githubLink: 'https://github.com/johndoe',
+  linkedinLink: 'https://linkedin.com/in/johndoe',
+  twitterLink: 'https://twitter.com/johndoe',
+  portfolioLink: 'https://johndoe.dev',
+  discordLink: 'https://discord.com/users/johndoe',
+  email: 'john@example.com',
+  contactEmail: 'contact@example.com',
   skills: [],
 };
 
-const ProfileHeroSection = ({applicant} : {applicant : any}) => {
+const ProfileHeroSection = ({ applicant }: { applicant: any }) => {
   const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [userdetails] = useState(mockUserDetails);
@@ -43,10 +43,10 @@ const ProfileHeroSection = ({applicant} : {applicant : any}) => {
 
   return (
     <>
-      <div className="border rounded-2xl min-h-72 overflow-hidden">
-        <div className="w-full h-32 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
-        <div className="p-6 relative flex-col flex gap-y-3">
-          <Avatar className="h-32 w-32 absolute -top-16 bg-slate-100 dark:bg-slate-900">
+      <div className="min-h-72 overflow-hidden rounded-2xl border">
+        <div className="h-32 w-full bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+        <div className="relative flex flex-col gap-y-3 p-6">
+          <Avatar className="absolute -top-16 h-32 w-32 bg-slate-100 dark:bg-slate-900">
             {userdetails.avatar && (
               <AvatarImage src={userdetails.avatar} alt="@shadcn" />
             )}
@@ -54,14 +54,14 @@ const ProfileHeroSection = ({applicant} : {applicant : any}) => {
               <User
                 width={32}
                 height={32}
-                className="dark:text-slate-400 text-slate-500"
+                className="text-slate-500 dark:text-slate-400"
               />
             </AvatarFallback>
           </Avatar>
-          <div className="w-full flex justify-end gap-2 h-10">
+          <div className="flex h-10 w-full justify-end gap-2">
             <Button
               variant={'outline'}
-              className="px-3 py-2 rounded-sm"
+              className="rounded-sm px-3 py-2"
               onClick={handleOpen}
             >
               <Pencil height={16} width={16} />
@@ -69,14 +69,16 @@ const ProfileHeroSection = ({applicant} : {applicant : any}) => {
             <Button
               onClick={() => setIsAccountOpen(true)}
               variant={'outline'}
-              className="px-3 py-2 rounded-sm"
+              className="rounded-sm px-3 py-2"
             >
               <Settings height={16} width={16} />
             </Button>
             <ProfileShareDialog />
           </div>
           <div>
-            <h2 className="text-4xl font-bold">{`${applicant.firstName}\t${applicant.lastName}`} </h2>
+            <h2 className="text-4xl font-bold">
+              {`${applicant.firstName}\t${applicant.lastName}`}{' '}
+            </h2>
           </div>
           <ProfileSocials userdetails={userdetails} applicant={applicant} />
         </div>
@@ -87,10 +89,7 @@ const ProfileHeroSection = ({applicant} : {applicant : any}) => {
         title={SHEETS.editProfile.title}
         description={SHEETS.editProfile.description}
       >
-        <EditProfileForm
-          userDetails={userdetails} 
-          onClose={handleClose}
-        />
+        <EditProfileForm userDetails={userdetails} onClose={handleClose} />
       </SheetWrapper>
       <SheetWrapper
         isOpen={isAccountOpen}

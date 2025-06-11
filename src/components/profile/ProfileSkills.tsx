@@ -8,8 +8,15 @@ import { SkillsForm } from './forms/SkillsForm';
 import ProfileEmptyContainers from './emptycontainers/ProfileEmptyContainers';
 
 const mockSkills = [
-  "React", "TypeScript", "Node.js", "MongoDB", "AWS", 
-  "Docker", "JavaScript", "Python", "Git"
+  'React',
+  'TypeScript',
+  'Node.js',
+  'MongoDB',
+  'AWS',
+  'Docker',
+  'JavaScript',
+  'Python',
+  'Git',
 ];
 
 const ProfileSkills = () => {
@@ -35,13 +42,13 @@ const ProfileSkills = () => {
   };
 
   return (
-    <div className='space-y-5'>
-      <div className="flex justify-between items-center space-y-3">
-        <h3 className="font-bold text-2xl">Skills</h3>
+    <div className="space-y-5">
+      <div className="flex items-center justify-between space-y-3">
+        <h3 className="text-2xl font-bold">Skills</h3>
         {isOwner && (
           <Button
             variant={'outline'}
-            className="px-3 py-2 rounded-sm text-slate-500 dark:text-slate-400 flex gap-2"
+            className="flex gap-2 rounded-sm px-3 py-2 text-slate-500 dark:text-slate-400"
             onClick={handleOpen}
           >
             <Pencil height={16} width={16} /> Update
@@ -66,18 +73,18 @@ const ProfileSkills = () => {
         />
       )}
       {skills.length !== 0 && (
-        <div className="rounded-2xl gap-x-2 p-6 dark:bg-slate-900 bg-slate-200 flex flex-wrap">
+        <div className="flex flex-wrap gap-x-2 rounded-2xl bg-slate-200 p-6 dark:bg-slate-900">
           {skills.map((title) => {
             return (
               <div
                 key={title}
-                className="dark:border-slate-800 border px-3 py-2 rounded-[8px] dark:text-slate-50 border-slate-200 flex items-center gap-2"
+                className="flex items-center gap-2 rounded-[8px] border border-slate-200 px-3 py-2 dark:border-slate-800 dark:text-slate-50"
               >
                 {title}
                 {isOwner && (
                   <button
                     onClick={() => removeSkill(title)}
-                    className="text-red-500 ml-2"
+                    className="ml-2 text-red-500"
                   >
                     ✕
                   </button>
@@ -94,11 +101,7 @@ const ProfileSkills = () => {
           title={SHEETS.skills.title}
           description={SHEETS.skills.description}
         >
-          <SkillsForm
-            handleClose={handleClose}
-            skills={skills}
-          
-          />
+          <SkillsForm handleClose={handleClose} skills={skills} />
         </SheetWrapper>
       )}
     </div>

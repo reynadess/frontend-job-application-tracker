@@ -1,4 +1,4 @@
-import  { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Form,
   FormControl,
@@ -29,30 +29,26 @@ const ProjectForm = ({
   addUserProjects,
   editProject,
   submitImage,
-  profileProjectSchema
-}:any) => {
+  profileProjectSchema,
+}: any) => {
   const [file, setFiles] = useState(null);
   const [previewImg, setPreviewImg] = useState(
     selectedProject?.projectThumbnail || null
   );
 
-  const onDrop = useCallback(
-    (acceptedFiles : any) => {
-      if (
-        acceptedFiles[0].size < 1024 * 1024 * 5 && //5mb
-        acceptedFiles[0].type.includes('image')
-      ) {
-        setFiles(acceptedFiles[0]);
-        setPreviewImg(URL.createObjectURL(acceptedFiles[0]));
-      } else {
-        toast.error(
-          
-           'Project thumbnail should be a image and not more than 5 MB.',
-        );
-      }
-    },
-    []
-  );
+  const onDrop = useCallback((acceptedFiles: any) => {
+    if (
+      acceptedFiles[0].size < 1024 * 1024 * 5 && //5mb
+      acceptedFiles[0].type.includes('image')
+    ) {
+      setFiles(acceptedFiles[0]);
+      setPreviewImg(URL.createObjectURL(acceptedFiles[0]));
+    } else {
+      toast.error(
+        'Project thumbnail should be a image and not more than 5 MB.'
+      );
+    }
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -65,11 +61,11 @@ const ProjectForm = ({
       projectGithub: selectedProject?.projectGithub || '',
       projectLiveLink: selectedProject?.projectLiveLink || '',
       projectName: selectedProject?.projectName || '',
-      stack: selectedProject?.stack || 'OTHERS'
+      stack: selectedProject?.stack || 'OTHERS',
     },
   });
 
-  async function onSubmit(data  :any) {
+  async function onSubmit(data: any) {
     try {
       if (file) {
         data.projectThumbnail = (await submitImage(file)) ?? '';
@@ -85,22 +81,13 @@ const ProjectForm = ({
       }
 
       if (!response.status) {
-        return toast.error(
-         response.message || 'Error'
-        
-        );
+        return toast.error(response.message || 'Error');
       }
-      toast.success(
-      response.message,
-      
-      );
+      toast.success(response.message);
 
       handleFormClose();
     } catch (_error) {
-      toast.error(
-    'Something went wrong while Adding Skills',
-      
-      );
+      toast.error('Something went wrong while Adding Skills');
     }
   }
 
@@ -110,7 +97,7 @@ const ProjectForm = ({
     handleClose();
     handleImageReset();
   };
-  
+
   const handleImageReset = () => {
     setFiles(null);
     setPreviewImg(null);
@@ -118,23 +105,23 @@ const ProjectForm = ({
   };
 
   return (
-    <div className="flex-1 relative">
+    <div className="relative flex-1">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 h-full flex flex-col justify-between"
+          className="flex h-full flex-col justify-between space-y-8"
         >
           <div className="flex flex-col gap-y-4">
             <div>
               <FormLabel>Upload project thumbnail</FormLabel>
               <div
                 {...getRootProps()}
-                className={`w-full overflow-hidden h-44 flex justify-center items-center flex-col bg-slate-100 dark:bg-slate-900 rounded-[8px] border border-transparent text-center mt-2 relative ${isDragActive && 'animate-pulse border-white'}`}
+                className={`relative mt-2 flex h-44 w-full flex-col items-center justify-center overflow-hidden rounded-[8px] border border-transparent bg-slate-100 text-center dark:bg-slate-900 ${isDragActive && 'animate-pulse border-white'}`}
               >
                 {previewImg && (
                   <div
                     onClick={handleImageReset}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center cursor-pointer"
+                    className="absolute right-1 top-1 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white"
                   >
                     <X height={16} width={16} />
                   </div>
@@ -143,11 +130,11 @@ const ProjectForm = ({
                   <>
                     <input {...getInputProps({ accept: 'images' })} />
                     <CirclePlus height={24} width={24} />
-                    <p className="font-medium text-base leading-6 block mt-2">
+                    <p className="mt-2 block text-base font-medium leading-6">
                       Drag and drop an image <br />
                       or click to upload
                     </p>
-                    <p className="text-slate-400 text-xs">
+                    <p className="text-xs text-slate-400">
                       Supported formats: JPEG, PNG. <br />
                       Maximum file size: 5MB
                     </p>
@@ -159,11 +146,11 @@ const ProjectForm = ({
                     alt="project-image"
                     width={300}
                     height={300}
-                    className="object-cover !w-full !h-full"
+                    className="!h-full !w-full object-cover"
                   />
                 )}
               </div>
-              <p className="text-red-700 text-xs">
+              <p className="text-xs text-red-700">
                 {!previewImg &&
                   form.formState.errors.projectThumbnail?.message &&
                   'Project Thumbnail is required.'}
@@ -249,11 +236,11 @@ const ProjectForm = ({
               )}
             />
           </div>
-          <div className="py-4 flex gap-4 justify-end">
+          <div className="flex justify-end gap-4 py-4">
             <Button
               onClick={handleFormClose}
               variant={'outline'}
-              className="mt-0 text-slate-500 dark:text-white rounded-[8px]"
+              className="mt-0 rounded-[8px] text-slate-500 dark:text-white"
               type="reset"
             >
               Cancel
@@ -261,7 +248,7 @@ const ProjectForm = ({
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"
-              className="mt-0 text-white rounded-[8px]"
+              className="mt-0 rounded-[8px] text-white"
             >
               {form.formState.isSubmitting
                 ? 'Please wait ...'

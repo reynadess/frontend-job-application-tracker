@@ -1,16 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Search, ChevronDown, X, Plus } from "lucide-react";
-import { Status_Options } from "@/types/applications.types";
-import { DEFAULT_VISIBLE_COLUMNS, TABLE_COLUMNS } from "../constants";
-import type { JobTableFilters } from "../types";
+} from '@/components/ui/dropdown-menu';
+import { Search, ChevronDown, X, Plus } from 'lucide-react';
+import { Status_Options } from '@/types/applications.types';
+import { DEFAULT_VISIBLE_COLUMNS, TABLE_COLUMNS } from '../constants';
+import type { JobTableFilters } from '../types';
 
 interface TableControlsProps {
   filters: JobTableFilters;
@@ -43,7 +43,7 @@ export function TableControls({
 
   const hasActiveFilters = () => {
     return (
-      filters.search !== "" ||
+      filters.search !== '' ||
       filters.status.length > 0 ||
       JSON.stringify(filters.visibleColumns) !==
         JSON.stringify(DEFAULT_VISIBLE_COLUMNS)
@@ -51,7 +51,7 @@ export function TableControls({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
       <div className="relative w-full sm:w-72">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input

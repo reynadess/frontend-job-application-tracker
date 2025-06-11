@@ -1,4 +1,3 @@
-
 import {
   Form,
   FormControl,
@@ -9,7 +8,7 @@ import {
 import {
   UserPasswordSchema,
   UserPasswordSchemaType,
-} from "@/schema/userProfileValidators"
+} from '@/schema/userProfileValidators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -27,10 +26,6 @@ const AccountSeetingForm = ({ handleClose }: { handleClose: () => void }) => {
     },
   });
 
- 
-
-
-
   const handleFormClose = () => {
     form.clearErrors();
     form.reset();
@@ -38,12 +33,10 @@ const AccountSeetingForm = ({ handleClose }: { handleClose: () => void }) => {
   };
 
   return (
-    <div className=" flex-1 relative">
-      <h2 className="text-xl mb-4 font-bold">Change password</h2>
+    <div className="relative flex-1">
+      <h2 className="mb-4 text-xl font-bold">Change password</h2>
       <Form {...form}>
-        <form
-          className="space-y-8 flex flex-col justify-between border px-3 py-3 rounded-sm"
-        >
+        <form className="flex flex-col justify-between space-y-8 rounded-sm border px-3 py-3">
           <div className="flex flex-col gap-y-4">
             <FormField
               control={form.control}
@@ -96,19 +89,19 @@ const AccountSeetingForm = ({ handleClose }: { handleClose: () => void }) => {
                 </FormItem>
               )}
             />
-            <div className="py-4 flex gap-4 justify-end">
+            <div className="flex justify-end gap-4 py-4">
               <Button
                 type="reset"
                 onClick={handleFormClose}
                 variant={'outline'}
-                className="mt-0 text-slate-500 dark:text-slate-400 rounded-[8px]"
+                className="mt-0 rounded-[8px] text-slate-500 dark:text-slate-400"
               >
                 Cancel
               </Button>
               <Button
                 disabled={form.formState.isSubmitting}
                 type="submit"
-                className="mt-0 text-white rounded-[8px]"
+                className="mt-0 rounded-[8px] text-white"
               >
                 {form.formState.isSubmitting
                   ? 'Please wait...'
@@ -119,12 +112,12 @@ const AccountSeetingForm = ({ handleClose }: { handleClose: () => void }) => {
         </form>
       </Form>
 
-      <div className="h-60 bg-red-600 bg-opacity-10 mt-5 rounded-md flex flex-col justify-center items-center p-6 text-center ">
+      <div className="mt-5 flex h-60 flex-col items-center justify-center rounded-md bg-red-600 bg-opacity-10 p-6 text-center">
         <TriangleAlert height={32} width={32} className="text-[#DD503F]" />
-        <h4 className="text-xl font-bold dark:text-slate-50 text-[#020817] ">
+        <h4 className="text-xl font-bold text-[#020817] dark:text-slate-50">
           Delete account
         </h4>
-        <p className="text-slate-500 dark:text-slate-400 text-sm">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Permanently delete your account and all associated data. This action
           cannot be undone.
         </p>

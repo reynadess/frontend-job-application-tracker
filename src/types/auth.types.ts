@@ -1,8 +1,8 @@
-import { LoginInputType, SignupInputType } from "@/schema/userSchema";
+import { LoginInputType, SignupInputType } from '@/schema/userSchema';
 //Auth types
 export type User = {
-    id: string;
-    username: string;
+  id: string;
+  username: string;
 };
 
 export type UserState = {

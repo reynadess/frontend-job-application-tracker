@@ -18,7 +18,7 @@ export function UserSkills() {
       {skills.map((item, index) => (
         <div
           key={index}
-          className="bg-blue-300 p-2 rounded-sm dark:bg-blue-800"
+          className="rounded-sm bg-blue-300 p-2 dark:bg-blue-800"
         >
           {item}
         </div>

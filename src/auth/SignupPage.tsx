@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { SignupInputType } from "@/schema/userSchema";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { SignupInputType } from '@/schema/userSchema';
 import {
   Loader2,
   LockKeyhole,
@@ -9,21 +9,21 @@ import {
   Notebook,
   User,
   User2,
-} from "lucide-react";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { userSignupSchema } from "@/schema/userSchema";
-import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
+} from 'lucide-react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { userSignupSchema } from '@/schema/userSchema';
+import { useAuthStore } from '@/hooks/zustand/store/useAuthStore';
 
 const SignupPage = () => {
   const [input, setInput] = useState<SignupInputType>({
-    username: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   });
-  const {signup , loading}  = useAuthStore();
+  const { signup, loading } = useAuthStore();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Partial<SignupInputType>>({});
 
@@ -32,7 +32,7 @@ const SignupPage = () => {
     setInput({ ...input, [name]: value });
   };
 
-  const submitHandler = async(e: FormEvent) => {
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     const result = userSignupSchema.safeParse(input);
     if (!result.success) {
@@ -41,19 +41,22 @@ const SignupPage = () => {
       return;
     }
     // reseting the fields
-   try {
-    await signup(input);
-    navigate("/login");
-   } catch (error) {
-    console.error(error);
-   }
+    try {
+      await signup(input);
+      navigate('/login');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="flex items-center  justify-center min-h-screen ">
-      <form onSubmit={submitHandler} className="md:p-8 w-full max-w-md md:border border-gray-200 rounde  mx-4">
+    <div className="flex min-h-screen items-center justify-center">
+      <form
+        onSubmit={submitHandler}
+        className="rounde mx-4 w-full max-w-md border-gray-200 md:border md:p-8"
+      >
         <div className="mb-4">
-          <h1 className="font-bold text-center text-2xl">
+          <h1 className="text-center text-2xl font-bold">
             Create Your Account to Start Tracking Jobs!
           </h1>
         </div>
@@ -68,8 +71,10 @@ const SignupPage = () => {
                 placeholder="John"
                 className="pl-10 focus-visible:ring-1"
               />
-              <User2 className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-              {errors && <span className="text-red-500 text-xs">{errors.firstName}</span>}
+              <User2 className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
+              {errors && (
+                <span className="text-xs text-red-500">{errors.firstName}</span>
+              )}
             </div>
           </div>
           <div className="mb-4">
@@ -82,8 +87,10 @@ const SignupPage = () => {
                 placeholder="Doe"
                 className="pl-10 focus-visible:ring-1"
               />
-              <Notebook className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-              {errors && <span className="text-red-500 text-xs">{errors.lastName}</span>}
+              <Notebook className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
+              {errors && (
+                <span className="text-xs text-red-500">{errors.lastName}</span>
+              )}
             </div>
           </div>
         </div>
@@ -97,8 +104,10 @@ const SignupPage = () => {
               placeholder="John123"
               className="pl-10 focus-visible:ring-1"
             />
-            <User className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && <span className="text-red-500 text-xs">{errors.username}</span>}
+            <User className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
+            {errors && (
+              <span className="text-xs text-red-500">{errors.username}</span>
+            )}
           </div>
         </div>
         <div className="mb-4">
@@ -111,8 +120,10 @@ const SignupPage = () => {
               placeholder="john@example.com"
               className="pl-10 focus-visible:ring-1"
             />
-            <Mail className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && <span className="text-red-500 text-xs">{errors.email}</span>}
+            <Mail className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
+            {errors && (
+              <span className="text-xs text-red-500">{errors.email}</span>
+            )}
           </div>
         </div>
         <div className="mb-4">
@@ -125,23 +136,19 @@ const SignupPage = () => {
               placeholder="******"
               className="pl-10 focus-visible:ring-1"
             />
-            <LockKeyhole className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
-            {errors && <span className="text-red-500 text-xs">{errors.password}</span>}
+            <LockKeyhole className="pointer-events-none absolute inset-y-2 left-2 text-gray-500" />
+            {errors && (
+              <span className="text-xs text-red-500">{errors.password}</span>
+            )}
           </div>
         </div>
         {loading ? (
-          <Button
-            disabled
-            className=" w-full border-none"
-          >
-            <Loader2 className="animate-spin h-4 w-4 mr-2" />
+          <Button disabled className="w-full border-none">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Please Wait
           </Button>
         ) : (
-          <Button
-            type="submit"
-            className=" w-full border-none"
-          >
+          <Button type="submit" className="w-full border-none">
             Signup
           </Button>
         )}
@@ -149,7 +156,7 @@ const SignupPage = () => {
         <Separator className="mt-7" />
 
         <p className="mt-4">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link to="/login" className="text-blue-500 hover:underline">
             Login.
           </Link>

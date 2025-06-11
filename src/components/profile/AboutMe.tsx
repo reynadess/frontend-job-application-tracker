@@ -29,13 +29,13 @@ const ProfileAboutMe = ({
   };
 
   return (
-    <div className='space-y-5 '>
-      <div className="flex justify-between items-center space-y-2">
-        <h3 className="font-bold text-2xl">About Me</h3>
+    <div className="space-y-5">
+      <div className="flex items-center justify-between space-y-2">
+        <h3 className="text-2xl font-bold">About Me</h3>
         {isOwner && (
           <Button
             variant={'outline'}
-            className="px-3 py-2 rounded-sm text-slate-500 dark:text-slate-400 flex gap-2"
+            className="flex gap-2 rounded-sm px-3 py-2 text-slate-500 dark:text-slate-400"
             onClick={handleOpen}
           >
             <Pencil height={16} width={16} /> Edit
@@ -59,7 +59,7 @@ const ProfileAboutMe = ({
         />
       )}
       {aboutMe && (
-        <div className="rounded-2xl p-6 dark:bg-slate-900 bg-slate-200">
+        <div className="rounded-2xl bg-slate-200 p-6 dark:bg-slate-900">
           <p className="text-base leading-normal">{aboutMe}</p>
         </div>
       )}

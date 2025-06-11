@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col justify-start md:h-full items-start md:px-2 z-[4] md:border md:rounded-xl md:pt-6 max-md:absolute right-5">
+    <div className="right-5 z-[4] flex flex-col items-start justify-start max-md:absolute md:h-full md:rounded-xl md:border md:px-2 md:pt-6">
       <DesktopSidebar />
       <MobileSidebar />
     </div>
@@ -21,8 +21,8 @@ const Sidebar = () => {
 
 const DesktopSidebar = () => {
   return (
-    <div className="md:flex hidden w-56 h-full p-2">
-      <div className="flex flex-col w-full">
+    <div className="hidden h-full w-56 p-2 md:flex">
+      <div className="flex w-full flex-col">
         <SidebarNavs />
       </div>
     </div>
@@ -31,16 +31,16 @@ const DesktopSidebar = () => {
 
 const MobileSidebar = () => {
   return (
-    <div className="md:hidden h-full flex flex-col z-[3]">
+    <div className="z-[3] flex h-full flex-col md:hidden">
       <Sheet>
         <SheetTrigger>
           <MenuIcon />
         </SheetTrigger>
         <SheetContent className="md:hidden">
-          <SheetClose className="absolute top-3 right-3">
+          <SheetClose className="absolute right-3 top-3">
             <XIcon />
           </SheetClose>
-          <div className="flex flex-col w-full md:hidden mt-12">
+          <div className="mt-12 flex w-full flex-col md:hidden">
             <SidebarNavs />
           </div>
         </SheetContent>
@@ -52,7 +52,7 @@ const MobileSidebar = () => {
 const SidebarNavs = () => {
   return (
     <div className="flex w-full flex-col text-slate-700 dark:text-slate-300">
-      <div className="flex flex-col justify-start items-start gap-3 mb-2">
+      <div className="mb-2 flex flex-col items-start justify-start gap-3">
         <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
           User Settings
         </span>
@@ -66,10 +66,9 @@ const SidebarNavs = () => {
 };
 
 const NavItem = () => {
-
-  return (
-    {/*TODO: link to path  */}
-  );
+  return {
+    /*TODO: link to path  */
+  };
 };
 
 export default Sidebar;

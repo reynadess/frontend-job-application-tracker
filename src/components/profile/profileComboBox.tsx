@@ -43,7 +43,7 @@ export function ProfileComboBox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between border border-slate-200 dark:bg-gray-800 text-slate-500 rounded-[8px] dark:text-white"
+          className="w-full justify-between rounded-[8px] border border-slate-200 text-slate-500 dark:bg-gray-800 dark:text-white"
         >
           Enter Skills
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

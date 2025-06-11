@@ -4,7 +4,6 @@ import { useState, useTransition } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   UserPasswordSchema,
@@ -14,7 +13,6 @@ import {
 import { Input } from '../ui/input';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { Button } from '../ui/button';
-
 
 import {
   Form,
@@ -26,9 +24,7 @@ import {
 } from '../ui/form';
 import Loader from '../Loader';
 
-
 export const ChangePassword = () => {
-
   const { register, watch } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -55,14 +51,9 @@ export const ChangePassword = () => {
     );
   };
 
- 
-
   return (
     <Form {...form}>
-      <form
-        className="flex flex-col gap-3 p-4 w-full min-h-[45vh]"
-        
-      >
+      <form className="flex min-h-[45vh] w-full flex-col gap-3 p-4">
         <p className="text-md">Change your password</p>
         <FormField
           control={form.control}
@@ -77,7 +68,7 @@ export const ChangePassword = () => {
                     placeholder="******"
                     type="password"
                     onChange={handleInputChange}
-                    className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+                    className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
                   />
                 </div>
               </FormControl>
@@ -99,7 +90,7 @@ export const ChangePassword = () => {
                     type="password"
                     {...register('newPassword', { required: true })}
                     onChange={handleInputChange}
-                    className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+                    className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
                   />
                 </div>
               </FormControl>
@@ -128,12 +119,12 @@ export const ChangePassword = () => {
                       },
                     })}
                     onChange={handleInputChange}
-                    className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+                    className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
                   />
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 transform"
                     aria-label="password"
                   >
                     {showPassword ? <EyeOffIcon /> : <EyeIcon />}
@@ -145,10 +136,10 @@ export const ChangePassword = () => {
           )}
         />
 
-        <div className="flex justify-end w-full">
+        <div className="flex w-full justify-end">
           <Button
             disabled={isPending}
-            className="bg-slate-950 text-white dark:text-slate-950 dark:bg-white rounded-md py-2 px-4 md:w-56 w-full"
+            className="w-full rounded-md bg-slate-950 px-4 py-2 text-white dark:bg-white dark:text-slate-950 md:w-56"
             aria-label="save"
           >
             {isPending ? <Loader /> : 'Save'}

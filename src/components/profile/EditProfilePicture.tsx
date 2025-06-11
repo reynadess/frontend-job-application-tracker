@@ -12,26 +12,26 @@ export const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
 }) => {
   const [image, setImage] = useState<string>(initialImage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
   // Get initials from name
   const getNameInitials = (name: string): string => {
     if (!name) return '';
-    
+
     return name
       .split(' ')
-      .map(part => part.charAt(0))
+      .map((part) => part.charAt(0))
       .join('')
       .toUpperCase();
   };
-  
+
   const nameInitials = getNameInitials(userName);
-  
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
+
     setIsLoading(true);
-    
+
     // Create a local preview URL
     const fileReader = new FileReader();
     fileReader.onload = (event) => {
@@ -41,24 +41,24 @@ export const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
       }
     };
     fileReader.readAsDataURL(file);
-    
+
     // Here you would normally upload to backend
     // Instead, we're just showing a preview
   };
-  
+
   const handleRemoveImage = () => {
     setImage('');
   };
-  
+
   return (
-    <div className="flex flex-col items-center justify-center gap-4 my-4">
-      <div className="flex justify-center items-center">
-        <div className="w-64 h-64 rounded-full overflow-hidden cursor-pointer relative bg-gray-200 flex items-center justify-center">
+    <div className="my-4 flex flex-col items-center justify-center gap-4">
+      <div className="flex items-center justify-center">
+        <div className="relative flex h-64 w-64 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gray-200">
           {image ? (
-            <img 
-              src={image} 
-              alt="Profile" 
-              className="w-full h-full object-cover"
+            <img
+              src={image}
+              alt="Profile"
+              className="h-full w-full object-cover"
             />
           ) : (
             <div className="text-8xl font-bold text-gray-500">
@@ -68,16 +68,16 @@ export const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
         </div>
       </div>
       <span className="text-xs text-slate-500">Accepts .PNG, .JPEG, .JPG</span>
-      <form className="flex mt-2">
+      <form className="mt-2 flex">
         <label
-          className="flex items-center justify-center gap-3 text-xs bg-slate-950 text-white rounded-full px-6 cursor-pointer h-10 w-32"
+          className="flex h-10 w-32 cursor-pointer items-center justify-center gap-3 rounded-full bg-slate-950 px-6 text-xs text-white"
           htmlFor="profile-picture"
         >
           {isLoading ? (
-            <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
           ) : (
             <>
-              <PencilIcon className="w-4 h-4" />
+              <PencilIcon className="h-4 w-4" />
               Change
             </>
           )}
@@ -94,10 +94,10 @@ export const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
           type="button"
           disabled={isLoading || !image}
           onClick={handleRemoveImage}
-          className={`flex items-center justify-center gap-3 text-xs text-red-400 bg-transparent border-none hover:bg-transparent h-10 px-4 ${!image ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+          className={`flex h-10 items-center justify-center gap-3 border-none bg-transparent px-4 text-xs text-red-400 hover:bg-transparent ${!image ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
           aria-label="remove"
         >
-          <Trash className="w-4 h-4" />
+          <Trash className="h-4 w-4" />
           Remove
         </button>
       </form>

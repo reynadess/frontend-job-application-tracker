@@ -2,7 +2,6 @@ import { DegreeType, FieldOfStudyType } from '@/lib/enum/enums';
 import { EducationType } from '@/types/user.types';
 import React, { useState } from 'react';
 
-
 // Define the Education type
 // interface EducationType {
 //   id?: number;
@@ -16,7 +15,10 @@ import React, { useState } from 'react';
 interface EducationFormProps {
   handleClose: () => void;
   selectedEducation?: EducationType | null;
-  onSubmitEducation?: (data: EducationType, id?: number) => Promise<{
+  onSubmitEducation?: (
+    data: EducationType,
+    id?: number
+  ) => Promise<{
     status: boolean;
     message: string;
   }>;
@@ -28,38 +30,43 @@ const formatDate = (date?: Date | null): string => {
 };
 
 const startCase = (str: string): string => {
-  return str.toLowerCase()
+  return str
+    .toLowerCase()
     .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 };
 
 const EducationForm: React.FC<EducationFormProps> = ({
   handleClose,
   selectedEducation = null,
-  onSubmitEducation = async () => ({ status: true, message: 'Success' })
+  onSubmitEducation = async () => ({ status: true, message: 'Success' }),
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<EducationType>({
     instituteName: selectedEducation?.instituteName || '',
     degree: selectedEducation?.degree || DegreeType.BTECH,
     fieldOfStudy: selectedEducation?.fieldOfStudy || FieldOfStudyType.CS,
-    startDate: selectedEducation?.startDate ? new Date(selectedEducation.startDate) : undefined,
-    endDate: selectedEducation?.endDate ? new Date(selectedEducation.endDate) : null,
+    startDate: selectedEducation?.startDate
+      ? new Date(selectedEducation.startDate)
+      : undefined,
+    endDate: selectedEducation?.endDate
+      ? new Date(selectedEducation.endDate)
+      : null,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
-    
+
     if (formData.instituteName.length < 2) {
-      newErrors.instituteName = "Institute name must be at least 2 characters";
+      newErrors.instituteName = 'Institute name must be at least 2 characters';
     }
-    
+
     if (!formData.startDate) {
-      newErrors.startDate = "Start date is required";
+      newErrors.startDate = 'Start date is required';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -68,38 +75,44 @@ const EducationForm: React.FC<EducationFormProps> = ({
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'startDate' | 'endDate') => {
+  const handleDateChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: 'startDate' | 'endDate'
+  ) => {
     const { value } = e.target;
     setFormData({
       ...formData,
-      [field]: value ? new Date(value) : (field === 'endDate' ? null : undefined)
+      [field]: value ? new Date(value) : field === 'endDate' ? null : undefined,
     });
   };
 
-  const handleSelectChange = (value: string, field: 'degree' | 'fieldOfStudy') => {
+  const handleSelectChange = (
+    value: string,
+    field: 'degree' | 'fieldOfStudy'
+  ) => {
     setFormData({
       ...formData,
-      [field]: value
+      [field]: value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Mock submission - in a real app, this would call your API
       const response = await onSubmitEducation(formData, selectedEducation?.id);
-      
+
       if (response.status) {
         // Show success message
         alert(response.message || 'Education saved successfully');
@@ -116,10 +129,10 @@ const EducationForm: React.FC<EducationFormProps> = ({
   };
 
   return (
-    <div className="flex-1 relative">
+    <div className="relative flex-1">
       <form
         onSubmit={handleSubmit}
-        className="space-y-8 h-full flex flex-col justify-between"
+        className="flex h-full flex-col justify-between space-y-8"
       >
         <div className="flex flex-col gap-y-4">
           {/* Institute Name Field */}
@@ -131,20 +144,20 @@ const EducationForm: React.FC<EducationFormProps> = ({
               value={formData.instituteName}
               onChange={handleInputChange}
               placeholder="Enter Institute Name"
-              className={`w-full p-2 border rounded-lg bg-white dark:bg-black ${errors.instituteName ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full rounded-lg border bg-white p-2 dark:bg-black ${errors.instituteName ? 'border-red-500' : 'border-gray-300'}`}
             />
             {errors.instituteName && (
               <p className="text-xs text-red-500">{errors.instituteName}</p>
             )}
           </div>
-          
+
           {/* Degree Field */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Degree</label>
             <select
               value={formData.degree}
               onChange={(e) => handleSelectChange(e.target.value, 'degree')}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black rounded-lg "
+              className="w-full rounded-lg border border-gray-300 bg-white p-2 dark:bg-black"
             >
               {Object.values(DegreeType).map((type) => (
                 <option key={type} value={type}>
@@ -153,14 +166,16 @@ const EducationForm: React.FC<EducationFormProps> = ({
               ))}
             </select>
           </div>
-          
+
           {/* Field of Study */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Field of Study</label>
             <select
               value={formData.fieldOfStudy}
-              onChange={(e) => handleSelectChange(e.target.value, 'fieldOfStudy')}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black rounded-lg"
+              onChange={(e) =>
+                handleSelectChange(e.target.value, 'fieldOfStudy')
+              }
+              className="w-full rounded-lg border border-gray-300 bg-white p-2 dark:bg-black"
             >
               {Object.values(FieldOfStudyType).map((type) => (
                 <option key={type} value={type}>
@@ -177,7 +192,7 @@ const EducationForm: React.FC<EducationFormProps> = ({
               type="date"
               value={formatDate(formData.startDate)}
               onChange={(e) => handleDateChange(e, 'startDate')}
-              className={`w-full p-2 border rounded-lg bg-white dark:bg-black ${errors.startDate ? 'border-red-500' : 'border-gray-300'}`}
+              className={`w-full rounded-lg border bg-white p-2 dark:bg-black ${errors.startDate ? 'border-red-500' : 'border-gray-300'}`}
             />
             {errors.startDate && (
               <p className="text-xs text-red-500">{errors.startDate}</p>
@@ -191,24 +206,24 @@ const EducationForm: React.FC<EducationFormProps> = ({
               type="date"
               value={formatDate(formData.endDate)}
               onChange={(e) => handleDateChange(e, 'endDate')}
-              className="w-full p-2 border bg-white dark:bg-black border-gray-300 rounded-lg"
+              className="w-full rounded-lg border border-gray-300 bg-white p-2 dark:bg-black"
             />
           </div>
         </div>
-        
+
         {/* Form Actions */}
-        <div className="py-4 flex gap-4 justify-end">
+        <div className="flex justify-end gap-4 py-4">
           <button
             onClick={handleClose}
             type="button"
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
           >
             Cancel
           </button>
           <button
             disabled={isSubmitting}
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
           >
             {isSubmitting
               ? 'Please wait...'

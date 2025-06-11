@@ -49,16 +49,16 @@ type Props = {
 // Mock EditProfilePicture component
 const EditProfilePicture = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full p-4">
-      <div className="flex flex-col gap-2 items-center justify-center w-full">
-        <div className="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+    <div className="flex w-full flex-col items-center justify-center gap-4 p-4">
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <div className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
           <img
             src="https://via.placeholder.com/150"
             alt="Profile"
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
-        <div className="flex gap-2 mt-4">
+        <div className="mt-4 flex gap-2">
           <Button variant="outline">Remove</Button>
           <Button>Upload</Button>
         </div>
@@ -87,7 +87,7 @@ export const EditProfile = ({ name, email }: Props) => {
     try {
       // Simulate API call
       setIsPending(true);
-      
+
       // Simulate a delay
       setTimeout(() => {
         setIsPending(false);
@@ -102,20 +102,18 @@ export const EditProfile = ({ name, email }: Props) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-start my-3 gap-4">
-      <div className="flex w-full p-4 border rounded-md mt-5">
+    <div className="my-3 flex flex-col items-start justify-center gap-4">
+      <div className="mt-5 flex w-full rounded-md border p-4">
         <Dialog>
           <DialogTrigger asChild>
-            <div className="w-20 h-20 rounded-full cursor-pointer">
+            <div className="h-20 w-20 cursor-pointer rounded-full">
               <Avatar className="h-20 w-20">
                 <AvatarImage src={userImage || undefined} />
-                <AvatarFallback>
-                  {getNameInitials(name)}
-                </AvatarFallback>
+                <AvatarFallback>{getNameInitials(name)}</AvatarFallback>
               </Avatar>
             </div>
           </DialogTrigger>
-          <DialogContent className="flex flex-col justify-center items-center sm:w-[330px] sm:h-auto h-screen bg-white dark:bg-slate-950 md:rounded-2xl">
+          <DialogContent className="flex h-screen flex-col items-center justify-center bg-white dark:bg-slate-950 sm:h-auto sm:w-[330px] md:rounded-2xl">
             <DialogHeader>
               <DialogTitle>Profile Picture</DialogTitle>
               <DialogDescription>
@@ -128,10 +126,10 @@ export const EditProfile = ({ name, email }: Props) => {
       </div>
       <Form {...form}>
         <form
-          className="flex flex-col gap-3 p-4 border rounded-md w-full min-h-[40vh]"
+          className="flex min-h-[40vh] w-full flex-col gap-3 rounded-md border p-4"
           onSubmit={form.handleSubmit(handleFormSubmit)}
         >
-          <div className="flex justify-between items-center mb-3">
+          <div className="mb-3 flex items-center justify-between">
             <span>Profile Info</span>
             <DeleteAccountDialog />
           </div>
@@ -146,7 +144,7 @@ export const EditProfile = ({ name, email }: Props) => {
                     {...field}
                     disabled={isPending}
                     onChange={handleInputChange}
-                    className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+                    className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
                   />
                 </FormControl>
                 <FormMessage />
@@ -164,17 +162,17 @@ export const EditProfile = ({ name, email }: Props) => {
                     {...field}
                     disabled={isPending}
                     onChange={handleInputChange}
-                    className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+                    className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="flex justify-end w-full">
+          <div className="flex w-full justify-end">
             <Button
               disabled={isPending}
-              className="bg-slate-950 text-white dark:text-slate-950 dark:bg-white rounded-md py-2 px-4 md:w-56 w-full"
+              className="w-full rounded-md bg-slate-950 px-4 py-2 text-white dark:bg-white dark:text-slate-950 md:w-56"
               type="submit"
               aria-label="submit"
             >

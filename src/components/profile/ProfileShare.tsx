@@ -1,14 +1,14 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Twitter, Linkedin, Share2, Copy } from "lucide-react";
-import { toast } from "sonner";
+} from '@/components/ui/dialog';
+import { Twitter, Linkedin, Share2, Copy } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface ShareOption {
   name: string;
@@ -19,36 +19,36 @@ interface ShareOption {
 export const ProfileShareDialog = () => {
   const shareOptions: ShareOption[] = [
     {
-      name: "Twitter",
+      name: 'Twitter',
       icon: <Twitter className="h-5 w-5" />,
       shareFunction: () => {
         const text = encodeURIComponent(
           `Check out my new profile at  Job-Board: ${window.location.href}`
         );
-        window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
       },
     },
     {
-      name: "LinkedIn",
+      name: 'LinkedIn',
       icon: <Linkedin className="h-5 w-5" />,
       shareFunction: () => {
         const url = encodeURIComponent(window.location.href);
-        const title = encodeURIComponent("My New Profile");
+        const title = encodeURIComponent('My New Profile');
         const summary = encodeURIComponent(
           `Excited to share my new profile on 100xdevs Job-Board! Check it out here: ${url} #JobSearch #Hiring #OpenToWork`
         );
         window.open(
           `https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}&summary=${summary}`,
-          "_blank"
+          '_blank'
         );
       },
     },
     {
-      name: "Copy",
+      name: 'Copy',
       icon: <Copy className="h-5 w-5" />,
       shareFunction: () => {
         window.navigator.clipboard.writeText(window.location.href);
-        toast.success("Successfully copied the Profile Url.");
+        toast.success('Successfully copied the Profile Url.');
       },
     },
   ];
@@ -56,7 +56,7 @@ export const ProfileShareDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"outline"} className="px-3 py-2 rounded-sm">
+        <Button variant={'outline'} className="rounded-sm px-3 py-2">
           <Share2 height={16} width={16} />
         </Button>
       </DialogTrigger>
@@ -73,7 +73,7 @@ export const ProfileShareDialog = () => {
               onClick={() => option.shareFunction()}
             >
               {option.icon}
-              {option.name === "Copy" ? "Copy Url" : `Share on ${option.name}`}
+              {option.name === 'Copy' ? 'Copy Url' : `Share on ${option.name}`}
             </Button>
           ))}
         </div>
