@@ -17,20 +17,20 @@ const ProfileEmptyContainers = ({
   isOwner: boolean;
 }) => {
   return (
-    <div className="border rounded-2xl   h-80 overflow-hidden flex flex-col gap-y-4 px-6 items-center justify-center">
+    <div className="flex h-80 flex-col items-center justify-center gap-y-4 overflow-hidden rounded-2xl border px-6">
       <Icon
         width={32}
         height={32}
-        className="dark:text-slate-400 text-slate-500"
+        className="text-slate-500 dark:text-slate-400"
       />
       <div className="text-center">
-        <h4 className="font-bold text-xl">{title}</h4>
+        <h4 className="text-xl font-bold">{title}</h4>
         <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
           {description}
         </p>
       </div>
       {isOwner && (
-        <Button onClick={handleClick} className="text-white rounded-sm">
+        <Button onClick={handleClick} className="rounded-sm text-white">
           {buttonText}
         </Button>
       )}

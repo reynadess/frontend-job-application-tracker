@@ -42,12 +42,12 @@ const ProfileComboBox: React.FC<ProfileComboBoxProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setComboBoxInputValue(e.target.value);
   };
-  
+
   const handleSelectItem = (item: DropdownValue) => {
     if (!comboBoxSelectedValues.includes(item.value)) {
       setComboBoxSelectedValues([...comboBoxSelectedValues, item.value]);
@@ -55,30 +55,30 @@ const ProfileComboBox: React.FC<ProfileComboBoxProps> = ({
     setInputValue('');
     setIsOpen(false);
   };
-  
+
   return (
     <div className="relative w-full">
-      <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-md">
+      <div className="flex items-center rounded-md border border-gray-300 dark:border-gray-700">
         <input
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           onFocus={() => setIsOpen(true)}
-          className="w-full p-2 outline-none bg-transparent"
+          className="w-full bg-transparent p-2 outline-none"
           placeholder="Search for skills..."
         />
         {isLoading && (
-          <div className="w-5 h-5 mr-2 border-2 border-t-transparent border-gray-500 rounded-full animate-spin"></div>
+          <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-gray-500 border-t-transparent"></div>
         )}
       </div>
-      
+
       {isOpen && (
-        <div className="absolute w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+        <div className="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-300 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
           {dropdownValues.length > 0 ? (
             dropdownValues.map((item) => (
               <div
                 key={item.value}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                className="cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => handleSelectItem(item)}
               >
                 {item.label}
@@ -104,33 +104,35 @@ const ProfileSkillsCombobox: React.FC<ProfileSkillsComboboxProps> = ({
 }) => {
   const [comboBoxInputValue, setComboBoxInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [skillDropdownValues, setSkillDropdownValues] = useState<DropdownValue[]>([]);
-  
+  const [skillDropdownValues, setSkillDropdownValues] = useState<
+    DropdownValue[]
+  >([]);
+
   // Mock API call with local filtering
   useEffect(() => {
     setIsLoading(true);
-    
+
     // Simulate network delay
     const timeoutId = setTimeout(() => {
-      const filteredSkills = MOCK_SKILLS.filter(skill => 
+      const filteredSkills = MOCK_SKILLS.filter((skill) =>
         skill.label.toLowerCase().includes(comboBoxInputValue.toLowerCase())
       );
       setSkillDropdownValues(filteredSkills);
       setIsLoading(false);
     }, 300);
-    
+
     return () => clearTimeout(timeoutId);
   }, [comboBoxInputValue]);
-  
+
   // Function to format text with first letter of each word capitalized
   const formatText = (text: string): string => {
     return text
       .toLowerCase()
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
-  
+
   return (
     <>
       <div className="flex flex-col gap-2">
@@ -143,17 +145,19 @@ const ProfileSkillsCombobox: React.FC<ProfileSkillsComboboxProps> = ({
           isLoading={isLoading}
         />
       </div>
-      
+
       {selectedSkills.length > 0 && (
-        <div className="flex mt-3 flex-wrap gap-3 p-4 dark:bg-slate-900 bg-slate-100 rounded-lg">
+        <div className="mt-3 flex flex-wrap gap-3 rounded-lg bg-slate-100 p-4 dark:bg-slate-900">
           {selectedSkills.map((skill, index) => (
-            <div key={index} className="flex items-center group">
-              <div className="font-medium text-sm cursor-pointer flex items-center gap-1 py-2 px-4 rounded-full bg-slate-500 bg-opacity-10 dark:bg-opacity-10 text-slate-500 dark:text-slate-400">
+            <div key={index} className="group flex items-center">
+              <div className="flex cursor-pointer items-center gap-1 rounded-full bg-slate-500 bg-opacity-10 px-4 py-2 text-sm font-medium text-slate-500 dark:bg-opacity-10 dark:text-slate-400">
                 {formatText(skill)}
                 <button
-                  className="p-0 h-fit bg-transparent hover:bg-transparent"
+                  className="h-fit bg-transparent p-0 hover:bg-transparent"
                   onClick={() => {
-                    setSelectedSkills(selectedSkills.filter(item => item !== skill));
+                    setSelectedSkills(
+                      selectedSkills.filter((item) => item !== skill)
+                    );
                   }}
                 >
                   <X className="text-slate-500" size={15} />

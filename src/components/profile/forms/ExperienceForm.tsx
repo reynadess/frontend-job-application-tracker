@@ -1,4 +1,3 @@
-
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import _ from 'lodash';
@@ -32,21 +31,21 @@ const EmployementType = {
   Part_time: 'Part_time',
   Contract: 'Contract',
   Freelance: 'Freelance',
-  Internship: 'Internship'
+  Internship: 'Internship',
 };
 
 const WorkMode = {
   office: 'office',
   remote: 'remote',
-  hybrid: 'hybrid'
+  hybrid: 'hybrid',
 };
 
 const ExperienceForm = ({
   handleClose,
   selecetedExperience,
   addUserExperience,
-  editExperience
-}  : any) => {
+  editExperience,
+}: any) => {
   const form = useForm({
     resolver: zodResolver(expFormSchema),
     defaultValues: {
@@ -61,10 +60,10 @@ const ExperienceForm = ({
       description: selecetedExperience?.description || '',
     },
   });
-  
+
   const WatchCurrentWorkStatus = form.watch('currentWorkStatus');
 
-  const onSubmit = async (data :any) => {
+  const onSubmit = async (data: any) => {
     try {
       let response;
       if (selecetedExperience?.id) {
@@ -77,23 +76,14 @@ const ExperienceForm = ({
       }
 
       if (!response.status) {
-        return toast.error(
-        response.message
-    
-        );
+        return toast.error(response.message);
       }
-      
-      toast.success(
-        response.message
- 
-      );
+
+      toast.success(response.message);
 
       handleFormClose();
     } catch (_error) {
-      toast.error(
-     'Something went wrong while Adding Skills'
-    
-      );
+      toast.error('Something went wrong while Adding Skills');
     }
   };
 
@@ -104,11 +94,11 @@ const ExperienceForm = ({
   };
 
   return (
-    <div className="flex-1 relative overflow-y-auto no-scrollbar">
+    <div className="no-scrollbar relative flex-1 overflow-y-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 h-full flex flex-col justify-between"
+          className="flex h-full flex-col justify-between space-y-4"
         >
           <div className="flex flex-col gap-y-4">
             <FormField
@@ -298,11 +288,11 @@ const ExperienceForm = ({
               )}
             />
           </div>
-          <div className="py-4 flex gap-4 justify-end">
+          <div className="flex justify-end gap-4 py-4">
             <Button
               onClick={handleFormClose}
               variant={'outline'}
-              className="mt-0 text-slate-500 dark:text-white rounded-[8px]"
+              className="mt-0 rounded-[8px] text-slate-500 dark:text-white"
               type="reset"
             >
               Cancel
@@ -310,7 +300,7 @@ const ExperienceForm = ({
             <Button
               disabled={form.formState.isSubmitting}
               type="submit"
-              className="mt-0 text-white rounded-[8px]"
+              className="mt-0 rounded-[8px] text-white"
             >
               {form.formState.isSubmitting
                 ? 'Please wait ...'

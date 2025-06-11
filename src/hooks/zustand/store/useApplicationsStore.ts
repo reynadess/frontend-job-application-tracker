@@ -1,12 +1,12 @@
-import api from "@/api/axiosInstance";
-import API_ROUTES from "@/config/config";
-import { userApplicationTypes } from "@/schema/userApplications";
-import { ApplicationsState } from "@/types/applications.types";
+import api from '@/api/axiosInstance';
+import API_ROUTES from '@/config/config';
+import { userApplicationTypes } from '@/schema/userApplications';
+import { ApplicationsState } from '@/types/applications.types';
 
-import { StatusCodes } from "http-status-codes";
-import { toast } from "sonner";
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { StatusCodes } from 'http-status-codes';
+import { toast } from 'sonner';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export const useApplicationsStore = create<ApplicationsState>()(
   persist(
@@ -30,12 +30,12 @@ export const useApplicationsStore = create<ApplicationsState>()(
             return newApplication;
           } else {
             set({ loading: false });
-            toast.error("Something went wrong try again");
+            toast.error('Something went wrong try again');
           }
         } catch (error: any) {
-          console.error("Error while creating the Applications");
+          console.error('Error while creating the Applications');
           toast.error(
-            error.response?.data?.message || "Failed to create the application"
+            error.response?.data?.message || 'Failed to create the application'
           );
           set({ loading: false });
         } finally {
@@ -51,12 +51,12 @@ export const useApplicationsStore = create<ApplicationsState>()(
             set({ Applications: response.data, loading: false });
           } else {
             toast.error(
-              "You dont have any applications to fetch please create one."
+              'You dont have any applications to fetch please create one.'
             );
           }
         } catch (error) {
           console.error(error);
-          toast.error("Fetching applications failed");
+          toast.error('Fetching applications failed');
         }
       },
       getApplicationById: async (id: number) => {
@@ -68,7 +68,7 @@ export const useApplicationsStore = create<ApplicationsState>()(
             return response.data;
           } else {
             console.error(
-              "Something went wrong while fetching the application"
+              'Something went wrong while fetching the application'
             );
           }
         } catch (error) {
@@ -89,14 +89,15 @@ export const useApplicationsStore = create<ApplicationsState>()(
             set((state) => ({
               Applications: state.Applications.map((application) =>
                 application.id === id ? updatedApplication : application
-              ),loading : false
+              ),
+              loading: false,
             }));
           } else {
-            toast.error("Failed to update the application");
+            toast.error('Failed to update the application');
           }
         } catch (error) {
           console.error(`Update application failed for id: ${id}`);
-          toast.error("Something went wrong, Please try again");
+          toast.error('Something went wrong, Please try again');
         } finally {
           set({ loading: false });
         }
@@ -120,18 +121,18 @@ export const useApplicationsStore = create<ApplicationsState>()(
               ),
             }));
           } else {
-            toast.error(res.data.message || "Failed to delete application");
+            toast.error(res.data.message || 'Failed to delete application');
           }
         } catch (error) {
           console.error(`Application deletion failed for id : ${id}`);
-          toast.error("Something went wrong");
+          toast.error('Something went wrong');
         } finally {
           set({ loading: false });
         }
       },
     }),
     {
-      name: "user-applications",
+      name: 'user-applications',
       storage: createJSONStorage(() => localStorage),
     }
   )

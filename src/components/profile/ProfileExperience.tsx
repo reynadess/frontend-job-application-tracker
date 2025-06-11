@@ -1,5 +1,5 @@
 import { Circle, Building2, Pencil, Plus } from 'lucide-react';
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import SheetWrapper from './sheets/SheetWrapper';
 import { SHEETS } from '@/lib/constants/Profile.constant';
@@ -10,18 +10,18 @@ import { ExperienceDeleteDialog } from './ExperienceDeleteDialog';
 import ProfileEmptyContainers from './emptycontainers/ProfileEmptyContainers';
 import { EmploymentType, WorkMode } from '@/lib/enum/enums';
 
-const mockExperiences  :ExperienceType[] = [
+const mockExperiences: ExperienceType[] = [
   {
     id: 1,
-    designation: "Senior Frontend Developer",
-    companyName: "Tech Corp",
+    designation: 'Senior Frontend Developer',
+    companyName: 'Tech Corp',
     EmploymentType: EmploymentType.FULL_TIME,
     workMode: WorkMode.REMOTE,
-    startDate: new Date("2021-01-01"),
+    startDate: new Date('2021-01-01'),
     endDate: null,
-    description: "Leading frontend development team and architecture",
+    description: 'Leading frontend development team and architecture',
     currentWorkStatus: true,
-    address: "San Francisco, CA"
+    address: 'San Francisco, CA',
   },
   // Add more mock experiences as needed
 ];
@@ -57,13 +57,13 @@ const ProfileExperience = () => {
     : SHEETS.expierence.title;
 
   return (
-    <div className='space-y-6'>
-      <div className="flex justify-between items-center space-y-2">
-        <h3 className="font-bold text-2xl">Work Experience</h3>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between space-y-2">
+        <h3 className="text-2xl font-bold">Work Experience</h3>
         {isOwner && (
           <Button
             variant={'outline'}
-            className="px-3 py-2 rounded-sm text-slate-500 dark:text-slate-400 flex gap-2"
+            className="flex gap-2 rounded-sm px-3 py-2 text-slate-500 dark:text-slate-400"
             onClick={handleOpen}
           >
             <Plus height={16} width={16} /> Add Experience
@@ -91,22 +91,22 @@ const ProfileExperience = () => {
       )}
 
       {experiences.length !== 0 && (
-        <div className="rounded-2xl p-6 dark:bg-slate-900 bg-slate-200">
+        <div className="rounded-2xl bg-slate-200 p-6 dark:bg-slate-900">
           {experiences.map((experience) => (
             <div key={experience.id} className="flex flex-col">
-              <div className="flex gap-3 justify-start">
-                <div className="relative w-4 flex justify-center">
-                  <div className="absolute top-0 w-2 h-2 rounded-full bg-[#3259E8]"></div>
-                  <div className="w-[2px] h-full bg-gradient-to-b from-[#3259e8] to-[#F1F5F9] dark:to-[#0F172A]"></div>
+              <div className="flex justify-start gap-3">
+                <div className="relative flex w-4 justify-center">
+                  <div className="absolute top-0 h-2 w-2 rounded-full bg-[#3259E8]"></div>
+                  <div className="h-full w-[2px] bg-gradient-to-b from-[#3259e8] to-[#F1F5F9] dark:to-[#0F172A]"></div>
                 </div>
-                <div className="flex flex-col gap-2 mb-3 w-full">
-                  <div className="flex flex-col sm:flex-row justify-between">
+                <div className="mb-3 flex w-full flex-col gap-2">
+                  <div className="flex flex-col justify-between sm:flex-row">
                     <div className="flex flex-col gap-1">
-                      <h2 className="dark:text-slate-50 text-[#020817] text-xl font-bold ">
+                      <h2 className="text-xl font-bold text-[#020817] dark:text-slate-50">
                         {experience.designation}
                       </h2>
-                      <p className="flex gap-[4px] items-center text-sm font-medium text-slate-500 dark:text-slate-400">
-                        <span className="text-[#3259E8] text-sm font-medium">
+                      <p className="flex items-center gap-[4px] text-sm font-medium text-slate-500 dark:text-slate-400">
+                        <span className="text-sm font-medium text-[#3259E8]">
                           {experience.companyName}
                         </span>
                         <Circle width={5} height={5} fill="currentColor" />
@@ -114,7 +114,7 @@ const ProfileExperience = () => {
                         <Circle width={5} height={5} fill="currentColor" />
                         {experience.workMode}
                       </p>
-                      <div className="px-3 py-1 bg-slate-500 bg-opacity-10 text-slate-500 dark:text-slate-400 rounded-[8px] text-sm w-fit">
+                      <div className="w-fit rounded-[8px] bg-slate-500 bg-opacity-10 px-3 py-1 text-sm text-slate-500 dark:text-slate-400">
                         {formatDateRange(
                           experience.startDate,
                           experience.endDate
@@ -122,22 +122,22 @@ const ProfileExperience = () => {
                       </div>
                     </div>
                     {isOwner && (
-                      <div className="flex gap-3 items-center w-fit">
+                      <div className="flex w-fit items-center gap-3">
                         <ExperienceDeleteDialog />
                         <Button
-                          className="bg-transparent p-0 b-0 hover:bg-transparent"
+                          className="b-0 bg-transparent p-0 hover:bg-transparent"
                           onClick={() => handleEditClick(experience)}
                         >
                           <Pencil
                             width={16}
                             height={16}
-                            className="dark:text-slate-400 text-slate-500"
+                            className="text-slate-500 dark:text-slate-400"
                           />
                         </Button>
                       </div>
                     )}
                   </div>
-                  <p className="text-[#020817] dark:text-slate-50 text-base font-medium">
+                  <p className="text-base font-medium text-[#020817] dark:text-slate-50">
                     {experience.description}
                   </p>
                 </div>

@@ -1,5 +1,5 @@
 import icons from '@/lib/icons';
-import  { FC } from 'react';
+import { FC } from 'react';
 import { LucideProps } from 'lucide-react';
 export interface IconProps extends LucideProps {
   icon: keyof typeof icons;

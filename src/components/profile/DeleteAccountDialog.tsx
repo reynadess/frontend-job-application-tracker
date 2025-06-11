@@ -13,17 +13,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-
 // Validation schema
 const UserProfileDestroySchema = z.object({
-  random: z.string().min(1, 'Please type the confirmation string')
+  random: z.string().min(1, 'Please type the confirmation string'),
 });
 
 type UserProfileDestroyType = z.infer<typeof UserProfileDestroySchema>;
 
 // Simple function to generate a random string
 const generateRandomString = (length: number): string => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const chars =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -55,15 +55,15 @@ export const DeleteAccountDialog = () => {
   const handleDeleteAccount = async () => {
     // Simulate loading state
     setIsPending(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsPending(false);
       setModalOpen(false);
-      
+
       // Placeholder for toast notification
       alert('Account deleted successfully');
-      
+
       // Clear form and close modal
       setDisabled(true);
     }, 1500);
@@ -90,7 +90,7 @@ export const DeleteAccountDialog = () => {
       <DialogContent className="sm:max-w-md">
         <div className="flex justify-end">
           <X
-            className="cursor-pointer size-4"
+            className="size-4 cursor-pointer"
             onClick={() => setModalOpen(false)}
           />
         </div>
@@ -104,14 +104,14 @@ export const DeleteAccountDialog = () => {
             <form className="mt-6" onSubmit={handleSubmit(handleDeleteAccount)}>
               <label className="text-black dark:text-gray-200" htmlFor="random">
                 Type{' '}
-                <span className="bg-gray-300 dark:bg-gray-800 text-black dark:text-white font-mono px-2 py-1 rounded">
+                <span className="rounded bg-gray-300 px-2 py-1 font-mono text-black dark:bg-gray-800 dark:text-white">
                   {randomString}
                 </span>
               </label>
               <input
                 {...register('random')}
                 id="random"
-                className="mt-2 p-4 rounded-md w-full bg-gray-200 dark:bg-black outline-none text-black dark:text-white"
+                className="mt-2 w-full rounded-md bg-gray-200 p-4 text-black outline-none dark:bg-black dark:text-white"
                 onPaste={(e: ClipboardEvent<HTMLInputElement>) =>
                   e.preventDefault()
                 }
@@ -122,10 +122,10 @@ export const DeleteAccountDialog = () => {
                 <p className="mt-2 text-red-500">{errors.random?.message}</p>
               )}
 
-              <div className="flex gap-2 items-baseline mt-4">
+              <div className="mt-4 flex items-baseline gap-2">
                 <Button
                   disabled={disabled || isPending}
-                  className="bg-red-500 hover:bg-red-600 text-white"
+                  className="bg-red-500 text-white hover:bg-red-600"
                   type="submit"
                   aria-label="submit"
                 >
@@ -133,7 +133,7 @@ export const DeleteAccountDialog = () => {
                 </Button>
 
                 <div
-                  className="bg-gray-200 dark:bg-transparent text-black dark:text-white hover:bg-gray-300 hover:dark:bg-slate-800 border-2 dark:border-slate-500 py-2 px-4 cursor-pointer rounded-md"
+                  className="cursor-pointer rounded-md border-2 bg-gray-200 px-4 py-2 text-black hover:bg-gray-300 dark:border-slate-500 dark:bg-transparent dark:text-white hover:dark:bg-slate-800"
                   onClick={() => setModalOpen(false)}
                 >
                   <p>No</p>

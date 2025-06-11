@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 import {
   ApplicationStatus,
   ApplicationsType,
   Status_Options,
-} from "@/types/applications.types";
-import { userApplicationTypes } from "@/schema/userApplications";
-import { CalendarIcon } from "lucide-react";
+} from '@/types/applications.types';
+import { userApplicationTypes } from '@/schema/userApplications';
+import { CalendarIcon } from 'lucide-react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useForm } from "react-hook-form";
-import { format } from "date-fns";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/select';
+import { useForm } from 'react-hook-form';
+import { format } from 'date-fns';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
-import { useApplicationsStore } from "@/hooks/zustand/store/useApplicationsStore";
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
+import { useApplicationsStore } from '@/hooks/zustand/store/useApplicationsStore';
 
 interface Props {
   selectedApplication?: ApplicationsType | null;
@@ -60,20 +60,20 @@ export function JobApplicationSheet({
     watch,
   } = useForm<userApplicationTypes>({
     defaultValues: {
-      company: "",
-      role: "",
+      company: '',
+      role: '',
       ctcOffered: 0,
-      city: "",
-      state: "",
-      country: "",
-      description: "",
+      city: '',
+      state: '',
+      country: '',
+      description: '',
       status: ApplicationStatus.Apply,
-      appliedDate: "", // Initialize as empty string
+      appliedDate: '', // Initialize as empty string
     },
   });
 
   // Watch the appliedDate field to keep date state in sync
-  const appliedDateValue = watch("appliedDate");
+  const appliedDateValue = watch('appliedDate');
 
   const onSubmit = async (data: userApplicationTypes) => {
     setIsSubmitting(true);
@@ -95,14 +95,14 @@ export function JobApplicationSheet({
       // Show success message
       toast.success(
         selectedApplication
-          ? "Application updated successfully"
-          : "Application created successfully"
+          ? 'Application updated successfully'
+          : 'Application created successfully'
       );
     } catch (error) {
       toast.error(
         selectedApplication
-          ? "Failed to update application"
-          : "Failed to create application"
+          ? 'Failed to update application'
+          : 'Failed to create application'
       );
     } finally {
       setIsSubmitting(false);
@@ -112,27 +112,27 @@ export function JobApplicationSheet({
   // Populate form when selectedApplication changes
   useEffect(() => {
     if (selectedApplication) {
-      setValue("company", selectedApplication.company || "");
-      setValue("role", selectedApplication.role || "");
-      setValue("city", selectedApplication.city || "");
-      setValue("state", selectedApplication.state || "");
-      setValue("country", selectedApplication.country || "");
-      setValue("description", selectedApplication.description || "");
-      setValue("jobLink", selectedApplication.jobLink || "");
-      setValue("status", selectedApplication.status || "");
+      setValue('company', selectedApplication.company || '');
+      setValue('role', selectedApplication.role || '');
+      setValue('city', selectedApplication.city || '');
+      setValue('state', selectedApplication.state || '');
+      setValue('country', selectedApplication.country || '');
+      setValue('description', selectedApplication.description || '');
+      setValue('jobLink', selectedApplication.jobLink || '');
+      setValue('status', selectedApplication.status || '');
 
       if (selectedApplication.appliedDate) {
         const applicationDate = new Date(selectedApplication.appliedDate);
         setDate(applicationDate);
-        setValue("appliedDate", format(applicationDate, "yyyy-MM-dd"));
+        setValue('appliedDate', format(applicationDate, 'yyyy-MM-dd'));
       } else {
         setDate(undefined);
-        setValue("appliedDate", "");
+        setValue('appliedDate', '');
       }
     } else {
       // When no application is selected (new application), reset to empty
       setDate(undefined);
-      setValue("appliedDate", "");
+      setValue('appliedDate', '');
     }
   }, [selectedApplication, setValue]);
 
@@ -140,7 +140,7 @@ export function JobApplicationSheet({
   useEffect(() => {
     if (
       appliedDateValue &&
-      appliedDateValue !== format(date || new Date(), "yyyy-MM-dd")
+      appliedDateValue !== format(date || new Date(), 'yyyy-MM-dd')
     ) {
       const newDate = new Date(appliedDateValue);
       if (!isNaN(newDate.getTime())) {
@@ -152,9 +152,9 @@ export function JobApplicationSheet({
   const handleDateChange = (selectedDate: Date | undefined) => {
     setDate(selectedDate);
     if (selectedDate) {
-      setValue("appliedDate", format(selectedDate, "yyyy-MM-dd"));
+      setValue('appliedDate', format(selectedDate, 'yyyy-MM-dd'));
     } else {
-      setValue("appliedDate", "");
+      setValue('appliedDate', '');
     }
   };
 
@@ -170,9 +170,9 @@ export function JobApplicationSheet({
             id="company"
             placeholder="Enter company name"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("company", {
-              required: !isEditMode ? "Company is required" : false,
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('company', {
+              required: !isEditMode ? 'Company is required' : false,
             })}
           />
           {errors.company && !isEditMode && (
@@ -187,9 +187,9 @@ export function JobApplicationSheet({
             id="role"
             placeholder="Enter job position"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("role", {
-              required: !isEditMode ? "Position is required" : false,
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('role', {
+              required: !isEditMode ? 'Position is required' : false,
             })}
           />
           {errors.role && !isEditMode && (
@@ -205,15 +205,15 @@ export function JobApplicationSheet({
             type="number"
             placeholder="e.g. 75000"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("ctcOffered", {
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('ctcOffered', {
               valueAsNumber: true,
               validate: (value) =>
-                isEditMode || !isNaN(value) || "Please enter a valid number",
+                isEditMode || !isNaN(value) || 'Please enter a valid number',
               min: !isEditMode
                 ? {
                     value: 0,
-                    message: "Salary cannot be negative",
+                    message: 'Salary cannot be negative',
                   }
                 : undefined,
             })}
@@ -227,8 +227,8 @@ export function JobApplicationSheet({
             id="city"
             placeholder="e.g. Remote, New York, NY"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("city")}
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('city')}
           />
         </div>
 
@@ -238,8 +238,8 @@ export function JobApplicationSheet({
             id="state"
             placeholder="e.g. New York"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("state")}
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('state')}
           />
         </div>
 
@@ -249,8 +249,8 @@ export function JobApplicationSheet({
             id="country"
             placeholder="e.g. United States"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("country")}
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('country')}
           />
         </div>
 
@@ -260,8 +260,8 @@ export function JobApplicationSheet({
             id="jobLink"
             placeholder="https://www.company.com/careers/job-id"
             readOnly={isEditMode}
-            className={isEditMode ? "cursor-not-allowed" : ""}
-            {...register("jobLink")}
+            className={isEditMode ? 'cursor-not-allowed' : ''}
+            {...register('jobLink')}
           />
         </div>
 
@@ -271,11 +271,9 @@ export function JobApplicationSheet({
           <Textarea
             id="description"
             placeholder="Brief description of the role"
-            className={`min-h-20 ${
-              isEditMode ? "cursor-not-allowed" : ""
-            }`}
+            className={`min-h-20 ${isEditMode ? 'cursor-not-allowed' : ''}`}
             readOnly={isEditMode}
-            {...register("description")}
+            {...register('description')}
           />
         </div>
 
@@ -287,12 +285,12 @@ export function JobApplicationSheet({
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
+                  'w-full justify-start text-left font-normal',
+                  !date && 'text-muted-foreground'
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : "Select date"}
+                {date ? format(date, 'PPP') : 'Select date'}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
@@ -310,9 +308,9 @@ export function JobApplicationSheet({
         <div className="space-y-2">
           <Label htmlFor="status">Status</Label>
           <Select
-            value={watch("status")}
+            value={watch('status')}
             onValueChange={(value: ApplicationStatus) =>
-              setValue("status", value)
+              setValue('status', value)
             }
           >
             <SelectTrigger>
@@ -328,25 +326,25 @@ export function JobApplicationSheet({
           </Select>
         </div>
 
-        <div className="py-4 flex gap-4 justify-end">
+        <div className="flex justify-end gap-4 py-4">
           <button
             onClick={handleClose}
             type="button"
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
           >
             Cancel
           </button>
           <button
             disabled={isSubmitting}
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
           >
             {isSubmitting
-              ? "Please wait..."
+              ? 'Please wait...'
               : `${
                   selectedApplication?.id
-                    ? "Update Application"
-                    : "Add Application"
+                    ? 'Update Application'
+                    : 'Add Application'
                 }`}
           </button>
         </div>

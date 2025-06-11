@@ -4,8 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
-
-
 export const ProfileInfo = () => {
   // Mock session data
   const session = {
@@ -19,17 +17,15 @@ export const ProfileInfo = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-start my-3 gap-4">
-      <div className="flex w-full mt-2 p-4 border rounded-md">
+    <div className="my-3 flex flex-col items-start justify-center gap-4">
+      <div className="mt-2 flex w-full rounded-md border p-4">
         <Avatar className="h-20 w-20">
           <AvatarImage src={session.data.user.image} />
-          <AvatarFallback>
-           {session.data.user.name}
-          </AvatarFallback>
+          <AvatarFallback>{session.data.user.name}</AvatarFallback>
         </Avatar>
       </div>
-      <div className="flex flex-col gap-4 p-4 border rounded-md w-full min-h-[40vh]">
-        <div className="flex justify-between items-center mb-3">
+      <div className="flex min-h-[40vh] w-full flex-col gap-4 rounded-md border p-4">
+        <div className="mb-3 flex items-center justify-between">
           <span>Profile Info</span>
         </div>
         <div className="flex flex-col gap-4">
@@ -37,7 +33,7 @@ export const ProfileInfo = () => {
           <Input
             disabled
             value={session.data.user.name}
-            className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+            className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
           />
         </div>
         <div className="flex flex-col gap-4">
@@ -45,7 +41,7 @@ export const ProfileInfo = () => {
           <Input
             disabled
             value={session.data.user.email}
-            className="rounded focus-visible:ring-0 focus:outline-none focus:border-slate-500"
+            className="rounded focus:border-slate-500 focus:outline-none focus-visible:ring-0"
           />
         </div>
       </div>

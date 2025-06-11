@@ -1,7 +1,7 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import { Project } from '@/lib/enum/enums';
 import icons from '@/lib/icons';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -12,35 +12,32 @@ import {
 import { SquareArrowOutUpRightIcon } from 'lucide-react';
 
 export function UserProjects() {
-
   const [projects, setProjects] = useState<Project[]>();
-
-  
 
   if (!projects) {
     return (
-      <div className="flex items-center justify-center h-full w-full">
-        <icons.loading className="animate-spin w-10 h-10" />
+      <div className="flex h-full w-full items-center justify-center">
+        <icons.loading className="h-10 w-10 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-4 gap-3 mt-4">
+    <div className="mt-4 grid grid-cols-4 gap-3">
       {projects.map((item: Project) => (
         <Card
           key={item.id}
-          className="flex flex-col md:col-span-2 col-span-4 border-2 hover:bg-slate-100 dark:hover:bg-slate-900 text-black dark:text-white transition-shadow duration-300"
+          className="col-span-4 flex flex-col border-2 text-black transition-shadow duration-300 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900 md:col-span-2"
         >
-          <div className="flex items-center justify-center aspect-video w-full h-[200px] overflow-hidden object-contain rounded-2xl p-1 mt-1">
+          <div className="mt-1 flex aspect-video h-[200px] w-full items-center justify-center overflow-hidden rounded-2xl object-contain p-1">
             {item.projectThumbnail ? (
               <img
                 alt={item.projectName}
                 src={item.projectThumbnail}
-                className={`h-[200px] hover:scale-110 transition-transform duration-300`}
+                className={`h-[200px] transition-transform duration-300 hover:scale-110`}
               />
             ) : (
-              <div className="flex items-center justify-center h-[200px] rounded-2xl bg-slate-400 dark:bg-slate-900">
+              <div className="flex h-[200px] items-center justify-center rounded-2xl bg-slate-400 dark:bg-slate-900">
                 <span className="text-3xl font-semibold">
                   {item.projectName}
                 </span>
@@ -48,7 +45,7 @@ export function UserProjects() {
             )}
           </div>
           <CardHeader>
-            <CardTitle className="text-lg font-semibold uppercase flex items-center justify-between">
+            <CardTitle className="flex items-center justify-between text-lg font-semibold uppercase">
               {item.projectName}
             </CardTitle>
           </CardHeader>
@@ -82,7 +79,7 @@ export function UserProjects() {
         </Card>
       ))}
       {projects.length === 0 && (
-        <div className="flex items-center justify-center col-span-4 h-full">
+        <div className="col-span-4 flex h-full items-center justify-center">
           <icons.alert size={24} />
           <span className="ml-2">No Projects Found</span>
         </div>

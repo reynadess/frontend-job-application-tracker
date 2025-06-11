@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-slate-900 text-white">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-16">
+        <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Column */}
           <div className="space-y-6">
             <div className="flex items-center">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mr-3">
+              <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -40,7 +40,7 @@ const Footer = () => {
             <div className="flex space-x-4">
               <Link
                 to="#"
-                className="text-slate-400 hover:text-indigo-400 transition"
+                className="text-slate-400 transition hover:text-indigo-400"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ const Footer = () => {
               </Link>
               <Link
                 to="#"
-                className="text-slate-400 hover:text-indigo-400 transition"
+                className="text-slate-400 transition hover:text-indigo-400"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ const Footer = () => {
               </Link>
               <Link
                 to="#"
-                className="text-slate-400 hover:text-indigo-400 transition"
+                className="text-slate-400 transition hover:text-indigo-400"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ const Footer = () => {
               </Link>
               <Link
                 to="#"
-                className="text-slate-400 hover:text-indigo-400 transition"
+                className="text-slate-400 transition hover:text-indigo-400"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -119,12 +119,12 @@ const Footer = () => {
 
           {/* Links Columns */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Product</h3>
+            <h3 className="mb-4 text-lg font-semibold">Product</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Features
                 </Link>
@@ -132,7 +132,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Pricing
                 </Link>
@@ -140,7 +140,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Job Board
                 </Link>
@@ -148,7 +148,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Application Tracker
                 </Link>
@@ -156,7 +156,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Integrations
                 </Link>
@@ -165,12 +165,12 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Resources</h3>
+            <h3 className="mb-4 text-lg font-semibold">Resources</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Blog
                 </Link>
@@ -178,7 +178,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Help Center
                 </Link>
@@ -186,7 +186,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Career Tips
                 </Link>
@@ -194,7 +194,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   API Documentation
                 </Link>
@@ -202,7 +202,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Community
                 </Link>
@@ -211,12 +211,12 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <h3 className="mb-4 text-lg font-semibold">Company</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   About Us
                 </Link>
@@ -224,7 +224,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Careers
                 </Link>
@@ -232,7 +232,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Contact
                 </Link>
@@ -240,7 +240,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="#"
-                  className="text-slate-400 hover:text-white transition"
+                  className="text-slate-400 transition hover:text-white"
                 >
                   Press Kit
                 </Link>
@@ -248,12 +248,12 @@ const Footer = () => {
             </ul>
 
             <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-4">Legal</h3>
+              <h3 className="mb-4 text-lg font-semibold">Legal</h3>
               <ul className="space-y-3">
                 <li>
                   <Link
                     to="#"
-                    className="text-slate-400 hover:text-white transition"
+                    className="text-slate-400 transition hover:text-white"
                   >
                     Privacy Policy
                   </Link>
@@ -261,7 +261,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="#"
-                    className="text-slate-400 hover:text-white transition"
+                    className="text-slate-400 transition hover:text-white"
                   >
                     Terms of Service
                   </Link>
@@ -272,10 +272,10 @@ const Footer = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="border-t border-slate-800 pt-8 pb-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="border-t border-slate-800 pb-12 pt-8">
+          <div className="grid items-center gap-8 md:grid-cols-2">
             <div>
-              <h3 className="text-xl font-semibold mb-2">Stay in the loop</h3>
+              <h3 className="mb-2 text-xl font-semibold">Stay in the loop</h3>
               <p className="text-slate-400">
                 Subscribe to our newsletter for the latest job market insights
                 and product updates.
@@ -285,9 +285,9 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-slate-800 text-white px-4 py-3 rounded-l-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full rounded-l-lg bg-slate-800 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
-              <button className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-r-lg font-medium transition">
+              <button className="rounded-r-lg bg-indigo-600 px-6 py-3 font-medium transition hover:bg-indigo-700">
                 Subscribe
               </button>
             </div>
@@ -295,22 +295,22 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+        <div className="flex flex-col items-center justify-between border-t border-slate-800 pt-8 md:flex-row">
+          <div className="mb-4 flex items-center space-x-2 md:mb-0">
             <span className="text-sm text-slate-400">
               © {currentYear} JobTrack. All rights reserved.
             </span>
           </div>
 
           <div className="flex items-center space-x-3">
-            <div className="bg-slate-800 px-4 py-2 rounded-full flex items-center">
-              <span className="bg-green h-2 w-2 rounded-full mr-2"></span>
+            <div className="flex items-center rounded-full bg-slate-800 px-4 py-2">
+              <span className="bg-green mr-2 h-2 w-2 rounded-full"></span>
               <span className="text-sm text-slate-400">
                 Status: All systems operational
               </span>
             </div>
 
-            <select className="bg-slate-800 text-slate-400 px-3 py-2 rounded-lg text-sm">
+            <select className="rounded-lg bg-slate-800 px-3 py-2 text-sm text-slate-400">
               <option>English (US)</option>
               <option>Spanish</option>
               <option>French</option>
@@ -321,12 +321,12 @@ const Footer = () => {
       </div>
 
       {/* Startup Badge */}
-      <div className="bg-slate-950 py-4 px-4 text-center">
-        <p className="text-slate-400 text-sm">
-          <span className="bg-indigo-500 text-white text-xs px-2 py-1 rounded font-medium mr-2">
+      <div className="bg-slate-950 px-4 py-4 text-center">
+        <p className="text-sm text-slate-400">
+          <span className="mr-2 rounded bg-indigo-500 px-2 py-1 text-xs font-medium text-white">
             Beta
           </span>
-          A product by{" "}
+          A product by{' '}
           <span className="font-semibold text-white">JobTrack Startup</span> -
           Revolutionizing how people find their dream careers
         </p>

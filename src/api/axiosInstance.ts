@@ -1,13 +1,12 @@
-import axios from "axios";
-import API_ROUTES from "@/config/config";
-import { getToken, removeToken } from "@/utils/tokenUtils";
-import { useNavigate } from "react-router-dom";
-
+import axios from 'axios';
+import API_ROUTES from '@/config/config';
+import { getToken, removeToken } from '@/utils/tokenUtils';
+import { useNavigate } from 'react-router-dom';
 
 // Create Axios Instance with Base URL
 const api = axios.create({
   baseURL: API_ROUTES.BASE_URL,
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
 
@@ -27,7 +26,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       const naviagate = useNavigate();
       removeToken();
-      naviagate("/home"); // Auto-redirect on token expiry
+      naviagate('/home'); // Auto-redirect on token expiry
     }
     return Promise.reject(error);
   }

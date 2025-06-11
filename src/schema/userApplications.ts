@@ -1,5 +1,5 @@
-import { ApplicationStatus } from "@/types/applications.types";
-import { z } from "zod";
+import { ApplicationStatus } from '@/types/applications.types';
+import { z } from 'zod';
 
 export const userApplicationSchema = z.object({
   role: z.string().nonempty(),
@@ -10,8 +10,8 @@ export const userApplicationSchema = z.object({
   state: z.string().nonempty().optional(),
   description: z.string().nonempty().optional(),
   status: z.nativeEnum(ApplicationStatus),
-  appliedDate : z.string(),
-  ctcOffered :z.number().min(0)
+  appliedDate: z.string(),
+  ctcOffered: z.number().min(0),
 });
 
 export type userApplicationTypes = z.infer<typeof userApplicationSchema>;

@@ -1,5 +1,5 @@
 import { File } from 'lucide-react';
-import {Link} from "react-router-dom"
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export function UserResume() {
@@ -23,7 +23,7 @@ export function UserResume() {
         rel="noopener noreferrer"
       >
         <File className="h-40 w-40" />
-        <h1 className="text-white text-2xl text-center">Click here</h1>
+        <h1 className="text-center text-2xl text-white">Click here</h1>
       </Link>
     </div>
   );

@@ -8,25 +8,25 @@ import {
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
-} from "@/components/ui/resizable-navbar";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import LandingPage from "./landingPage/LandingPage";
-import Footer from "./landingPage/Footer";
+} from '@/components/ui/resizable-navbar';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import LandingPage from './landingPage/LandingPage';
+import Footer from './landingPage/Footer';
 
 export function NavbarHome() {
   const navItems = [
     {
-      name: "Features",
-      link: "features",
+      name: 'Features',
+      link: 'features',
     },
     {
-      name: "Pricing",
-      link: "pricing",
+      name: 'Pricing',
+      link: 'pricing',
     },
     {
-      name: "Contact",
-      link: "contact",
+      name: 'Contact',
+      link: 'contact',
     },
   ];
   const navigate = useNavigate();
@@ -41,12 +41,12 @@ export function NavbarHome() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             <NavbarButton
-              onClick={() => navigate("/login")}
+              onClick={() => navigate('/login')}
               variant="secondary"
             >
               Login
             </NavbarButton>
-            <NavbarButton onClick={() => navigate("/signup")} variant="primary">
+            <NavbarButton onClick={() => navigate('/signup')} variant="primary">
               Signup
             </NavbarButton>
           </div>
@@ -79,7 +79,7 @@ export function NavbarHome() {
             <div className="flex w-full flex-col gap-4">
               <NavbarButton
                 onClick={() => {
-                  navigate("/login");
+                  navigate('/login');
                   setIsMobileMenuOpen(false);
                 }}
                 variant="primary"
@@ -89,7 +89,7 @@ export function NavbarHome() {
               </NavbarButton>
               <NavbarButton
                 onClick={() => {
-                  navigate("/signup");
+                  navigate('/signup');
                   setIsMobileMenuOpen(false);
                 }}
                 variant="primary"
@@ -102,7 +102,7 @@ export function NavbarHome() {
         </MobileNav>
       </Navbar>
       <LandingPage />
-      <Footer/>
+      <Footer />
     </div>
   );
 }

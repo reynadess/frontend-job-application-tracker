@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import api from "@/api/axiosInstance";
-import API_ROUTES from "@/config/config";
-import { toast } from "sonner";
-import { ApplicantState } from "@/types/user.types";
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import api from '@/api/axiosInstance';
+import API_ROUTES from '@/config/config';
+import { toast } from 'sonner';
+import { ApplicantState } from '@/types/user.types';
 
 export const useApplicantStore = create<ApplicantState>()(
   persist(
@@ -24,7 +24,7 @@ export const useApplicantStore = create<ApplicantState>()(
           return response.data;
         } catch (error: any) {
           toast.error(
-            error.response?.data?.message || "Failed to fetch the date"
+            error.response?.data?.message || 'Failed to fetch the date'
           );
         } finally {
           set({ loading: false });
@@ -32,7 +32,7 @@ export const useApplicantStore = create<ApplicantState>()(
       },
     }),
     {
-      name: "applicant-info",
+      name: 'applicant-info',
       storage: createJSONStorage(() => localStorage),
     }
   )

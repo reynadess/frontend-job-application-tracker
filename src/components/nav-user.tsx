@@ -4,9 +4,9 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,15 +15,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { useAuthStore } from "@/hooks/zustand/store/useAuthStore";
-import { useNavigate } from "react-router-dom";
+} from '@/components/ui/sidebar';
+import { useAuthStore } from '@/hooks/zustand/store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 interface NavUserProps {
   User: {
@@ -40,7 +40,7 @@ export function NavUser({ User }: NavUserProps) {
   const navigate = useNavigate();
   const handleLogout = async () => {
     await logout();
-    navigate("/home");
+    navigate('/home');
   };
   return (
     <SidebarMenu>
@@ -64,7 +64,7 @@ export function NavUser({ User }: NavUserProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -89,7 +89,9 @@ export function NavUser({ User }: NavUserProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => navigate(`user/${User.username}`)}>
+              <DropdownMenuItem
+                onClick={() => navigate(`user/${User.username}`)}
+              >
                 <BadgeCheck />
                 View Profile
               </DropdownMenuItem>

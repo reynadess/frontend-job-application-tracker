@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+public
+
+# Environment files
+.env
+.env.sample
+
+# Configuration files (already formatted)
+*.config.js
+*.config.ts
+tailwind.config.js
+vite.config.ts
+postcss.config.js
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+components.json
+
+# Generated or minified files
+*.min.css
+*.min.js
+
+# IDE and system files
+.vscode
+.idea
+*.log
+
+# Other files
+README.md
+package-lock.json
+FolderStructure.txt
