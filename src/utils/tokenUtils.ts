@@ -1,5 +1,10 @@
 import { jwtDecode } from 'jwt-decode';
-
+interface DecodedToken {
+  exp: number;
+  iat: number;
+  userId: string;
+  username : string;
+}
 export const setToken = (token: string) => {
   try {
     localStorage.setItem('access_token', token);
@@ -27,7 +32,7 @@ export const removeToken = () => {
 
 export const isTokenExpired = (token: string): boolean => {
   try {
-    const decodedToken: any = jwtDecode(token);
+    const decodedToken = jwtDecode<DecodedToken>(token);
     return decodedToken.exp * 1000 < Date.now();
   } catch (error) {
     console.error('Failed to decode token or check expiration:', error);

@@ -24,7 +24,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
     const token = getToken();
 
-    if (token && isTokenExpired(token)) {
+    if (!token && isTokenExpired(token as string)) {
       removeToken();
       logout(); // Clear user state in Zustand
       toast.error('Session expired. Please log in again.');
