@@ -7,12 +7,12 @@ import { ToastProvider } from './components/ui/toast.tsx';
 import { Toaster } from './components/ui/sonner.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ToastProvider>
-        <App />
-        <Toaster />
-      </ToastProvider>
-    </BrowserRouter>
-  </StrictMode>
+    <StrictMode>
+        <BrowserRouter>
+            <ToastProvider>
+                <App />
+                <Toaster />
+            </ToastProvider>
+        </BrowserRouter>
+    </StrictMode>
 );

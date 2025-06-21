@@ -5,47 +5,47 @@ import { getToken, isTokenExpired, removeToken } from '@/utils/tokenUtils';
 import { toast } from 'sonner';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, user, logout } = useAuthStore();
-  const [isHydrated, setIsHydrated] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const unsubscribe = useAuthStore.persist.onHydrate(() => {
-      setIsHydrated(true);
-    });
+    const { isAuthenticated, user, logout } = useAuthStore();
+    const [isHydrated, setIsHydrated] = useState(false);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const unsubscribe = useAuthStore.persist.onHydrate(() => {
+            setIsHydrated(true);
+        });
 
-    // If store was already hydrated, set state
-    if (useAuthStore.persist.hasHydrated()) {
-      setIsHydrated(true);
+        // If store was already hydrated, set state
+        if (useAuthStore.persist.hasHydrated()) {
+            setIsHydrated(true);
+        }
+
+        const token = getToken();
+
+        if (!token && isTokenExpired(token as string)) {
+            removeToken();
+            logout(); // Clear user state in Zustand
+            toast.error('Session expired. Please log in again.');
+            navigate('/home');
+        }
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
+    // Show loading or nothing while hydrating
+    if (!isHydrated) {
+        return null; // or a loading indicator
     }
 
-    const token = getToken();
-
-    if (!token && isTokenExpired(token as string)) {
-      removeToken();
-      logout(); // Clear user state in Zustand
-      toast.error('Session expired. Please log in again.');
-      navigate('/home');
+    if (!isAuthenticated || !user) {
+        return <Navigate to="/home" replace />;
     }
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  // Show loading or nothing while hydrating
-  if (!isHydrated) {
-    return null; // or a loading indicator
-  }
-
-  if (!isAuthenticated || !user) {
-    return <Navigate to="/home" replace />;
-  }
-
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 export default ProtectedRoute;
