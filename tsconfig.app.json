@@ -30,5 +30,5 @@
       ]
     }
   },
-  "include": ["src", "src/hooks/zustand/store/useApplicationsStore.ts"]
+  "include": ["src", "src/features/job-tracking/store/applications.store.ts"]
 }
