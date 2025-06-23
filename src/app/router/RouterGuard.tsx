@@ -1,4 +1,3 @@
-// src/app/router/RouteGuard.tsx
 import { Suspense } from 'react';
 import { AppRouter } from './AppRouter';
 import { ErrorBoundary } from '@/shared/components/feedback/ErrorBoundary';
