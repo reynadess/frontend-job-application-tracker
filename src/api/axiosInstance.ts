@@ -1,6 +1,6 @@
 import axios from 'axios';
 import API_ROUTES from '@/config/config';
-import { getToken, removeToken } from '@/utils/tokenUtils';
+import { getToken, removeToken } from '@/shared/utils/tokenUtils';
 import { useNavigate } from 'react-router-dom';
 
 // Create Axios Instance with Base URL
