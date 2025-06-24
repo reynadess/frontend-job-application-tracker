@@ -24,17 +24,10 @@ import {
 } from '@/shared/components/ui/sidebar';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/features/authentication';
+import { ApplicantState } from '../types/user.types';
 
-interface NavUserProps {
-    User: {
-        username?: string;
-        name?: string;
-        email?: string;
-        avatar: string;
-    };
-}
 
-export function NavUser({ User }: NavUserProps) {
+export function NavUser({ Applicant }: ApplicantState) {
     const { isMobile } = useSidebar();
     const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
@@ -53,8 +46,8 @@ export function NavUser({ User }: NavUserProps) {
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
                                 <AvatarImage
-                                    src={User.avatar}
-                                    alt={User.name}
+                                    src={Applicant?.avatar || 'https://github.com/shadcn.png'}
+                                    alt={Applicant?.firstName}
                                 />
                                 <AvatarFallback className="rounded-lg">
                                     CN
@@ -62,10 +55,10 @@ export function NavUser({ User }: NavUserProps) {
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-semibold">
-                                    {User.name}
+                                    {Applicant?.firstName}
                                 </span>
                                 <span className="truncate text-xs">
-                                    {User.email}
+                                    {Applicant?.email}
                                 </span>
                             </div>
                             <ChevronsUpDown className="ml-auto size-4" />
@@ -81,8 +74,8 @@ export function NavUser({ User }: NavUserProps) {
                             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                 <Avatar className="h-8 w-8 rounded-lg">
                                     <AvatarImage
-                                        src={User.avatar}
-                                        alt={User.name}
+                                        src={Applicant?.avatar || "https://github.com/shadcn.png"}
+                                        alt={Applicant?.firstName}
                                     />
                                     <AvatarFallback className="rounded-lg">
                                         CN
@@ -90,10 +83,10 @@ export function NavUser({ User }: NavUserProps) {
                                 </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">
-                                        {User.name}
+                                        {Applicant?.firstName}
                                     </span>
                                     <span className="truncate text-xs">
-                                        {User.email}
+                                        {Applicant?.email}
                                     </span>
                                 </div>
                             </div>
@@ -109,7 +102,7 @@ export function NavUser({ User }: NavUserProps) {
                         <DropdownMenuGroup>
                             <DropdownMenuItem
                                 onClick={() =>
-                                    navigate(`/dashboard/user/${User.username}`)
+                                    navigate(`/dashboard/user/${Applicant?.username}`)
                                 }
                             >
                                 <BadgeCheck />

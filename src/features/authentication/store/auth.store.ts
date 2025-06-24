@@ -174,6 +174,7 @@ export const useAuthStore = create<UserStateWithTimer>()(
                                 isAuthenticated: false,
                                 logoutTimer: null
                             });
+                            window.location.href = "/home"
                             toast.info('Session expired. Please login again.');
                         }, timeUntilExpiration);
 

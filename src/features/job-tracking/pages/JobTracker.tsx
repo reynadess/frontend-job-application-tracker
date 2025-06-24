@@ -1,9 +1,9 @@
 import CurrentJobCard from '@/shared/components/CurrentJobCard';
-import { dummyJobs } from '@/DummyData/Jobs';
 import { Link } from 'react-router-dom';
 import JobTrackingTable from '../JobTrackingTable';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { PAGE_TITLES } from '@/shared/utils/pageTitle';
+import { mockJobs } from '@/lib/job-data';
 const JobTracker = () => {
     usePageTitle(PAGE_TITLES.JOB_TRACKER)
     return (
@@ -11,8 +11,8 @@ const JobTracker = () => {
             <div className="ml-7 hidden space-y-4 sm:block">
                 <h1 className="text-2xl font-bold">Current Openings</h1>
                 <div className="flex space-x-10 overflow-x-auto">
-                    {dummyJobs.slice(0, 3).map((job) => (
-                        <Link to={`/job/details/${job._id}`} key={job._id}>
+                    {mockJobs.slice(0, 3).map((job) => (
+                        <Link to={`/dashboard/job/details/${job.id}`} key={job.id}>
                             <CurrentJobCard job={job} />
                         </Link>
                     ))}
