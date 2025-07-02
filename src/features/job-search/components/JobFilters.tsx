@@ -102,7 +102,7 @@ export function JobFiltersComponent({
             value={[filters.salaryMin]}
             onValueChange={([value]) => updateFilter('salaryMin', value)}
             max={300000}
-            min={30000}
+            min={1000}
             step={10000}
             className="w-full"
           />

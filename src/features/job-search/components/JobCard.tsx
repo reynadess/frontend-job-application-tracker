@@ -44,7 +44,7 @@ export function JobCard({ job, onSave, isSaved = false }: JobCardProps) {
                     to={`/dashboard/job/details/${job.id}`}
                     className="text-xl font-semibold transition-colors hover:text-primary"
                   >
-                    {job.title}
+                    {job.role}
                   </Link>
                   {job.isUrgent && (
                     <Badge variant="destructive" className="text-xs">
@@ -102,8 +102,8 @@ export function JobCard({ job, onSave, isSaved = false }: JobCardProps) {
               <div className="text-success flex items-center gap-1 font-semibold">
                 <DollarSign className="h-4 w-4" />
                 <span>
-                  {job.salary.min.toLocaleString()} -{' '}
-                  {job.salary.max.toLocaleString()} {job.salary.currency}
+                  {job.ctcOffered.min.toLocaleString()} -{' '}
+                  {job.ctcOffered.max.toLocaleString()} {job.ctcOffered.currency}
                 </span>
               </div>
               <div className="flex items-center gap-2">

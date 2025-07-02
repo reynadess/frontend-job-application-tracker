@@ -1,12 +1,14 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Search } from "lucide-react"
-
 import { Button } from "@/shared/components/ui/button"
 import { Card, CardContent } from "@/shared/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select"
 import { JobCard } from "../components/JobCard"
 import { JobFiltersComponent } from "../components/JobFilters"
-import type { JobFilters } from "../types/job.types"
+import type { Job, JobFilters } from "../types/job.types"
+import { useJobs } from "../hooks/useJobs"
+import axios from "axios"
+import api from "@/api/axiosInstance"
 import { mockJobs } from "@/lib/job-data"
 
 const initialFilters: JobFilters = {
@@ -26,6 +28,12 @@ export default function JobSearchPage() {
   const [filters, setFilters] = useState<JobFilters>(initialFilters)
   const [sortBy, setSortBy] = useState("relevance")
   const [savedJobs, setSavedJobs] = useState<number[]>([])
+  // const [jobs , setJobs] = useState<Job[]>([])
+  // const {jobs, getJobList} = useJobs();
+
+
+
+
 
   const toggleSaveJob = (jobId: number) => {
     setSavedJobs((prev) => (prev.includes(jobId) ? prev.filter((id) => id !== jobId) : [...prev, jobId]))
@@ -54,16 +62,16 @@ export default function JobSearchPage() {
     return mockJobs.filter((job) => {
       const matchesSearch =
         !filters.search ||
-        job.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+        job.role.toLowerCase().includes(filters.search.toLowerCase()) ||
         job.company.toLowerCase().includes(filters.search.toLowerCase()) ||
-        job.skills.some((skill) => skill.toLowerCase().includes(filters.search.toLowerCase()))
+        job?.skills?.some((skill) => skill.toLowerCase().includes(filters.search.toLowerCase()))
 
       const matchesLocation =
         !filters.location ||
-        job.location.toLowerCase().includes(filters.location.toLowerCase()) ||
+        job?.location?.toLowerCase().includes(filters.location.toLowerCase()) ||
         (filters.location.toLowerCase().includes("remote") && job.remote)
 
-      const matchesSalary = job.salary.min >= filters.salaryMin
+      const matchesSalary = job.ctcOffered.min >= filters.salaryMin
       const matchesType = filters.jobType === "all" || job.type === filters.jobType
       const matchesRemote = !filters.remote || job.remote
       const matchesHybrid = !filters.hybrid || job.hybrid
@@ -91,9 +99,9 @@ export default function JobSearchPage() {
       case "newest":
         return sorted.sort((a, b) => new Date(b.posted).getTime() - new Date(a.posted).getTime())
       case "salary-high":
-        return sorted.sort((a, b) => b.salary.max - a.salary.max)
+        return sorted.sort((a, b) => b.ctcOffered.max - a.ctcOffered.max)
       case "salary-low":
-        return sorted.sort((a, b) => a.salary.min - b.salary.min)
+        return sorted.sort((a, b) => a.ctcOffered.min - b.ctcOffered.min)
       case "match":
         return sorted.sort((a, b) => b.skillMatch - a.skillMatch)
       default:

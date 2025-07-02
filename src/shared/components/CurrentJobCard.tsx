@@ -52,7 +52,7 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
             {/* Job Header */}
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                    {job.title}
+                    {job.role}
                 </h2>
                 <Badge
                     className={` ${experienceStyles.badge} rounded-full px-2 py-1 text-xs`}
@@ -77,7 +77,7 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
                 </div>
                 <div className="flex items-center space-x-1">
                     <DollarSign className="h-4 w-4" />
-                    <span>{formatSalary(job.salary.min)} / year</span>
+                    <span>{formatSalary(job.ctcOffered.min)} / year</span>
                 </div>
                 <div className="flex items-center space-x-1">
                     <Clock className="h-4 w-4" />

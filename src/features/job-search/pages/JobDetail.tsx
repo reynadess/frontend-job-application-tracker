@@ -72,7 +72,7 @@ export default function JobDetailPage() {
                   <div className="flex items-start justify-between">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <h1 className="text-3xl font-bold">{job.title}</h1>
+                        <h1 className="text-3xl font-bold">{job.role}</h1>
                         {job.isUrgent && (
                           <Badge variant="destructive">Urgent</Badge>
                         )}
@@ -110,8 +110,8 @@ export default function JobDetailPage() {
                     <div className="text-success flex items-center gap-1 text-lg font-semibold">
                       <DollarSign className="h-5 w-5" />
                       <span>
-                        ${job.salary.min.toLocaleString()} - $
-                        {job.salary.max.toLocaleString()} {job.salary.currency}
+                        ${job.ctcOffered.min.toLocaleString()} - $
+                        {job.ctcOffered.max.toLocaleString()} {job.ctcOffered.currency}
                       </span>
                     </div>
                     <Badge variant="secondary">{job.type}</Badge>
@@ -426,11 +426,11 @@ export default function JobDetailPage() {
                         className="block rounded p-2 transition-colors hover:bg-muted/50"
                       >
                         <h4 className="text-sm font-medium">
-                          {similarJob.title}
+                          {similarJob.role}
                         </h4>
                         <p className="text-xs text-muted-foreground">
-                          {similarJob.company} • ${similarJob.salary.min}k-$
-                          {similarJob.salary.max}k
+                          {similarJob.company} • ${similarJob.ctcOffered.min}k-$
+                          {similarJob.ctcOffered.max}k
                         </p>
                       </Link>
                     </div>

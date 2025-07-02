@@ -22,6 +22,14 @@ const API_ROUTES = Object.freeze({
         UPDATEBYID: '/applications',
         DELETEBYID: '/applications',
     },
+    JOB : {
+        GET_ALL_JOBS : '/jobs',
+        GET_JOB_BY_ID : (id: number) => `/jobs/${id}`,
+        GET_JOB_BY_IDS : (ids: number[]) => `/jobs/by-ids=${ids.join(',')}`,
+        CREATE_JOB : '/jobs',
+        UPDATE_JOB : (id: number) => `/jobs/${id}`,
+        DELETE_JOB : (id: number) => `/jobs/${id}`,
+    }
 });
 
 export default API_ROUTES;

@@ -1,11 +1,27 @@
+export interface JobState {
+  jobs: Job[];
+  loading: boolean;
+  error: string | null;
+}
+
+export interface JobActions extends JobState {
+  getJobList: () => Promise<void>;
+  addJob: (job: Job) => Promise<void>;
+  updateJob: (jobId:number , job:Job) => Promise<void>;
+  deleteJob: (jobId: number) => Promise<void>;
+  getJobByIds: (jobIds: number[]) => Promise<void>;
+  getJobById: (jobId: number) => Promise<void>;
+}
+
+
 export interface Job {
   id: number
-  title: string
+  role: string
   company: string
   location: string
   remote: boolean
   hybrid?: boolean
-  salary: {
+  ctcOffered: {
     min: number
     max: number
     currency: string
@@ -54,3 +70,4 @@ export interface JobFilters {
   department: string
   postedWithin: string
 }
+
