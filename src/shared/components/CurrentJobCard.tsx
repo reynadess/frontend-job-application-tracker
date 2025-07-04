@@ -1,8 +1,7 @@
 import React from 'react';
-import { Job } from '@/DummyData/Jobs';
 import { Briefcase, MapPin, DollarSign, Clock, Star } from 'lucide-react';
 import { Badge } from '@/shared/components/ui/badge';
-import { Button } from '@/shared/components/ui/button';
+import { Job } from '@/features/job-search/types/job.types';
 
 interface JobCardProps {
     job: Job;
@@ -19,21 +18,24 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
     };
 
     // Function to get experience badge color and background
-    const getExperienceStyles = (experience: Job['experience']) => {
+    const getExperienceStyles = (experience: Job['experienceLevel']) => {
         const variants = {
-            entry: {
+            Entry: {
                 badge: 'dark:bg-gray-700 dark:text-gray-300 bg-gray-200 text-gray-800',
                 card: 'dark:border-gray-700/50 border-gray-200 dark:hover:border-gray-600 hover:border-gray-300',
-            },
-            mid: {
+            },Mid: {
                 badge: 'dark:bg-blue-900/50 dark:text-blue-300 bg-blue-100 text-blue-800',
                 card: 'dark:border-blue-900/50 border-blue-100 dark:hover:border-blue-800 hover:border-blue-200',
             },
-            senior: {
+            Senior: {
                 badge: 'dark:bg-green-900/50 dark:text-green-300 bg-green-100 text-green-800',
                 card: 'dark:border-green-900/50 border-green-100 dark:hover:border-green-800 hover:border-green-200',
             },
-            executive: {
+            Lead: {
+                badge: 'dark:bg-purple-900/50 dark:text-purple-300 bg-purple-100 text-purple-800',
+                card: 'dark:border-purple-900/50 border-purple-100 dark:hover:border-purple-800 hover:border-purple-200',
+            },
+           Executive : {
                 badge: 'dark:bg-purple-900/50 dark:text-purple-300 bg-purple-100 text-purple-800',
                 card: 'dark:border-purple-900/50 border-purple-100 dark:hover:border-purple-800 hover:border-purple-200',
             },
@@ -41,7 +43,7 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
         return variants[experience];
     };
 
-    const experienceStyles = getExperienceStyles(job.experience);
+    const experienceStyles = getExperienceStyles(job.experienceLevel);
 
     return (
         <div
@@ -50,13 +52,13 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
             {/* Job Header */}
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                    {job.title}
+                    {job.role}
                 </h2>
                 <Badge
                     className={` ${experienceStyles.badge} rounded-full px-2 py-1 text-xs`}
                 >
-                    {job.experience.charAt(0).toUpperCase() +
-                        job.experience.slice(1)}{' '}
+                    {job.experienceLevel.charAt(0).toUpperCase() +
+                        job.experienceLevel.slice(1)}{' '}
                     Level
                 </Badge>
             </div>
@@ -75,12 +77,12 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
                 </div>
                 <div className="flex items-center space-x-1">
                     <DollarSign className="h-4 w-4" />
-                    <span>{formatSalary(job.salary)} / year</span>
+                    <span>{formatSalary(job.ctcOffered.min)} / year</span>
                 </div>
                 <div className="flex items-center space-x-1">
                     <Clock className="h-4 w-4" />
                     <span>
-                        {job.jobType
+                        {job.type
                             .replace('-', ' ')
                             .replace(/\b\w/g, (l) => l.toUpperCase())}
                     </span>
@@ -91,7 +93,7 @@ const CurrentJobCard: React.FC<JobCardProps> = ({ job }) => {
                 <div className="flex items-center text-yellow-500">
                     <Star className="mr-1 h-4 w-4" />
                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Posted {job.postedDate}
+                        Posted {job.posted}
                     </span>
                 </div>
             </div>

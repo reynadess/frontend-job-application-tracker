@@ -60,6 +60,6 @@ export interface UserType {
 
 export type ApplicantState = {
     Applicant: UserType | null;
-    getApplicantInfo: (username: string) => Promise<void>;
+    getApplicantInfo: (username: string | undefined) => Promise<void>;
     loading: boolean;
 };

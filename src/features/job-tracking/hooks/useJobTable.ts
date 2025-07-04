@@ -129,9 +129,6 @@ export function useJobTable() {
     };
 
     const handleReset = () => {
-        //TODO : here
-        // Reset all filters to their default values
-        console.log('Bhai aa gaya yaha');
         setFilters({
             search: '',
             status: [],

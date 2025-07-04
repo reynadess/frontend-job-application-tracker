@@ -1,244 +1,179 @@
-import React, { useState, useMemo } from 'react';
-import { Job, dummyJobs } from '@/DummyData/Jobs';
-import { Button } from '@/shared/components/ui/button';
-import { Input } from '@/shared/components/ui/input';
-import { Separator } from '@radix-ui/react-separator';
-import { Map, Search, StarsIcon, Filter, X } from 'lucide-react';
-import JobCard from '@/shared/components/JobCard';
-import FilterPage from '@/shared/components/FilterPage';
-import { Link } from 'react-router-dom';
-import { usePageTitle } from '@/hooks/usePageTitle';
-import { PAGE_TITLES } from '@/shared/utils/pageTitle';
+import { useState, useMemo, useEffect } from "react"
+import { Search } from "lucide-react"
+import { Button } from "@/shared/components/ui/button"
+import { Card, CardContent } from "@/shared/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select"
+import { JobCard } from "../components/JobCard"
+import { JobFiltersComponent } from "../components/JobFilters"
+import type { Job, JobFilters } from "../types/job.types"
+import { useJobs } from "../hooks/useJobs"
+import axios from "axios"
+import api from "@/api/axiosInstance"
+import { mockJobs } from "@/lib/job-data"
 
-// Define filter state type
-type FilterState = {
-    jobType: Job['jobType'][];
-    experience: Job['experience'][];
-    salary: string[];
-    industry: Job['industry'][];
-};
+const initialFilters: JobFilters = {
+  search: "",
+  location: "",
+  salaryMin: 50000,
+  jobType: "all",
+  remote: false,
+  hybrid: false,
+  companySize: "all",
+  experienceLevel: "all",
+  department: "all",
+  postedWithin: "all",
+}
 
-const GlobalJobs: React.FC = () => {
-    // State for search and filters
-    const [searchTitle, setSearchTitle] = useState('');
-    const [searchLocation, setSearchLocation] = useState('');
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [appliedFilters, setAppliedFilters] = useState<FilterState>({
-        jobType: [],
-        experience: [],
-        salary: [],
-        industry: [],
-    });
+export default function JobSearchPage() {
+  const [filters, setFilters] = useState<JobFilters>(initialFilters)
+  const [sortBy, setSortBy] = useState("relevance")
+  const [savedJobs, setSavedJobs] = useState<number[]>([])
+  // const [jobs , setJobs] = useState<Job[]>([])
+  // const {jobs, getJobList} = useJobs();
 
-    usePageTitle(PAGE_TITLES.JOB_SEARCH)
 
-    // Filtering logic with strong typing
-    const filteredJobs = useMemo(() => {
-        return dummyJobs.filter((job) => {
-            // Title search
-            const matchesTitle = job.title
-                .toLowerCase()
-                .includes(searchTitle.toLowerCase());
 
-            // Location search
-            const matchesLocation = job.location
-                .toLowerCase()
-                .includes(searchLocation.toLowerCase());
 
-            // Filter checks with type safety
-            const matchesJobType =
-                appliedFilters.jobType.length === 0 ||
-                appliedFilters.jobType.includes(job.jobType);
 
-            const matchesExperience =
-                appliedFilters.experience.length === 0 ||
-                appliedFilters.experience.includes(job.experience);
+  const toggleSaveJob = (jobId: number) => {
+    setSavedJobs((prev) => (prev.includes(jobId) ? prev.filter((id) => id !== jobId) : [...prev, jobId]))
+  }
 
-            const matchesSalary =
-                appliedFilters.salary.length === 0 ||
-                appliedFilters.salary.some((salaryRange) => {
-                    const [min, max] = salaryRange.split('-').map(Number);
-                    return job.salary >= min && job.salary <= max;
-                });
+  const clearFilters = () => {
+    setFilters(initialFilters)
+  }
 
-            const matchesIndustry =
-                appliedFilters.industry.length === 0 ||
-                appliedFilters.industry.includes(job.industry);
+  const activeFiltersCount = useMemo(() => {
+    let count = 0
+    if (filters.search) count++
+    if (filters.location) count++
+    if (filters.salaryMin > 50000) count++
+    if (filters.jobType !== "all") count++
+    if (filters.remote) count++
+    if (filters.hybrid) count++
+    if (filters.companySize !== "all") count++
+    if (filters.experienceLevel !== "all") count++
+    if (filters.department !== "all") count++
+    if (filters.postedWithin !== "all") count++
+    return count
+  }, [filters])
 
-            return (
-                matchesTitle &&
-                matchesLocation &&
-                matchesJobType &&
-                matchesExperience &&
-                matchesSalary &&
-                matchesIndustry
-            );
-        });
-    }, [searchTitle, searchLocation, appliedFilters]);
+  const filteredJobs = useMemo(() => {
+    return mockJobs.filter((job) => {
+      const matchesSearch =
+        !filters.search ||
+        job.role.toLowerCase().includes(filters.search.toLowerCase()) ||
+        job.company.toLowerCase().includes(filters.search.toLowerCase()) ||
+        job?.skills?.some((skill) => skill.toLowerCase().includes(filters.search.toLowerCase()))
 
-    // Handle filter application
-    const handleApplyFilters = (filters: FilterState) => {
-        setAppliedFilters(filters);
-    };
+      const matchesLocation =
+        !filters.location ||
+        job?.location?.toLowerCase().includes(filters.location.toLowerCase()) ||
+        (filters.location.toLowerCase().includes("remote") && job.remote)
 
-    // Clear all filters and search
-    const clearAllFilters = () => {
-        setSearchTitle('');
-        setSearchLocation('');
-        setAppliedFilters({
-            jobType: [],
-            experience: [],
-            salary: [],
-            industry: [],
-        });
-    };
+      const matchesSalary = job.ctcOffered.min >= filters.salaryMin
+      const matchesType = filters.jobType === "all" || job.type === filters.jobType
+      const matchesRemote = !filters.remote || job.remote
+      const matchesHybrid = !filters.hybrid || job.hybrid
+      const matchesCompanySize = filters.companySize === "all" || job.companySize === filters.companySize
+      const matchesExperience = filters.experienceLevel === "all" || job.experienceLevel === filters.experienceLevel
+      const matchesDepartment = filters.department === "all" || job.department === filters.department
 
-    return (
-        <div className="mx-auto px-4 py-6">
-            <div className="w-full rounded-lg border">
-                <div className="p-6">
-                    <h1 className="mb-6 flex items-center text-3xl font-bold">
-                        Find Your Dream Job Here{' '}
-                        <StarsIcon className="ml-2 text-yellow-500" />
-                    </h1>
+      return (
+        matchesSearch &&
+        matchesLocation &&
+        matchesSalary &&
+        matchesType &&
+        matchesRemote &&
+        matchesHybrid &&
+        matchesCompanySize &&
+        matchesExperience &&
+        matchesDepartment
+      )
+    })
+  }, [filters])
 
-                    {/* Search Section */}
-                    <div className="rounded-xl border p-4 shadow-sm">
-                        <div className="flex items-center space-x-4">
-                            <div className="relative flex-1">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <Input
-                                    value={searchTitle}
-                                    onChange={(e) =>
-                                        setSearchTitle(e.target.value)
-                                    }
-                                    className="rounded-full border-gray-300 py-2 pl-10 transition-all focus:border-blue-500"
-                                    placeholder="Job Title or Keyword"
-                                />
-                            </div>
+  const sortedJobs = useMemo(() => {
+    const sorted = [...filteredJobs]
+    switch (sortBy) {
+      case "newest":
+        return sorted.sort((a, b) => new Date(b.posted).getTime() - new Date(a.posted).getTime())
+      case "salary-high":
+        return sorted.sort((a, b) => b.ctcOffered.max - a.ctcOffered.max)
+      case "salary-low":
+        return sorted.sort((a, b) => a.ctcOffered.min - b.ctcOffered.min)
+      case "match":
+        return sorted.sort((a, b) => b.skillMatch - a.skillMatch)
+      default:
+        return sorted.sort((a, b) => b.skillMatch - a.skillMatch)
+    }
+  }, [filteredJobs, sortBy])
 
-                            <Separator
-                                orientation="vertical"
-                                className="h-10 border-l"
-                            />
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Filters Sidebar */}
+          <div className="lg:col-span-1">
+            <JobFiltersComponent
+              filters={filters}
+              onFiltersChange={setFilters}
+              onClearFilters={clearFilters}
+              activeFiltersCount={activeFiltersCount}
+            />
+          </div>
 
-                            <div className="relative flex-1">
-                                <Map className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <Input
-                                    value={searchLocation}
-                                    onChange={(e) =>
-                                        setSearchLocation(e.target.value)
-                                    }
-                                    className="rounded-full border-gray-300 py-2 pl-10 transition-all focus:border-blue-500"
-                                    placeholder="Country or City"
-                                />
-                            </div>
-
-                            {/* Filter Toggle */}
-                            <Button
-                                variant="outline"
-                                onClick={() => setIsFilterOpen(!isFilterOpen)}
-                                className="flex items-center gap-2 rounded-full px-4 py-2"
-                            >
-                                <Filter className="h-5 w-5" />
-                                Filters
-                            </Button>
-
-                            <Button
-                                type="submit"
-                                className="rounded-full bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
-                            >
-                                Search
-                            </Button>
-                        </div>
-
-                        {/* Active Filters Display */}
-                        {(searchTitle ||
-                            searchLocation ||
-                            Object.values(appliedFilters).some(
-                                (arr) => arr.length > 0
-                            )) && (
-                            <div className="mt-4 flex items-center space-x-2">
-                                <span className="text-sm text-gray-600">
-                                    Active Filters:
-                                </span>
-                                {searchTitle && (
-                                    <div className="flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">
-                                        Title: {searchTitle}
-                                        <X
-                                            className="ml-1 h-4 w-4 cursor-pointer"
-                                            onClick={() => setSearchTitle('')}
-                                        />
-                                    </div>
-                                )}
-                                {searchLocation && (
-                                    <div className="flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">
-                                        Location: {searchLocation}
-                                        <X
-                                            className="ml-1 h-4 w-4 cursor-pointer"
-                                            onClick={() =>
-                                                setSearchLocation('')
-                                            }
-                                        />
-                                    </div>
-                                )}
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={clearAllFilters}
-                                    className="text-red-600"
-                                >
-                                    Clear All
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Jobs and Filters Section */}
-                    <div className="mt-6 grid grid-cols-12 gap-6">
-                        {/* Filters */}
-                        <div
-                            className={`${
-                                isFilterOpen ? 'col-span-3' : 'col-span-0'
-                            } transform transition-all duration-1000`}
-                        >
-                            {isFilterOpen && (
-                                <FilterPage
-                                    onApplyFilters={handleApplyFilters}
-                                    currentFilters={appliedFilters}
-                                />
-                            )}
-                        </div>
-
-                        {/* Job Listings */}
-
-                        <div
-                            className={` ${
-                                isFilterOpen ? 'col-span-9' : 'col-span-12'
-                            } transition-all duration-1000`}
-                        >
-                            <h3 className="mb-4 text-xl font-semibold">
-                                {filteredJobs.length} Recommended Jobs
-                            </h3>
-                            <div className="grid h-[65vh] grid-cols-1 gap-4 overflow-y-auto md:grid-cols-2">
-                                {filteredJobs.map((job) => (
-                                    <Link to={`/job/details/${job._id}`}>
-                                        <JobCard key={job._id} job={job} />
-                                    </Link>
-                                ))}
-                                {filteredJobs.length === 0 && (
-                                    <div className="col-span-2 py-10 text-center text-gray-500">
-                                        No jobs match your search and filter
-                                        criteria.
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          {/* Job Listings */}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Results Header */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-semibold">{sortedJobs.length} jobs found</h2>
+                {activeFiltersCount > 0 && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {activeFiltersCount} filter{activeFiltersCount !== 1 ? "s" : ""} applied
+                  </p>
+                )}
+              </div>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevance">Most Relevant</SelectItem>
+                  <SelectItem value="newest">Newest First</SelectItem>
+                  <SelectItem value="match">Best Match</SelectItem>
+                  <SelectItem value="salary-high">Highest Salary</SelectItem>
+                  <SelectItem value="salary-low">Lowest Salary</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-        </div>
-    );
-};
 
-export default GlobalJobs;
+            {/* Job Cards */}
+            <div className="space-y-4">
+              {sortedJobs.map((job) => (
+                <JobCard key={job.id} job={job} onSave={toggleSaveJob} isSaved={savedJobs.includes(job.id)} />
+              ))}
+            </div>
+
+            {/* No Results */}
+            {sortedJobs.length === 0 && (
+              <Card>
+                <CardContent className="p-12 text-center">
+                  <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No jobs found</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Try adjusting your filters or search terms to find more opportunities.
+                  </p>
+                  <Button onClick={clearFilters} variant="outline">
+                    Clear All Filters
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
