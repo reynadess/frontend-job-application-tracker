@@ -9,37 +9,38 @@ Welcome! This guide helps you set up, run, and share the project easily using **
 
 ```plaintext
 frontend-job-application-tracker/
-├── api/
-├── app/
-├── assets/
-├── auth/
-├── config/
-├── Dashboard/
-├── DummyData/
-├── features/
-├── hooks/
-├── lib/
-├── pages/
-├── schema/
-├── shared/
-├── store/
-├── types/
-├── utils/
-├── public/
-├── src/
-│   ├── App.tsx
-│   ├── index.css
-│   ├── index.tsx
-│   ├── main.tsx
-│   ├── vite-env.d.ts
-├── .dockerignore
-├── docker-compose.yml
-├── Dockerfile
-├── package.json
-├── package-lock.json
-├── vite.config.ts
-├── tailwind.config.js
-└── README.md
+   |-public
+   |-src/
+      ├── api/
+      ├── app/
+      ├── assets/
+      ├── auth/
+      ├── config/
+      ├── Dashboard/
+      ├── DummyData/
+      ├── features/
+      ├── hooks/
+      ├── lib/
+      ├── pages/
+      ├── schema/
+      ├── shared/
+      ├── store/
+      ├── types/
+      ├── utils/
+      ├── public/
+      ├── App.tsx
+      ├── index.css
+      ├── index.tsx
+      ├── main.tsx
+   ├── vite-env.d.ts
+   ├── .dockerignore
+   ├── docker-compose.yml
+   ├── Dockerfile
+   ├── package.json
+   ├── package-lock.json
+   ├── vite.config.ts
+   ├── tailwind.config.js
+   └── README.md
 ```
 
 ---

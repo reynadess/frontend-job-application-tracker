@@ -25,8 +25,8 @@ export const ProtectedRoutes = () => {
       >
         <Route path="job-tracker" element={<JobTracker />} />
         <Route path="user/:username" element={<ProfilePage />} />
-        <Route path="jobsearch" element={<GlobalJobs />} />
-        <Route path="job/details/:id" element={<JobDetail />} />
+        {/* <Route path="jobsearch" element={<GlobalJobs />} /> */}
+        {/* <Route path="job/details/:id" element={<JobDetail />} /> */}
         <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage title='Back to dashboard' url='/dashboard/job-tracker' />} />
       </Route>
     </Routes>

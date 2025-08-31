@@ -7,7 +7,7 @@ import { ApplicantState } from '@/shared/types/user.types';
 export const useApplicantStore = create<ApplicantState>()(
     persist(
         (set) => ({
-            Applicant: null,
+            Applicant: null!,
             loading: false,
 
             getApplicantInfo: async (username: string) => {

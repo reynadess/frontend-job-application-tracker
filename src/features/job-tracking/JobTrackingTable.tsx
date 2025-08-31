@@ -5,8 +5,8 @@ import { JobTableRow } from './ui/TableRow';
 import { TablePagination } from './ui/TablePagination';
 import { useJobTable } from './hooks/useJobTable';
 import { JobApplicationSheet } from './ui/JobApplicationSheet';
-import { SHEETS } from '@/features/applicant-portfolio/lib/constants/Profile.constant';
 import SheetWrapper from '@/shared/components/sheets/SheetWrapper';
+import { SHEETS } from '@/lib/constants/Profile.constant';
 
 export default function JobTrackingTable() {
     const {

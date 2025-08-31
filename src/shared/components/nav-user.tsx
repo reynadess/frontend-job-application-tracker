@@ -24,10 +24,13 @@ import {
 } from '@/shared/components/ui/sidebar';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/features/authentication';
-import { ApplicantState } from '../types/user.types';
+import { UserType } from '../types/user.types';
+// import { ApplicantState } from '../types/user.types';
 
-
-export function NavUser({ Applicant }: ApplicantState) {
+interface NavApplicantState {
+    profile : UserType  | null
+}
+export function NavUser({ profile }: NavApplicantState) {
     const { isMobile } = useSidebar();
     const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
@@ -46,8 +49,9 @@ export function NavUser({ Applicant }: ApplicantState) {
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
                                 <AvatarImage
-                                    src={Applicant?.avatar || 'https://github.com/shadcn.png'}
-                                    alt={Applicant?.firstName}
+                                //@ts-ignore TODO:Remove it
+                                    src={profile?.avatar || 'https://github.com/shadcn.png'}
+                                    alt={profile?.firstName}
                                 />
                                 <AvatarFallback className="rounded-lg">
                                     CN
@@ -55,10 +59,10 @@ export function NavUser({ Applicant }: ApplicantState) {
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-semibold">
-                                    {Applicant?.firstName}
+                                    {profile?.firstName}
                                 </span>
                                 <span className="truncate text-xs">
-                                    {Applicant?.email}
+                                    {profile?.email}
                                 </span>
                             </div>
                             <ChevronsUpDown className="ml-auto size-4" />
@@ -74,8 +78,11 @@ export function NavUser({ Applicant }: ApplicantState) {
                             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                 <Avatar className="h-8 w-8 rounded-lg">
                                     <AvatarImage
-                                        src={Applicant?.avatar || "https://github.com/shadcn.png"}
-                                        alt={Applicant?.firstName}
+                                    //@ts-ignore TODO:remove it
+
+                                        src={ profile?.avatar || 
+                                            "https://github.com/shadcn.png"}
+                                        alt={profile?.firstName}
                                     />
                                     <AvatarFallback className="rounded-lg">
                                         CN
@@ -83,10 +90,10 @@ export function NavUser({ Applicant }: ApplicantState) {
                                 </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">
-                                        {Applicant?.firstName}
+                                        {profile?.firstName}
                                     </span>
                                     <span className="truncate text-xs">
-                                        {Applicant?.email}
+                                        {profile?.email}
                                     </span>
                                 </div>
                             </div>
@@ -102,7 +109,7 @@ export function NavUser({ Applicant }: ApplicantState) {
                         <DropdownMenuGroup>
                             <DropdownMenuItem
                                 onClick={() =>
-                                    navigate(`/dashboard/user/${Applicant?.username}`)
+                                    navigate(`/dashboard/user/${profile?.username}`)
                                 }
                             >
                                 <BadgeCheck />

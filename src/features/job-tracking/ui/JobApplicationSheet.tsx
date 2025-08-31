@@ -91,19 +91,8 @@ export function JobApplicationSheet({
             handleClose();
             reset();
             setDate(undefined); // Reset date state as well
-
-            // Show success message
-            toast.success(
-                selectedApplication
-                    ? 'Application updated successfully'
-                    : 'Application created successfully'
-            );
         } catch (error) {
-            toast.error(
-                selectedApplication
-                    ? 'Failed to update application'
-                    : 'Failed to create application'
-            );
+            console.error("Operation Failed Try again")
         } finally {
             setIsSubmitting(false);
         }
