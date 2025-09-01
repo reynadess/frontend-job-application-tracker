@@ -1,199 +1,235 @@
-import { Link } from 'react-router-dom';
+import * as React from 'react';
 import { Button } from '@/shared/components/ui/button';
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from '@/shared/components/ui/dialog';
-
 import {
-    CalendarIcon,
-    MapPinIcon,
-    BriefcaseIcon,
-    LinkIcon,
-    DollarSignIcon,
-    ClockIcon,
+  CalendarIcon,
+  MapPinIcon,
+  LinkIcon,
+  DollarSignIcon,
+  BadgeCheckIcon,
+  CopyIcon,
+  ExternalLinkIcon,
 } from 'lucide-react';
-import { DialogDescription } from '@radix-ui/react-dialog';
 import { ApplicationsType } from '@/shared/types/applications.types';
 
 interface PopupProps {
-    selectedApplication: ApplicationsType | null;
+  selectedApplication: ApplicationsType | null;
+  triggerLabel?: string;
 }
 
-const JobApplicationDetailsPopup = ({ selectedApplication }: PopupProps) => {
-    return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button className="w-full" type="button" variant={'ghost'}>
-                    View Details
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[70vw]">
-                <div className="mb-4 flex flex-col items-center">
-                    <div className="md-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-gray-100">
-                        <img
-                            src={
-                                'https://imgs.search.brave.com/IQL0yRWAyMo_AqV4saaoXE1ZwqC_lJR1S7aF6WaqWfI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvam9iLWFuZC1y/ZXN1bWUtNS82NC9D/b21wYW55LW9mZmlj/ZS1hZGRyZXNzLWxv/Y2F0aW9uLWdwcy0x/MjgucG5n'
-                            }
-                            alt="company-logo"
-                            className="h-full w-full object-contain"
-                        />
-                    </div>
-                    <h2 className="text-xl font-bold">
-                        {selectedApplication?.company}
-                    </h2>
-                </div>
+function formatDate(iso?: string) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  });
+}
 
-                <DialogHeader>
-                    <DialogTitle className="text-2xl">
-                        {selectedApplication?.role}
-                    </DialogTitle>
-                </DialogHeader>
-                <DialogDescription>
-                    <div className="grid gap-6 py-4">
-                        {/* Job highlights */}
-                        <div className="flex flex-wrap gap-3 text-sm">
-                            <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
-                                <DollarSignIcon className="h-4 w-4" />
-                                <span>{selectedApplication?.ctcOffered}</span>
-                            </div>
-                            <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
-                                <MapPinIcon className="h-4 w-4" />
-                                <span>
-                                    {selectedApplication?.city},{' '}
-                                    {selectedApplication?.country},{' '}
-                                    {selectedApplication?.state}
-                                </span>
-                            </div>
-                            <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
-                                <BriefcaseIcon className="h-4 w-4" />
-                                <span>Full time</span>
-                            </div>
-                            <div className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 dark:bg-blue-950">
-                                <ClockIcon className="h-4 w-4" />
-                                <span>Remote</span>
-                            </div>
-                        </div>
+function formatNumber(n?: number) {
+  if (typeof n !== 'number') return '';
+  try {
+    return new Intl.NumberFormat(undefined).format(n);
+  } catch {
+    return String(n);
+  }
+}
 
-                        {/* Application status */}
-                        <div className="flex items-center justify-between border-b border-t py-3">
-                            <div className="flex items-center gap-2">
-                                <CalendarIcon className="h-4 w-4" />
-                                <span className="text-sm">
-                                    Applied on May 15 , 2025
-                                </span>
-                            </div>
-                            <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
-                                {selectedApplication?.status}
-                            </span>
-                        </div>
+function ensureHttp(url?: string) {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `https://${url}`;
+}
 
-                        {/* job link  */}
+export function JobApplicationDetailsDialog({
+  selectedApplication,
+  triggerLabel = 'View Details',
+}: PopupProps) {
+  const [copied, setCopied] = React.useState(false);
 
-                        <div className="flex items-center gap-2">
-                            <LinkIcon className="h-4 w-4" />
-                            <Link
-                                to={'www.google.com'}
-                                className="text-sm text-blue-600 hover:underline"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {selectedApplication?.company}
-                            </Link>
-                        </div>
+  const safeLink = ensureHttp(selectedApplication?.jobLink);
+  const canOpen = Boolean(safeLink && safeLink.length > 8);
 
-                        {/* Job Description */}
-                        <div>
-                            <h3 className="mb-2 font-semibold">
-                                Job Description
-                            </h3>
-                            <div className="space-y-2 text-sm">
-                                <p>{selectedApplication?.description}</p>
-                                <p>
-                                    Responsibilities include developing new
-                                    features, maintaining existing code, and
-                                    collaborating with cross-functional teams.
-                                </p>
-                            </div>
-                        </div>
+  async function onCopy() {
+    try {
+      await navigator.clipboard.writeText(selectedApplication?.jobLink || '');
+      setCopied(true);
+      const t = setTimeout(() => setCopied(false), 1500);
+      return () => clearTimeout(t);
+    } catch {
+      // ignore
+    }
+  }
 
-                        {/* Qualification */}
-                        <div>
-                            <h3 className="mb-2 font-semibold">
-                                Qualification
-                            </h3>
-                            <ul className="list-inside list-disc space-y-1 text-sm">
-                                <li>
-                                    5+ years of experience in software
-                                    development
-                                </li>
-                                <li>
-                                    Strong proficiency in JavaScript, React, and
-                                    Node.js
-                                </li>
-                                <li>
-                                    Experience with cloud platforms (AWS, GCP,
-                                    or Azure)
-                                </li>
-                                <li>
-                                    Bachelor's degree in Computer Science or
-                                    related field
-                                </li>
-                                <li>
-                                    Excellent problem-solving and communication
-                                    skills
-                                </li>
-                            </ul>
-                        </div>
+  const initials =
+    (selectedApplication?.company?.trim?.() || '')
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((s) => s[0]?.toUpperCase())
+      .join('') || '??';
 
-                        {/* Benefits */}
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button type="button" variant="ghost" className="w-full">
+          {triggerLabel}
+        </Button>
+      </DialogTrigger>
 
-                        <div>
-                            <h3 className="mb-2 font-semibold">Benefits</h3>
-                            <ul className="list-inside list-disc space-y-1 text-sm">
-                                <li>Competitive salary and equity package</li>
-                                <li>Health, dental, and vision insurance</li>
-                                <li>401(k) matching</li>
-                                <li>
-                                    Flexible work hours and remote work options
-                                </li>
-                                <li>Professional development budget</li>
-                                <li>Paid time off and parental leave</li>
-                            </ul>
-                        </div>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[680px]">
+        <div className="mb-4 flex flex-col items-center gap-3">
+          <div
+            aria-hidden
+            className="flex h-20 w-20 items-center justify-center rounded-full bg-muted text-lg font-semibold"
+          >
+            {initials}
+          </div>
+          <h2 className="text-center text-xl font-bold">
+            {selectedApplication?.company}
+          </h2>
+        </div>
 
-                        <div>
-                            <h3 className="mb-2 font-semibold">
-                                About Acme Corporation
-                            </h3>
-                            <p className="text-sm">
-                                Acme Corporation is a leading technology company
-                                specializing in innovative software solutions.
-                                Founded in 2010, we've grown to over 500
-                                employees worldwide with offices in San
-                                Francisco, New York, and London. Our mission is
-                                to create technology that makes people's lives
-                                better.
-                            </p>
-                        </div>
-                    </div>
-                </DialogDescription>
+        <DialogHeader className="space-y-1">
+          <DialogTitle className="text-balance text-2xl">
+            {selectedApplication?.role}
+          </DialogTitle>
+          <DialogDescription className="sr-only">
+            Job details for {selectedApplication?.role} at{' '}
+            {selectedApplication?.company}
+          </DialogDescription>
+        </DialogHeader>
 
-                <DialogFooter className="flex gap-2">
-                    <Button variant="outline">Mark as Rejected</Button>
-                    <Button variant="outline">Mark as Interview</Button>
-                    <DialogClose>
-                        <Button type="button">Close</Button>
-                    </DialogClose>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    );
-};
+        <div className="grid gap-6 py-4">
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <div className="flex items-center gap-1 rounded-full bg-muted px-3 py-1">
+              <DollarSignIcon className="h-4 w-4" />
+              <span className="tabular-nums">
+                {formatNumber(selectedApplication?.ctcOffered)}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 rounded-full bg-muted px-3 py-1">
+              <MapPinIcon className="h-4 w-4" />
+              <span>
+                {selectedApplication?.city}
+                {selectedApplication?.state
+                  ? `, ${selectedApplication.state}`
+                  : ''}
+                {selectedApplication?.country
+                  ? `, ${selectedApplication.country}`
+                  : ''}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 rounded-full bg-muted px-3 py-1">
+              <BadgeCheckIcon className="h-4 w-4" />
+              <span>{selectedApplication?.status}</span>
+            </div>
+          </div>
 
-export default JobApplicationDetailsPopup;
+          {/* Applied date */}
+          <div className="flex flex-col gap-2 rounded-md border p-3">
+            <div className="flex items-center gap-2 text-sm">
+              <CalendarIcon className="h-4 w-4" />
+              <span>
+                Applied:{' '}
+                {formatDate(
+                  selectedApplication?.appliedDate
+                    ? selectedApplication.appliedDate.toString()
+                    : undefined
+                )}
+              </span>
+            </div>
+          </div>
+
+          {/* Link */}
+          <div className="flex items-center gap-2">
+            <LinkIcon className="h-4 w-4" />
+            {canOpen ? (
+              <a
+                href={safeLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-primary underline underline-offset-2"
+              >
+                {selectedApplication?.jobLink}
+              </a>
+            ) : (
+              <span className="text-sm text-muted-foreground">
+                No job link provided
+              </span>
+            )}
+          </div>
+
+          {/* Description */}
+          <section aria-labelledby="job-description">
+            <h3 id="job-description" className="mb-2 font-semibold">
+              Job Description
+            </h3>
+            <p className="text-pretty text-sm leading-relaxed">
+              {selectedApplication?.description || 'No description provided.'}
+            </p>
+          </section>
+
+          {/* IDs */}
+          <div className="gap-2 rounded-md border p-3 text-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground">Application ID</span>
+              <span className="font-medium">{selectedApplication?.id}</span>
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-between">
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCopy}
+              className="inline-flex items-center gap-2 bg-transparent"
+            >
+              <CopyIcon className="h-4 w-4" />
+              {copied ? 'Copied!' : 'Copy Link'}
+            </Button>
+            <Button
+              type="button"
+              variant="default"
+              className="inline-flex items-center gap-2"
+              asChild
+              disabled={!canOpen}
+            >
+              <a
+                href={canOpen ? safeLink : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLinkIcon className="h-4 w-4" />
+                Open Link
+              </a>
+            </Button>
+          </div>
+
+          {/* Optional status actions (client-only placeholders) */}
+          <div className="flex gap-2">
+            <Button type="button" variant="outline">
+              Mark as Rejected
+            </Button>
+            <Button type="button" variant="outline">
+              Mark as Interview
+            </Button>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default JobApplicationDetailsDialog;

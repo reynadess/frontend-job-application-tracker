@@ -8,7 +8,7 @@ const JobTracker = () => {
     usePageTitle(PAGE_TITLES.JOB_TRACKER)
     return (
         <>
-            <div className="ml-7 hidden space-y-4 sm:block">
+            {/* <div className="ml-7 hidden space-y-4 sm:block">
                 <h1 className="text-2xl font-bold">Current Openings</h1>
                 <div className="flex space-x-10 overflow-x-auto">
                     {mockJobs.slice(0, 3).map((job) => (
@@ -17,8 +17,9 @@ const JobTracker = () => {
                         </Link>
                     ))}
                 </div>
-            </div>
-            <div className="mt-12">
+            </div> */}
+            {/* Change the css to mt-12 */}
+            <div className="mt-2">
                 <h1 className="mb-3 ml-7 text-2xl font-bold">Tracker</h1>
                 <JobTrackingTable />
             </div>

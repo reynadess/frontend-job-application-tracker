@@ -26,7 +26,6 @@ import {
 } from '@/shared/components/ui/popover';
 import { Calendar } from '@/shared/components/ui/calendar';
 import { Textarea } from '@/shared/components/ui/textarea';
-import { toast } from 'sonner';
 import { useApplicationsStore } from '@/features/job-tracking/store/applications.store';
 
 interface Props {
@@ -91,19 +90,8 @@ export function JobApplicationSheet({
             handleClose();
             reset();
             setDate(undefined); // Reset date state as well
-
-            // Show success message
-            toast.success(
-                selectedApplication
-                    ? 'Application updated successfully'
-                    : 'Application created successfully'
-            );
         } catch (error) {
-            toast.error(
-                selectedApplication
-                    ? 'Failed to update application'
-                    : 'Failed to create application'
-            );
+            console.error("Operation Failed Try again")
         } finally {
             setIsSubmitting(false);
         }

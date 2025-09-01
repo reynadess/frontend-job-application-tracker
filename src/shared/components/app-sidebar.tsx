@@ -75,60 +75,60 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [username]);
   const data = {
     navMain: [
-      {
-        title: 'Job Search',
-        url: '/dashboard/jobsearch',
-        icon: Search,
-        isActive: location.pathname.includes('/jobsearch'),
-        badge: '12 new',
-        items: [
-          {
-            title: 'All Jobs',
-            url: '/dashboard/jobsearch',
-            badge: '1,247',
-          },
-          {
-            title: 'Recommended',
-            url: '/dashboard/jobsearch/recommended',
-            badge: '23',
-          },
-          {
-            title: 'Recently Viewed',
-            url: '/dashboard/jobsearch/recent',
-          },
-          {
-            title: 'Job Alerts',
-            url: '/dashboard/jobsearch/alerts',
-            badge: '5',
-          },
-        ],
-      },
-      {
-        title: 'Companies',
-        url: '/dashboard/companies',
-        icon: Building2,
-        badge: '50+ hiring',
-        items: [
-          {
-            title: 'All Companies',
-            url: '/dashboard/companies',
-            badge: '156',
-          },
-          {
-            title: 'Following',
-            url: '/dashboard/companies/following',
-            badge: '8',
-          },
-          {
-            title: 'Recently Viewed',
-            url: '/dashboard/companies/recent',
-          },
-          {
-            title: 'Top Rated',
-            url: '/dashboard/companies/top-rated',
-          },
-        ],
-      },
+      // {
+      //   title: 'Job Search',
+      //   url: '/dashboard/jobsearch',
+      //   icon: Search,
+      //   isActive: location.pathname.includes('/jobsearch'),
+      //   badge: '12 new',
+      //   items: [
+      //     {
+      //       title: 'All Jobs',
+      //       url: '/dashboard/jobsearch',
+      //       badge: '1,247',
+      //     },
+      //     {
+      //       title: 'Recommended',
+      //       url: '/dashboard/jobsearch/recommended',
+      //       badge: '23',
+      //     },
+      //     {
+      //       title: 'Recently Viewed',
+      //       url: '/dashboard/jobsearch/recent',
+      //     },
+      //     {
+      //       title: 'Job Alerts',
+      //       url: '/dashboard/jobsearch/alerts',
+      //       badge: '5',
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: 'Companies',
+      //   url: '/dashboard/companies',
+      //   icon: Building2,
+      //   badge: '50+ hiring',
+      //   items: [
+      //     {
+      //       title: 'All Companies',
+      //       url: '/dashboard/companies',
+      //       badge: '156',
+      //     },
+      //     {
+      //       title: 'Following',
+      //       url: '/dashboard/companies/following',
+      //       badge: '8',
+      //     },
+      //     {
+      //       title: 'Recently Viewed',
+      //       url: '/dashboard/companies/recent',
+      //     },
+      //     {
+      //       title: 'Top Rated',
+      //       url: '/dashboard/companies/top-rated',
+      //     },
+      //   ],
+      // },
       {
         title: 'Applications',
         url: '/dashboard/job-tracker',
@@ -327,16 +327,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <DropdownMenuLabel className="text-xs text-muted-foreground">
                   Platform
                 </DropdownMenuLabel>
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                   <Search className="mr-2 size-4" />
                   <Link to={'/dashboard/jobsearch'} className="text-inherit">
                     Job Search
                   </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
+                </DropdownMenuItem> */}
+                {/* <DropdownMenuItem>
                   <Building2 className="mr-2 size-4" />
                   Company Directory
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <ModeToggle />
@@ -415,7 +415,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarSeparator />
 
         {/* Secondary Navigation */}
-        <SidebarGroup>
+        {/* <SidebarGroup>
           <SidebarGroupLabel>Personal</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -472,12 +472,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
-        </SidebarGroup>
+        </SidebarGroup> */}
 
         <SidebarSeparator />
 
         {/* Quick Actions */}
-        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+        {/* <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupLabel>Quick Actions</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -493,12 +493,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
-        </SidebarGroup>
+        </SidebarGroup> */}
 
-        <SidebarSeparator />
+        {/* <SidebarSeparator /> */}
 
         {/* Notifications */}
-        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+        {/* <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupLabel>Recent Activity</SidebarGroupLabel>
           <SidebarGroupContent>
             <div className="space-y-2 px-2">
@@ -531,11 +531,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </div>
             </div>
           </SidebarGroupContent>
-        </SidebarGroup>
+        </SidebarGroup> */}
       </SidebarContent>
 
       <SidebarFooter>
-       <NavUser Applicant={Applicant}/>
+       <NavUser profile={Applicant}/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
