@@ -2,7 +2,7 @@ import * as React from "react"
 import { Button } from "@/shared/components/ui/button"
 
 
-export function ProfileActions({ email }: { email: string }) {
+export function ProfileActions({ email }: { email: string}) {
   const [copied, setCopied] = React.useState(false)
 
   async function onCopy() {

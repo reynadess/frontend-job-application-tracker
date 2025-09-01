@@ -26,7 +26,6 @@ import {
 } from '@/shared/components/ui/popover';
 import { Calendar } from '@/shared/components/ui/calendar';
 import { Textarea } from '@/shared/components/ui/textarea';
-import { toast } from 'sonner';
 import { useApplicationsStore } from '@/features/job-tracking/store/applications.store';
 
 interface Props {

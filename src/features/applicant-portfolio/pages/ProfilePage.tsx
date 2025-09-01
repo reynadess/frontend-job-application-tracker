@@ -1,3 +1,4 @@
+import { LoadingSpinner } from "@/shared/components/LoadingSpinner";
 import { ProfileCard } from "../components/ProfileCard"
 import { useApplicant } from "../hooks/useApplicant"
 
@@ -10,7 +11,13 @@ const ProfilePage = () => {
         <h1 className="text-pretty font-sans text-2xl font-semibold tracking-tight">Hii , {Applicant?.firstName}</h1>
       </header>
 
-      <ProfileCard profile={Applicant} />
+      {
+        Applicant ? (<ProfileCard profile={Applicant}/>) :(
+          <div>
+            <LoadingSpinner/>
+          </div>
+        )
+      }
     </main>
     </div>
   )

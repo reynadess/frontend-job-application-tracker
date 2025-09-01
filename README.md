@@ -14,20 +14,11 @@ frontend-job-application-tracker/
       ├── api/
       ├── app/
       ├── assets/
-      ├── auth/
       ├── config/
-      ├── Dashboard/
-      ├── DummyData/
       ├── features/
       ├── hooks/
       ├── lib/
-      ├── pages/
-      ├── schema/
       ├── shared/
-      ├── store/
-      ├── types/
-      ├── utils/
-      ├── public/
       ├── App.tsx
       ├── index.css
       ├── index.tsx

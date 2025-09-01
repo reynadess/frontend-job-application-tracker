@@ -12,7 +12,9 @@ function App() {
   //TODO: FIx this why applicant is undefined initially  
   useEffect(() => {
     checkAuth();
-    getApplicantInfo(username);
+    if(username){
+      getApplicantInfo(username);
+    }
   }, [checkAuth , getApplicantInfo , username]);
 
   return (

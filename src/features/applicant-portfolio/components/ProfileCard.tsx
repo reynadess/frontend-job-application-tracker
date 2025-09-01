@@ -6,11 +6,11 @@ import { ProfileActions } from "./ProfileActions"
 import { UserType } from "@/shared/types/user.types"
 
 
-interface Profile {
+interface ProfileCardProps {
     profile :UserType
 }
 
-export function ProfileCard({ profile }: Profile) {
+export function ProfileCard({ profile }: ProfileCardProps) {
   const fullName = [profile?.firstName, profile?.lastName].filter(Boolean).join(" ").trim() || profile?.username
 
   return (
